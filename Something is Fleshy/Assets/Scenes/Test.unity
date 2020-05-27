@@ -215,7 +215,7 @@ GameObject:
   - component: {fileID: 951646379}
   - component: {fileID: 951646378}
   - component: {fileID: 951646377}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Ground
   m_TagString: Ground
   m_Icon: {fileID: 0}
@@ -306,7 +306,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 951646376}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -1, z: 0}
+  m_LocalPosition: {x: 0, y: -0.58, z: 0}
   m_LocalScale: {x: 40, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -341,7 +341,7 @@ CapsuleCollider2D:
   m_GameObject: {fileID: 1101086926}
   m_Enabled: 1
   m_Density: 1
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 6200000, guid: 435fa5f6d237ef94695c11c359fbe775, type: 2}
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
@@ -363,7 +363,7 @@ Rigidbody2D:
   m_Mass: 1
   m_LinearDrag: 0
   m_AngularDrag: 0.05
-  m_GravityScale: 1
+  m_GravityScale: 5
   m_Material: {fileID: 0}
   m_Interpolate: 0
   m_SleepingMode: 1
@@ -383,15 +383,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   movementSpeed: 10
   movementSmoothing: 0.05
-  airControl: 1
-  airControlSpeed: 5
+  initialJumpForce: 20
+  jumpTimeMax: 0.35
+  levitatingTimeAtApex: 0.15
+  percentageGravityHandleFall: 0.5
+  gravityLevitateRatio: 3
+  jumpControlMovementSpeed: 10
+  fallControlMovementSpeed: 7.5
   whatIsGround:
     serializedVersion: 2
     m_Bits: 256
   groundCheck: {fileID: 1180687346}
   groundedRadius: 0.2
-  rb: {fileID: 0}
-  grounded: 0
 --- !u!212 &1101086930
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -450,7 +453,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1101086926}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -1.0751851, y: 0.954, z: 0}
+  m_LocalPosition: {x: -1.0751851, y: 1.76, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1180687346}
