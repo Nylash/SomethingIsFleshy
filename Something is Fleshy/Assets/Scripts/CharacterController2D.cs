@@ -3,9 +3,9 @@ using System.Collections;
 
 public class CharacterController2D : MonoBehaviour
 {
+    #region CONFIGURATION
 #pragma warning disable 0649
-	[Header("Movement")]
-	[Header("CONFIGURATION")]
+    [Header("Movement")]
 	[SerializeField] float movementSpeed = 10f;
 	[Tooltip("Used for acceleration. Bigger is the value, longer the character make to stop or start moving.")]
 	[Range(0, .3f)] [SerializeField] private float movementSmoothing = .05f;
@@ -21,7 +21,7 @@ public class CharacterController2D : MonoBehaviour
 	[Tooltip("Percentage at jump's apex at which player loose all velocity from jump and start falling.")]
 	[Range(0, 1)] [SerializeField] float percentageGravityHandleFall = .5f;
 	[Tooltip("Gravity ratio multiplier for levitate effect. 1 = initial gravity, 0 = no gravity.")]
-	[Range(0, 1)] [SerializeField] float gravityLevitateRatio = .3f;
+	[Range(0, 1)] [SerializeField] float gravityLevitateRatio = .33f;
 	[Tooltip("Horizontal speed during jump, should be equal or inferior at movementSpeed. Otherwise, player will move faster by jumping.")]
 	[SerializeField] float jumpControlMovementSpeed = 10f;
 	[Tooltip("Speed during air control (when not jumping), should be equal or inferior at jumpControlMovementSpeed.")]
@@ -35,13 +35,20 @@ public class CharacterController2D : MonoBehaviour
 	[SerializeField] LayerMask whatIsGround;
 	[SerializeField] Transform groundCheck;
 	[SerializeField] float groundedRadius = .2f;
+	[Header("Debug")]
+	[SerializeField] bool showMovementDebug;
+	[SerializeField] Color movementColor = Color.cyan;
+	[SerializeField] Color jumpColor = Color.yellow;
+	[SerializeField] Color apexJumpColor = Color.green;
 #pragma warning restore 0649
-
-	[Header("COMPONENTS")]
+    #endregion
+	
+    [Header("Components")]
+	[Header("DON'T TOUCH BELOW")]
 	Rigidbody2D rb;
 	ActionsMap actionsMap;
 
-	[Header("VARIABLES")]
+	[Header("Variables")]
 	//Movement variable
 	bool isGrounded;
 	bool wasGrounded;
@@ -85,7 +92,8 @@ public class CharacterController2D : MonoBehaviour
 		JumpBufferingSystem();
 		Move(movementInput);
 		KeepJumping();
-		Debug.DrawLine(transform.position, transform.position - new Vector3(0, -.1f, 0), debugColor, 10);
+		if(showMovementDebug)
+			Debug.DrawLine(transform.position, transform.position - new Vector3(0, -.1f, 0), debugColor, 10);
 	}
 
 	void GroundDetection()
@@ -160,7 +168,7 @@ public class CharacterController2D : MonoBehaviour
 			{
 				jumpTimeCounter += Time.deltaTime;
 				rb.velocity = Vector2.Lerp(new Vector2(rb.velocity.x, initialJumpForce), new Vector2(rb.velocity.x, initialJumpForce * jumpSlowDownRatio), jumpTimeCounter / jumpTimeMax);
-				debugColor = Color.yellow;
+				debugColor = jumpColor;
 			}
 			else
 				StartCoroutine(LevitateAtApexJump());
@@ -181,7 +189,7 @@ public class CharacterController2D : MonoBehaviour
 		isLevitating = false;
 		rb.gravityScale = initialGravity;
 		StopCoroutine(LevitateAtApexJump());
-		debugColor = Color.cyan;
+		debugColor = movementColor;
 	}
 
 	IEnumerator LevitateAtApexJump()
@@ -191,11 +199,11 @@ public class CharacterController2D : MonoBehaviour
 		levitatingTimeCounter = 0f;
 		velocityAtApex = rb.velocity.y;
 		rb.gravityScale = initialGravity * gravityLevitateRatio;
-		debugColor = Color.green;
+		debugColor = apexJumpColor;
 		yield return new WaitForSeconds(levitatingTimeAtApex);
 		rb.gravityScale = initialGravity;
 		isLevitating = false;
-		debugColor = Color.cyan;
+		debugColor = movementColor;
 	}
 
     public void Move(float horizontalMove)
