@@ -34,9 +34,12 @@ public class CharacterController2D : MonoBehaviour
 	[Header("Ground Detection")]
 	[SerializeField] LayerMask whatIsGround;
 	[SerializeField] Transform groundCheck;
+	[SerializeField] Transform ceilingCheck;
+	[SerializeField] float ceilingRadius = .1f;
 	[SerializeField] float groundedRadius = .2f;
 	[Header("Debug")]
-	[SerializeField] bool showMovementDebug;
+	[SerializeField] bool showCheckerDebug = true;
+	[SerializeField] bool showMovementDebug = true;
 	[SerializeField] Color movementColor = Color.cyan;
 	[SerializeField] Color jumpColor = Color.yellow;
 	[SerializeField] Color apexJumpColor = Color.green;
@@ -88,6 +91,7 @@ public class CharacterController2D : MonoBehaviour
 	private void FixedUpdate()
 	{
 		GroundDetection();
+		CeilingDetection();
 		CoyoteTimeSystem();
 		JumpBufferingSystem();
 		Move(movementInput);
@@ -111,6 +115,18 @@ public class CharacterController2D : MonoBehaviour
 				{
 					//Landing
 				}
+			}
+		}
+	}
+
+	void CeilingDetection()
+	{
+		Collider2D[] colliders = Physics2D.OverlapCircleAll(ceilingCheck.position, ceilingRadius, whatIsGround);
+		for (int i = 0; i < colliders.Length; i++)
+		{
+			if (colliders[i].gameObject != gameObject)
+			{
+				StopJumping();
 			}
 		}
 	}
@@ -251,7 +267,11 @@ public class CharacterController2D : MonoBehaviour
 
 	private void OnDrawGizmos()
 	{
-		Gizmos.color = Color.yellow;
-		Gizmos.DrawWireSphere(groundCheck.position, groundedRadius);
+		if (showCheckerDebug)
+		{
+			Gizmos.color = Color.yellow;
+			Gizmos.DrawWireSphere(groundCheck.position, groundedRadius);
+			Gizmos.DrawWireSphere(ceilingCheck.position, ceilingRadius);
+		}
 	}
 }
