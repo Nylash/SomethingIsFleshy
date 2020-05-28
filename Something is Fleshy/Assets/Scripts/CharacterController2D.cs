@@ -13,17 +13,24 @@ public class CharacterController2D : MonoBehaviour
 	[Tooltip("The first impulsion given to the player when he hits jump button.")]
 	[SerializeField] float initialJumpForce = 20f;
 	[Tooltip("Total time where player can keep jumping.")]
-	[SerializeField] float jumpTimeMax = .4f;
+	[SerializeField] float jumpTimeMax = .35f;
+	[Tooltip("Percentage of jump force used at the end on the jump's duration. A lerp is done during the jump, reducing the jump force to jumpForce to jumpForce * jumpSlowDownRatio. Lower is this value, stronger is the slow.")]
+	[Range(0, 1)] [SerializeField] float jumpSlowDownRatio =.5f;
 	[Tooltip("Time during which the player 'levitate' after reaching jump's apex.")]
 	[SerializeField] float levitatingTimeAtApex = .15f;
 	[Tooltip("Percentage at jump's apex at which player loose all velocity from jump and start falling.")]
 	[Range(0, 1)] [SerializeField] float percentageGravityHandleFall = .5f;
-	[Tooltip("Gravity divider for levitate effect. Lower is the value quicker the player fall.")]
-	[Range(1, 10)] [SerializeField] float gravityLevitateRatio = 3f;
-	[Tooltip("Horizontal speed during jump, should be equal or inferior at movementSpeed.")]
+	[Tooltip("Gravity ratio multiplier for levitate effect. 1 = initial gravity, 0 = no gravity.")]
+	[Range(0, 1)] [SerializeField] float gravityLevitateRatio = .3f;
+	[Tooltip("Horizontal speed during jump, should be equal or inferior at movementSpeed. Otherwise, player will move faster by jumping.")]
 	[SerializeField] float jumpControlMovementSpeed = 10f;
 	[Tooltip("Speed during air control (when not jumping), should be equal or inferior at jumpControlMovementSpeed.")]
-	[SerializeField] float fallControlMovementSpeed = 5f;
+	[SerializeField] float fallControlMovementSpeed = 7.5f;
+	[Header("Jump polish")]
+	[Tooltip("How many frames player can still jump after leaving the ground (Coyote time).")]
+	[SerializeField] int nbFramesCoyoteTime = 5;
+	[Tooltip("Hom many frames jump input is stocked when the player is not grounded.")]
+	[SerializeField] int nbFramesJumpBuffering = 5;
 	[Header("Ground Detection")]
 	[SerializeField] LayerMask whatIsGround;
 	[SerializeField] Transform groundCheck;
@@ -37,6 +44,7 @@ public class CharacterController2D : MonoBehaviour
 	[Header("VARIABLES")]
 	//Movement variable
 	bool isGrounded;
+	bool wasGrounded;
 	bool facingRight = true;
 	float movementInput;
 	Vector3 velocity = Vector3.zero;
@@ -47,6 +55,10 @@ public class CharacterController2D : MonoBehaviour
 	float levitatingTimeCounter;
 	float initialGravity;
 	float velocityAtApex;
+	//Polish jump variable
+	bool jumpBuffering;
+	int framesCounterCoyoteTime;
+	int framesCounterJumpBuffering;
 	//Debug variable
 	Color debugColor = Color.cyan;
 
@@ -68,7 +80,17 @@ public class CharacterController2D : MonoBehaviour
 
 	private void FixedUpdate()
 	{
-		bool wasGrounded = isGrounded;
+		GroundDetection();
+		CoyoteTimeSystem();
+		JumpBufferingSystem();
+		Move(movementInput);
+		KeepJumping();
+		Debug.DrawLine(transform.position, transform.position - new Vector3(0, -.1f, 0), debugColor, 10);
+	}
+
+	void GroundDetection()
+	{
+		wasGrounded = isGrounded;
 		isGrounded = false;
 
 		Collider2D[] colliders = Physics2D.OverlapCircleAll(groundCheck.position, groundedRadius, whatIsGround);
@@ -83,20 +105,50 @@ public class CharacterController2D : MonoBehaviour
 				}
 			}
 		}
-
-		Move(movementInput);
-
-		KeepJumping();
 	}
 
-	void StartJumping()
+	void CoyoteTimeSystem()
+	{
+		if (!isGrounded && wasGrounded)
+		{
+
+			framesCounterCoyoteTime++;
+			if (framesCounterCoyoteTime <= nbFramesCoyoteTime)
+				isGrounded = true;
+			else
+				framesCounterCoyoteTime = 0;
+		}
+	}
+
+	void JumpBufferingSystem()
+	{
+		if (isGrounded && jumpBuffering)
+		{
+			StartJumping();
+		}
+		if (jumpBuffering)
+		{
+			framesCounterJumpBuffering++;
+			if (framesCounterJumpBuffering > nbFramesJumpBuffering)
+				jumpBuffering = false;
+		}
+	}
+
+    void StartJumping()
 	{
 		if (isGrounded)
 		{
+			jumpBuffering = false;
 			isGrounded = false;
 			isJumping = true;
+			framesCounterCoyoteTime = 0;
 			jumpTimeCounter = 0f;
 			rb.velocity = new Vector2(rb.velocity.x,initialJumpForce);
+		}
+		else
+		{
+			jumpBuffering = true;
+			framesCounterJumpBuffering = 0;
 		}
 	}
 
@@ -107,7 +159,8 @@ public class CharacterController2D : MonoBehaviour
 			if (jumpTimeCounter < jumpTimeMax)
 			{
 				jumpTimeCounter += Time.deltaTime;
-				rb.velocity = Vector2.Lerp(new Vector2(rb.velocity.x, initialJumpForce), new Vector2(rb.velocity.x, initialJumpForce/2), jumpTimeCounter / jumpTimeMax);
+				rb.velocity = Vector2.Lerp(new Vector2(rb.velocity.x, initialJumpForce), new Vector2(rb.velocity.x, initialJumpForce * jumpSlowDownRatio), jumpTimeCounter / jumpTimeMax);
+				debugColor = Color.yellow;
 			}
 			else
 				StartCoroutine(LevitateAtApexJump());
@@ -119,12 +172,11 @@ public class CharacterController2D : MonoBehaviour
 			if (rb.velocity.y == 0)
 				isLevitating = false;
 		}
-
-		Debug.DrawLine(transform.position, transform.position - new Vector3(0, -.1f, 0), debugColor, 10);
 	}
 
 	void StopJumping()
 	{
+		jumpBuffering = false;
 		isJumping = false;
 		isLevitating = false;
 		rb.gravityScale = initialGravity;
@@ -138,7 +190,7 @@ public class CharacterController2D : MonoBehaviour
 		isLevitating = true;
 		levitatingTimeCounter = 0f;
 		velocityAtApex = rb.velocity.y;
-		rb.gravityScale = initialGravity / gravityLevitateRatio;
+		rb.gravityScale = initialGravity * gravityLevitateRatio;
 		debugColor = Color.green;
 		yield return new WaitForSeconds(levitatingTimeAtApex);
 		rb.gravityScale = initialGravity;
@@ -146,7 +198,7 @@ public class CharacterController2D : MonoBehaviour
 		debugColor = Color.cyan;
 	}
 
-	public void Move(float horizontalMove)
+    public void Move(float horizontalMove)
 	{
 		if (isGrounded)
 		{
