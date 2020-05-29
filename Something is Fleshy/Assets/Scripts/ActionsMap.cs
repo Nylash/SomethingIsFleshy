@@ -41,7 +41,7 @@ public class @ActionsMap : IInputActionCollection, IDisposable
                     ""id"": ""a8bec3f9-fc33-4479-a459-dd47ff97d02b"",
                     ""path"": ""<Gamepad>/leftStick/x"",
                     ""interactions"": """",
-                    ""processors"": """",
+                    ""processors"": ""AxisDeadzone"",
                     ""groups"": ""Gamepad"",
                     ""action"": ""Movement"",
                     ""isComposite"": false,
