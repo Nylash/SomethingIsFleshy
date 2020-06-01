@@ -27,6 +27,8 @@ public class CharacterController2DTowerfallLike : MonoBehaviour
 	[SerializeField] float initialXWallJumpForce = 10f;
 	[Tooltip("The vertical impulsion given to the player when he hits jump button (Wall jump specific).")]
 	[SerializeField] float initialYWallJumpForce = 20f;
+	[Tooltip("Time during which player can uses his direction input.")]
+	[SerializeField] float inputLockTime = .2f;
 	[Header("Jump polish")]
 	[Tooltip("How many frames player can still jump after leaving the ground (Coyote time).")]
 	[SerializeField] int nbFramesCoyoteTime = 5;
@@ -200,7 +202,7 @@ public class CharacterController2DTowerfallLike : MonoBehaviour
 		else if((isWalledLeft || isWalledRight) && wallJumpAvailable)
 		{
 			CancelInvoke("ResetAirControlLock");
-			Invoke("ResetAirControlLock", jumpTimeMax / 2);
+			Invoke("ResetAirControlLock", inputLockTime);
 			airControlLocked = true;
 			wallJumpAvailable = false;
 			jumpBuffering = false;
