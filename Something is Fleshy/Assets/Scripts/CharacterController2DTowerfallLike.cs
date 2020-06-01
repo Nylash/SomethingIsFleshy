@@ -22,19 +22,28 @@ public class CharacterController2DTowerfallLike : MonoBehaviour
 	[SerializeField] float maxXSpeedInAir = 10f;
 	[Tooltip("Total time where player can keep jumping.")]
 	[SerializeField] float jumpTimeMax = .35f;
+	[Header("Wall jump")]
+	[Tooltip("The horizontal impulsion given to player when he hits jump button holding a direction (Wall jump specific).")]
+	[SerializeField] float initialXWallJumpForce = 10f;
+	[Tooltip("The vertical impulsion given to the player when he hits jump button (Wall jump specific).")]
+	[SerializeField] float initialYWallJumpForce = 20f;
 	[Header("Jump polish")]
 	[Tooltip("How many frames player can still jump after leaving the ground (Coyote time).")]
 	[SerializeField] int nbFramesCoyoteTime = 5;
 	[Tooltip("Hom many frames jump input is stocked when the player is not grounded.")]
 	[SerializeField] int nbFramesJumpBuffering = 5;
-	[Header("Ground Detection")]
+	[Header("Ground/Wall Detection")]
 	[SerializeField] LayerMask whatIsGround;
 	[SerializeField] Transform groundCheck;
 	[SerializeField] float groundedRadius = .2f;
+	[SerializeField] Transform redWallCheck;
+	[SerializeField] Transform blueWallCheck;
+	[SerializeField] float walledRadius = .2f;
 	[Header("Debug")]
 	[SerializeField] bool showCheckerDebug = true;
 	[SerializeField] bool showMovementDebug = true;
 	[SerializeField] Color groundedColor = Color.cyan;
+	[SerializeField] Color walledColor = Color.green;
 	[SerializeField] Color jumpColor = Color.yellow;
 	[SerializeField] Color fallColor = Color.red;
 #pragma warning restore 0649
@@ -49,11 +58,15 @@ public class CharacterController2DTowerfallLike : MonoBehaviour
 	//Movement variable
 	bool isGrounded;
 	bool wasGrounded;
+	bool isWalledLeft;
+	bool isWalledRight;
 	bool facingRight = true;
+	bool airControlLocked;
 	public float movementInput;
 	Vector3 velocity = Vector3.zero;
 	//Jump variable
 	bool isJumping;
+	bool wallJumpAvailable;
 	float jumpTimeCounter;
 	//Polish jump variable
 	bool jumpBuffering;
@@ -80,6 +93,7 @@ public class CharacterController2DTowerfallLike : MonoBehaviour
 	private void FixedUpdate()
 	{
 		GroundDetection();
+		WallDetection();
 		CoyoteTimeSystem();
 		JumpBufferingSystem();
 		Move(movementInput);
@@ -99,6 +113,7 @@ public class CharacterController2DTowerfallLike : MonoBehaviour
 			if (colliders[i].gameObject != gameObject)
 			{
 				isGrounded = true;
+				wallJumpAvailable = true;
 				if (!wasGrounded)
 				{
 					//Landing
@@ -109,6 +124,36 @@ public class CharacterController2DTowerfallLike : MonoBehaviour
 			debugColor = groundedColor;
 		else
 			debugColor = fallColor;
+	}
+
+	void WallDetection()
+	{
+		isWalledLeft = false;
+		isWalledRight = false;
+		Collider2D[] collidersLeft = Physics2D.OverlapCircleAll(redWallCheck.position, walledRadius, whatIsGround);
+		for (int i = 0; i < collidersLeft.Length; i++)
+		{
+			if (collidersLeft[i].gameObject != gameObject)
+			{
+				if (facingRight)
+					isWalledLeft = true;
+				else
+					isWalledRight = true;
+			}
+		}
+		Collider2D[] collidersRight = Physics2D.OverlapCircleAll(blueWallCheck.position, walledRadius, whatIsGround);
+		for (int i = 0; i < collidersRight.Length; i++)
+		{
+			if (collidersRight[i].gameObject != gameObject)
+			{
+				if (facingRight)
+					isWalledRight = true;
+				else
+					isWalledLeft = true;
+			}
+		}
+		if (isWalledLeft || isWalledRight)
+			debugColor = walledColor;
 	}
 
 	void CoyoteTimeSystem()
@@ -152,6 +197,30 @@ public class CharacterController2DTowerfallLike : MonoBehaviour
 				rb.velocity = new Vector2(0f, initialYJumpForce);
 			debugColor = jumpColor;
 		}
+		else if((isWalledLeft || isWalledRight) && wallJumpAvailable)
+		{
+			CancelInvoke("ResetAirControlLock");
+			Invoke("ResetAirControlLock", jumpTimeMax / 2);
+			airControlLocked = true;
+			wallJumpAvailable = false;
+			jumpBuffering = false;
+			isGrounded = false;
+			isJumping = true;
+			framesCounterCoyoteTime = 0;
+			jumpTimeCounter = 0f;
+			if (isWalledLeft)
+			{
+				if (!facingRight)
+					Flip(false);
+				rb.velocity = new Vector2(initialXWallJumpForce, initialYWallJumpForce);
+			}
+			else
+			{
+				if (facingRight)
+					Flip(false);
+				rb.velocity = new Vector2(-initialXWallJumpForce, initialYWallJumpForce);
+			}	
+		}
 		else
 		{
 			jumpBuffering = true;
@@ -193,7 +262,7 @@ public class CharacterController2DTowerfallLike : MonoBehaviour
 			else if (horizontalMove < 0 && facingRight)
 				Flip(false);
 		}
-		else
+		else if(!airControlLocked)
 		{
 			if (horizontalMove > 0 && !facingRight)
 				Flip(true);
@@ -226,12 +295,21 @@ public class CharacterController2DTowerfallLike : MonoBehaviour
 			rb.velocity = new Vector2(0f, rb.velocity.y);
 	}
 
+	void ResetAirControlLock()
+	{
+		airControlLocked = false;
+	}
+
 	private void OnDrawGizmos()
 	{
 		if (showCheckerDebug)
 		{
 			Gizmos.color = Color.yellow;
 			Gizmos.DrawWireSphere(groundCheck.position, groundedRadius);
+			Gizmos.color = Color.cyan;
+			Gizmos.DrawWireSphere(blueWallCheck.position, walledRadius);
+			Gizmos.color = Color.red;
+			Gizmos.DrawWireSphere(redWallCheck.position, walledRadius);
 		}
 	}
 }
