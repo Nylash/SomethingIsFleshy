@@ -1,52 +1,46 @@
-﻿using UnityEngine;
-using System.Collections;
+﻿using System.Collections;
+using UnityEngine;
 
 public class CharacterController2D : MonoBehaviour
 {
-    #region CONFIGURATION
+	#region CONFIGURATION
 #pragma warning disable 0649
-    [Header("Movement")]
+	[Header("Movement")]
 	[SerializeField] float movementSpeed = 10f;
 	[Tooltip("Used for acceleration. Bigger is the value, longer the character make to stop or start moving.")]
 	[Range(0, .3f)] [SerializeField] private float movementSmoothing = .05f;
 	[Header("Jump")]
-	[Tooltip("The first impulsion given to the player when he hits jump button.")]
-	[SerializeField] float initialJumpForce = 20f;
+	[Tooltip("The horizontal impulsion given to player when he hits jump button holding a direction.")]
+	[SerializeField] float initialXJumpForce = 3;
+	[Tooltip("The vertical impulsion given to the player when he hits jump button.")]
+	[SerializeField] float initialYJumpForce = 15;
+	[Tooltip("The force add to velocity.y at each frame if the player keeps jumping.")]
+	[SerializeField] float incrementYJumpForce = 2;
+	[Tooltip("The value modifying velocity.x each frame when the player is in air. Greater it is greater the air control is.")]
+	[SerializeField] float airControl = .7f;
+	[Tooltip("Maximum horizontal speed in air, if this value is greater than 'movementSpeed' the player will move faster in air.")]
+	[SerializeField] float maxXSpeedInAir = 10f;
 	[Tooltip("Total time where player can keep jumping.")]
-	[SerializeField] float jumpTimeMax = .4f;
-	[Tooltip("Percentage of jump force used at the end on the jump's duration. A lerp is done during the jump, reducing the jump force to jumpForce to jumpForce * jumpSlowDownRatio. Lower is this value, stronger is the slow.")]
-	[Range(0, 1)] [SerializeField] float jumpSlowDownRatio =.5f;
-	[Tooltip("Time during which the player 'levitate' after reaching jump's apex.")]
-	[SerializeField] float levitatingTimeAtApex = .35f;
-	[Tooltip("Percentage at jump's apex at which player loose all velocity from jump and start falling.")]
-	[Range(0, 1)] [SerializeField] float percentageGravityHandleFall = .32f;
-	[Tooltip("Gravity ratio multiplier for levitate effect. 1 = initial gravity, 0 = no gravity.")]
-	[Range(0, 1)] [SerializeField] float gravityLevitateRatio = .63f;
-	[Tooltip("Horizontal speed during jump, should be equal or inferior at movementSpeed. Otherwise, player will move faster by jumping.")]
-	[SerializeField] float jumpControlMovementSpeed = 10f;
-	[Tooltip("Speed during air control (when not jumping), should be equal or inferior at jumpControlMovementSpeed.")]
-	[SerializeField] float fallControlMovementSpeed = 7.5f;
+	[SerializeField] float jumpTimeMax = .2f;
 	[Header("Jump polish")]
 	[Tooltip("How many frames player can still jump after leaving the ground (Coyote time).")]
 	[SerializeField] int nbFramesCoyoteTime = 5;
 	[Tooltip("Hom many frames jump input is stocked when the player is not grounded.")]
-	[SerializeField] int nbFramesJumpBuffering = 5;
-	[Header("Ground Detection")]
+	[SerializeField] int nbFramesJumpBuffering = 10;
+	[Header("Ground/Wall Detection")]
 	[SerializeField] LayerMask whatIsGround;
 	[SerializeField] Transform groundCheck;
-	[SerializeField] Transform ceilingCheck;
-	[SerializeField] float ceilingRadius = .1f;
-	[SerializeField] float groundedRadius = .2f;
+	[SerializeField] Vector2 groundCheckSize = new Vector2(1f, .25f);
 	[Header("Debug")]
 	[SerializeField] bool showCheckerDebug = true;
 	[SerializeField] bool showMovementDebug = true;
-	[SerializeField] Color movementColor = Color.cyan;
+	[SerializeField] Color groundedColor = Color.cyan;
 	[SerializeField] Color jumpColor = Color.yellow;
-	[SerializeField] Color apexJumpColor = Color.green;
+	[SerializeField] Color fallColor = Color.red;
 #pragma warning restore 0649
-    #endregion
-	
-    [Header("Components")]
+	#endregion
+
+	[Header("Components")]
 	[Header("DON'T TOUCH BELOW")]
 	Rigidbody2D rb;
 	ActionsMap actionsMap;
@@ -60,17 +54,13 @@ public class CharacterController2D : MonoBehaviour
 	Vector3 velocity = Vector3.zero;
 	//Jump variable
 	bool isJumping;
-	bool isLevitating;
 	float jumpTimeCounter;
-	float levitatingTimeCounter;
-	float initialGravity;
-	float velocityAtApex;
 	//Polish jump variable
 	bool jumpBuffering;
 	int framesCounterCoyoteTime;
 	int framesCounterJumpBuffering;
 	//Debug variable
-	Color debugColor = Color.cyan;
+	Color debugColor;
 
 	private void OnEnable() => actionsMap.Gameplay.Enable();
 	private void OnDisable() => actionsMap.Gameplay.Disable();
@@ -78,7 +68,6 @@ public class CharacterController2D : MonoBehaviour
 	private void Awake()
 	{
 		rb = GetComponent<Rigidbody2D>();
-		initialGravity = rb.gravityScale;
 
 		actionsMap = new ActionsMap();
 
@@ -91,12 +80,11 @@ public class CharacterController2D : MonoBehaviour
 	private void FixedUpdate()
 	{
 		GroundDetection();
-		CeilingDetection();
 		CoyoteTimeSystem();
 		JumpBufferingSystem();
 		Move(movementInput);
 		KeepJumping();
-		if(showMovementDebug)
+		if (showMovementDebug)
 			Debug.DrawLine(transform.position, transform.position - new Vector3(0, -.1f, 0), debugColor, 10);
 	}
 
@@ -104,8 +92,7 @@ public class CharacterController2D : MonoBehaviour
 	{
 		wasGrounded = isGrounded;
 		isGrounded = false;
-
-		Collider2D[] colliders = Physics2D.OverlapCircleAll(groundCheck.position, groundedRadius, whatIsGround);
+		Collider2D[] colliders = Physics2D.OverlapBoxAll(groundCheck.position, groundCheckSize, 0, whatIsGround);
 		for (int i = 0; i < colliders.Length; i++)
 		{
 			if (colliders[i].gameObject != gameObject)
@@ -117,25 +104,16 @@ public class CharacterController2D : MonoBehaviour
 				}
 			}
 		}
-	}
-
-	void CeilingDetection()
-	{
-		Collider2D[] colliders = Physics2D.OverlapCircleAll(ceilingCheck.position, ceilingRadius, whatIsGround);
-		for (int i = 0; i < colliders.Length; i++)
-		{
-			if (colliders[i].gameObject != gameObject)
-			{
-				StopJumping();
-			}
-		}
+		if (isGrounded)
+			debugColor = groundedColor;
+		else
+			debugColor = fallColor;
 	}
 
 	void CoyoteTimeSystem()
 	{
 		if (!isGrounded && wasGrounded)
 		{
-
 			framesCounterCoyoteTime++;
 			if (framesCounterCoyoteTime <= nbFramesCoyoteTime)
 				isGrounded = true;
@@ -158,7 +136,7 @@ public class CharacterController2D : MonoBehaviour
 		}
 	}
 
-    void StartJumping()
+	void StartJumping()
 	{
 		if (isGrounded)
 		{
@@ -167,7 +145,11 @@ public class CharacterController2D : MonoBehaviour
 			isJumping = true;
 			framesCounterCoyoteTime = 0;
 			jumpTimeCounter = 0f;
-			rb.velocity = new Vector2(rb.velocity.x,initialJumpForce);
+			if(movementInput != 0)
+				rb.velocity = new Vector2((facingRight ? 1 : -1) * initialXJumpForce, initialYJumpForce);
+			else
+				rb.velocity = new Vector2(0f, initialYJumpForce);
+			debugColor = jumpColor;
 		}
 		else
 		{
@@ -183,18 +165,11 @@ public class CharacterController2D : MonoBehaviour
 			if (jumpTimeCounter < jumpTimeMax)
 			{
 				jumpTimeCounter += Time.deltaTime;
-				rb.velocity = Vector2.Lerp(new Vector2(rb.velocity.x, initialJumpForce), new Vector2(rb.velocity.x, initialJumpForce * jumpSlowDownRatio), jumpTimeCounter / jumpTimeMax);
+				rb.velocity += new Vector2(0f, incrementYJumpForce);
 				debugColor = jumpColor;
 			}
 			else
-				StartCoroutine(LevitateAtApexJump());
-		}
-		else if (isLevitating)
-		{
-			levitatingTimeCounter += Time.deltaTime;
-			rb.velocity = Vector2.Lerp(new Vector2(rb.velocity.x, velocityAtApex), new Vector2(rb.velocity.x,  0f), levitatingTimeCounter / (levitatingTimeAtApex * percentageGravityHandleFall));
-			if (rb.velocity.y == 0)
-				isLevitating = false;
+				StopJumping();
 		}
 	}
 
@@ -202,27 +177,10 @@ public class CharacterController2D : MonoBehaviour
 	{
 		jumpBuffering = false;
 		isJumping = false;
-		isLevitating = false;
-		rb.gravityScale = initialGravity;
-		StopCoroutine(LevitateAtApexJump());
-		debugColor = movementColor;
+		debugColor = fallColor;
 	}
 
-	IEnumerator LevitateAtApexJump()
-	{
-		isJumping = false;
-		isLevitating = true;
-		levitatingTimeCounter = 0f;
-		velocityAtApex = rb.velocity.y;
-		rb.gravityScale = initialGravity * gravityLevitateRatio;
-		debugColor = apexJumpColor;
-		yield return new WaitForSeconds(levitatingTimeAtApex);
-		rb.gravityScale = initialGravity;
-		isLevitating = false;
-		debugColor = movementColor;
-	}
-
-    public void Move(float horizontalMove)
+	public void Move(float horizontalMove)
 	{
 		if (isGrounded)
 		{
@@ -230,39 +188,41 @@ public class CharacterController2D : MonoBehaviour
 			rb.velocity = Vector3.SmoothDamp(rb.velocity, targetVelocity, ref velocity, movementSmoothing);
 
 			if (horizontalMove > 0 && !facingRight)
-				Flip();
+				Flip(false);
 			else if (horizontalMove < 0 && facingRight)
-				Flip();
-		}
-		else if (isJumping)
-		{
-			Vector3 targetVelocity = new Vector2(horizontalMove * jumpControlMovementSpeed, rb.velocity.y);
-			rb.velocity = Vector3.SmoothDamp(rb.velocity, targetVelocity, ref velocity, movementSmoothing);
-
-			if (horizontalMove > 0 && !facingRight)
-				Flip();
-			else if (horizontalMove < 0 && facingRight)
-				Flip();
+				Flip(false);
 		}
 		else
 		{
-			Vector3 targetVelocity = new Vector2(horizontalMove * fallControlMovementSpeed, rb.velocity.y);
-			rb.velocity = Vector3.SmoothDamp(rb.velocity, targetVelocity, ref velocity, movementSmoothing);
-
 			if (horizontalMove > 0 && !facingRight)
-				Flip();
+				Flip(true);
 			else if (horizontalMove < 0 && facingRight)
-				Flip();
+				Flip(true);
+			if(horizontalMove != 0)
+			{
+				rb.velocity += new Vector2((facingRight ? 1 : -1) * airControl, 0f);
+				if (Mathf.Abs(rb.velocity.x) > maxXSpeedInAir)
+					rb.velocity = new Vector2((facingRight ? 1 : -1) * maxXSpeedInAir, rb.velocity.y);
+			}
+			else
+			{
+				if(Mathf.Abs(rb.velocity.x) > airControl)
+				{
+					rb.velocity -= new Vector2((facingRight ? 1 : -1) * airControl, 0f);
+				}
+			}
 		}
 	}
 
-	private void Flip()
+	private void Flip(bool callInAir)
 	{
 		facingRight = !facingRight;
 
 		Vector3 theScale = transform.localScale;
 		theScale.x *= -1;
 		transform.localScale = theScale;
+		if (callInAir)
+			rb.velocity = new Vector2(0f, rb.velocity.y);
 	}
 
 	private void OnDrawGizmos()
@@ -270,8 +230,7 @@ public class CharacterController2D : MonoBehaviour
 		if (showCheckerDebug)
 		{
 			Gizmos.color = Color.yellow;
-			Gizmos.DrawWireSphere(groundCheck.position, groundedRadius);
-			Gizmos.DrawWireSphere(ceilingCheck.position, ceilingRadius);
+			Gizmos.DrawWireCube(groundCheck.position, groundCheckSize);
 		}
 	}
 }
