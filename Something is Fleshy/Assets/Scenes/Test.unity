@@ -558,6 +558,36 @@ Transform:
   m_Father: {fileID: 1101086931}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &903577560
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 903577561}
+  m_Layer: 0
+  m_Name: GroundCheck (2)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &903577561
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 903577560}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.964, y: 0.102, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1400343810}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &922324151
 GameObject:
   m_ObjectHideFlags: 0
@@ -1033,6 +1063,7 @@ GameObject:
   - component: {fileID: 1101086929}
   - component: {fileID: 1101086928}
   - component: {fileID: 1101086927}
+  - component: {fileID: 1101086932}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -1047,7 +1078,7 @@ CapsuleCollider2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1101086926}
-  m_Enabled: 1
+  m_Enabled: 0
   m_Density: 1
   m_Material: {fileID: 6200000, guid: 435fa5f6d237ef94695c11c359fbe775, type: 2}
   m_IsTrigger: 0
@@ -1179,6 +1210,32 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!61 &1101086932
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1101086926}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 6200000, guid: 435fa5f6d237ef94695c11c359fbe775, type: 2}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0.0031785965, y: -0.2988391}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 2.17, y: 2.09}
+    newSize: {x: 2.17, y: 2.09}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 1.260767, y: 1.4414558}
+  m_EdgeRadius: 0
 --- !u!1 &1180687345
 GameObject:
   m_ObjectHideFlags: 0
@@ -1330,6 +1387,7 @@ GameObject:
   - component: {fileID: 1400343808}
   - component: {fileID: 1400343807}
   - component: {fileID: 1400343806}
+  - component: {fileID: 1400343811}
   m_Layer: 0
   m_Name: PlayerTowerfallMovement
   m_TagString: Untagged
@@ -1344,7 +1402,7 @@ CapsuleCollider2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1400343805}
-  m_Enabled: 1
+  m_Enabled: 0
   m_Density: 1
   m_Material: {fileID: 6200000, guid: 435fa5f6d237ef94695c11c359fbe775, type: 2}
   m_IsTrigger: 0
@@ -1368,11 +1426,11 @@ Rigidbody2D:
   m_Mass: 1
   m_LinearDrag: 0
   m_AngularDrag: 0.05
-  m_GravityScale: 5
+  m_GravityScale: 9
   m_Material: {fileID: 0}
-  m_Interpolate: 0
+  m_Interpolate: 1
   m_SleepingMode: 1
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
   m_Constraints: 4
 --- !u!114 &1400343808
 MonoBehaviour:
@@ -1388,22 +1446,28 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   movementSpeed: 10
   movementSmoothing: 0.05
-  initialXJumpForce: 10
-  initialYJumpForce: 20
-  incrementYJumpForce: 1
-  airControl: 0.25
+  initialXJumpForce: 3
+  initialYJumpForce: 15
+  incrementYJumpForce: 2
+  airControl: 0.7
   maxXSpeedInAir: 10
   jumpTimeMax: 0.2
+  initialXWallJumpForce: 10
+  initialYWallJumpForce: 20
   nbFramesCoyoteTime: 5
-  nbFramesJumpBuffering: 5
+  nbFramesJumpBuffering: 10
   whatIsGround:
     serializedVersion: 2
     m_Bits: 256
   groundCheck: {fileID: 1082712839}
   groundedRadius: 0.2
+  redWallCheck: {fileID: 903577561}
+  blueWallCheck: {fileID: 1983357208}
+  walledRadius: 0.2
   showCheckerDebug: 1
   showMovementDebug: 1
   groundedColor: {r: 0, g: 1, b: 1, a: 0}
+  walledColor: {r: 0, g: 1, b: 0, a: 1}
   jumpColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
   fallColor: {r: 1, g: 0, b: 0, a: 1}
   movementInput: 0
@@ -1469,9 +1533,37 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1082712839}
+  - {fileID: 1983357208}
+  - {fileID: 903577561}
   m_Father: {fileID: 0}
   m_RootOrder: 18
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!61 &1400343811
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1400343805}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 6200000, guid: 435fa5f6d237ef94695c11c359fbe775, type: 2}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: -0.009503841, y: -0.3257799}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 2.17, y: 2.09}
+    newSize: {x: 2.17, y: 2.09}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 0.43848515, y: 1.3858957}
+  m_EdgeRadius: 0
 --- !u!1 &1491794561
 GameObject:
   m_ObjectHideFlags: 0
@@ -2012,6 +2104,36 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 13
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1983357207
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1983357208}
+  m_Layer: 0
+  m_Name: GroundCheck (1)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1983357208
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1983357207}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.738, y: 0.043, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1400343810}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1986635750
 GameObject:
   m_ObjectHideFlags: 0
@@ -2039,7 +2161,7 @@ BoxCollider2D:
   m_GameObject: {fileID: 1986635750}
   m_Enabled: 1
   m_Density: 1
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 6200000, guid: 435fa5f6d237ef94695c11c359fbe775, type: 2}
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
