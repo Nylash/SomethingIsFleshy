@@ -5,7 +5,7 @@ TagManager:
   serializedVersion: 2
   tags:
   - Ground
-  - Wall
+  - Lever
   layers:
   - Default
   - TransparentFX
@@ -42,4 +42,22 @@ TagManager:
   m_SortingLayers:
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: Background
+    uniqueID: 3457093293
+    locked: 0
+  - name: Player
+    uniqueID: 1935276343
+    locked: 0
+  - name: Organ
+    uniqueID: 696649615
+    locked: 0
+  - name: OrganGauge
+    uniqueID: 1124628597
+    locked: 0
+  - name: Ground
+    uniqueID: 2212278699
+    locked: 0
+  - name: Lever
+    uniqueID: 462479813
     locked: 0

@@ -41,7 +41,7 @@ public class CharacterController2D : MonoBehaviour
 	#endregion
 
 	[Header("Components")]
-	[Header("DON'T TOUCH BELOW")]
+	[Header("⚠ DON'T TOUCH BELOW ⚠")]
 	Rigidbody2D rb;
 	ActionsMap actionsMap;
 

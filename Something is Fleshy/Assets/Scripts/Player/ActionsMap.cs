@@ -1,4 +1,4 @@
-// GENERATED AUTOMATICALLY FROM 'Assets/Scripts/ActionsMap.inputactions'
+// GENERATED AUTOMATICALLY FROM 'Assets/Scripts/Player/ActionsMap.inputactions'
 
 using System;
 using System.Collections;
@@ -30,6 +30,14 @@ public class @ActionsMap : IInputActionCollection, IDisposable
                     ""name"": ""Jump"",
                     ""type"": ""Button"",
                     ""id"": ""47620dd5-a1d9-40d9-a924-9015cafc27df"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
+                },
+                {
+                    ""name"": ""Interact"",
+                    ""type"": ""Button"",
+                    ""id"": ""8195f6cf-a53e-4199-8c4a-8edbf534b39a"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """"
@@ -101,6 +109,50 @@ public class @ActionsMap : IInputActionCollection, IDisposable
                     ""action"": ""Jump"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""621cbc7f-9c9c-49b4-abcf-55a4568727c5"",
+                    ""path"": ""<Keyboard>/e"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard"",
+                    ""action"": ""Interact"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""95b7b00e-755d-40b4-8411-16dfcabe5f6c"",
+                    ""path"": ""<Keyboard>/enter"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard"",
+                    ""action"": ""Interact"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""8ebde61c-7322-4164-b3d0-f67e836857f9"",
+                    ""path"": ""<Keyboard>/numpadEnter"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Interact"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""261d25da-fe14-4a99-9f0d-d8f36982368e"",
+                    ""path"": ""<Gamepad>/buttonWest"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""Interact"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -122,6 +174,7 @@ public class @ActionsMap : IInputActionCollection, IDisposable
         m_Gameplay = asset.FindActionMap("Gameplay", throwIfNotFound: true);
         m_Gameplay_Movement = m_Gameplay.FindAction("Movement", throwIfNotFound: true);
         m_Gameplay_Jump = m_Gameplay.FindAction("Jump", throwIfNotFound: true);
+        m_Gameplay_Interact = m_Gameplay.FindAction("Interact", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -173,12 +226,14 @@ public class @ActionsMap : IInputActionCollection, IDisposable
     private IGameplayActions m_GameplayActionsCallbackInterface;
     private readonly InputAction m_Gameplay_Movement;
     private readonly InputAction m_Gameplay_Jump;
+    private readonly InputAction m_Gameplay_Interact;
     public struct GameplayActions
     {
         private @ActionsMap m_Wrapper;
         public GameplayActions(@ActionsMap wrapper) { m_Wrapper = wrapper; }
         public InputAction @Movement => m_Wrapper.m_Gameplay_Movement;
         public InputAction @Jump => m_Wrapper.m_Gameplay_Jump;
+        public InputAction @Interact => m_Wrapper.m_Gameplay_Interact;
         public InputActionMap Get() { return m_Wrapper.m_Gameplay; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -194,6 +249,9 @@ public class @ActionsMap : IInputActionCollection, IDisposable
                 @Jump.started -= m_Wrapper.m_GameplayActionsCallbackInterface.OnJump;
                 @Jump.performed -= m_Wrapper.m_GameplayActionsCallbackInterface.OnJump;
                 @Jump.canceled -= m_Wrapper.m_GameplayActionsCallbackInterface.OnJump;
+                @Interact.started -= m_Wrapper.m_GameplayActionsCallbackInterface.OnInteract;
+                @Interact.performed -= m_Wrapper.m_GameplayActionsCallbackInterface.OnInteract;
+                @Interact.canceled -= m_Wrapper.m_GameplayActionsCallbackInterface.OnInteract;
             }
             m_Wrapper.m_GameplayActionsCallbackInterface = instance;
             if (instance != null)
@@ -204,6 +262,9 @@ public class @ActionsMap : IInputActionCollection, IDisposable
                 @Jump.started += instance.OnJump;
                 @Jump.performed += instance.OnJump;
                 @Jump.canceled += instance.OnJump;
+                @Interact.started += instance.OnInteract;
+                @Interact.performed += instance.OnInteract;
+                @Interact.canceled += instance.OnInteract;
             }
         }
     }
@@ -230,5 +291,6 @@ public class @ActionsMap : IInputActionCollection, IDisposable
     {
         void OnMovement(InputAction.CallbackContext context);
         void OnJump(InputAction.CallbackContext context);
+        void OnInteract(InputAction.CallbackContext context);
     }
 }
