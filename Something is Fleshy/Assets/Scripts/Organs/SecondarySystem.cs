@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.U2D;
 
 public class SecondarySystem : MonoBehaviour
 {
@@ -25,7 +26,7 @@ public class SecondarySystem : MonoBehaviour
 	[Tooltip("Assign a pipe to this parameter to assiocate it with energy filling boolean.")]
 	[SerializeField] GameObject energyPipe;
 	[Tooltip("Assign a pipe to this parameter to assiocate it with oxygen filling boolean.")]
-	[SerializeField] LeverScript oxygenPipe;
+	[SerializeField] GameObject oxygenPipe;
 	[Tooltip("Check it if this system energy pipe starts open.")]
 	[SerializeField] bool energyStartsOpen;
 	[Tooltip("Check it if this system oxygen pipe starts open.")]
@@ -39,9 +40,35 @@ public class SecondarySystem : MonoBehaviour
 	public float currentOxygen;
 	public bool fillingEnergy;
 	public bool fillingOxygen;
+	SpriteShapeController controllerEnergyPipe;
+	SpriteShapeController controllerOxygenPipe;
+	SpriteShapeRenderer rendererEnergyPipe;
+	SpriteShapeRenderer rendererOxygenPipe;
 
 	private void Awake()
 	{
+		if (energyPipe)
+		{
+			controllerEnergyPipe = energyPipe.GetComponent<SpriteShapeController>();
+			rendererEnergyPipe = energyPipe.GetComponent<SpriteShapeRenderer>();
+			if (!energyStartsOpen)
+			{
+				for (int i = 0; i < controllerEnergyPipe.spline.GetPointCount(); i++)
+					controllerEnergyPipe.spline.SetHeight(i, GameManager.instance.pipeCloseHeight);
+				rendererEnergyPipe.color = GameManager.instance.energyPipeCloseColor;
+			}
+		}
+		if (oxygenPipe)
+		{
+			controllerOxygenPipe = oxygenPipe.GetComponent<SpriteShapeController>();
+			rendererOxygenPipe = oxygenPipe.GetComponent<SpriteShapeRenderer>();
+			if (!oxygenStartsOpen)
+			{
+				for (int i = 0; i < controllerOxygenPipe.spline.GetPointCount(); i++)
+					controllerOxygenPipe.spline.SetHeight(i, GameManager.instance.pipeCloseHeight);
+				rendererOxygenPipe.color = GameManager.instance.oxygenPipeCloseColor;
+			}
+		}
 		if (energyLever)
 		{
 			energyLever.associatedSecondarySystem = this;
@@ -58,6 +85,38 @@ public class SecondarySystem : MonoBehaviour
 		}
 		currentEnergy = startEnergy;
 		currentOxygen = startOxygen;
+	}
+
+	public void SwitchEnergyPipe()
+	{
+		if (fillingEnergy)
+		{
+			for (int i = 0; i < controllerEnergyPipe.spline.GetPointCount(); i++)
+				controllerEnergyPipe.spline.SetHeight(i, 1);
+			rendererEnergyPipe.color = GameManager.instance.energyPipeOpenColor;
+		}
+		else
+		{
+			for (int i = 0; i < controllerEnergyPipe.spline.GetPointCount(); i++)
+				controllerEnergyPipe.spline.SetHeight(i, GameManager.instance.pipeCloseHeight);
+			rendererEnergyPipe.color = GameManager.instance.energyPipeCloseColor;
+		}
+	}
+
+	public void SwitchOxygenPipe()
+	{
+		if (fillingOxygen)
+		{
+			for (int i = 0; i < controllerOxygenPipe.spline.GetPointCount(); i++)
+				controllerOxygenPipe.spline.SetHeight(i, 1);
+			rendererOxygenPipe.color = GameManager.instance.oxygenPipeOpenColor;
+		}
+		else
+		{
+			for (int i = 0; i < controllerOxygenPipe.spline.GetPointCount(); i++)
+				controllerOxygenPipe.spline.SetHeight(i, GameManager.instance.pipeCloseHeight);
+			rendererOxygenPipe.color = GameManager.instance.oxygenPipeCloseColor;
+		}
 	}
 
 	private void Update()

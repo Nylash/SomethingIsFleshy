@@ -16,6 +16,12 @@ public class GeometryCollider : MonoBehaviour
     int m_HashCode = 0;
 
     // Update is called once per frame
+
+    private void Start()
+    {
+        m_UpdateCollider = false;
+    }
+
     void Update()
     {
         if (m_UpdateCollider)
