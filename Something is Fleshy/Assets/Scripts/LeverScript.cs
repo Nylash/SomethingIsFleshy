@@ -53,6 +53,6 @@ public class LeverScript : MonoBehaviour
 
     public enum RessourcesType
     {
-        energy, oxygen,
+        none, energy, oxygen,
     }
 }
