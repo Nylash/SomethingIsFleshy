@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.U2D;
 
 public abstract class PrimarySystem : MonoBehaviour
 {
@@ -12,7 +13,7 @@ public abstract class PrimarySystem : MonoBehaviour
 	[Header("World objects")]
 	[Tooltip("Assign a lever to this parameter to assiocate it with filling boolean.")]
 	[SerializeField] LeverScript lever;
-	[Tooltip("Assign a pipe to this parameter to assiocate it with energy filling boolean.")]
+	[Tooltip("Assign a pipe to this parameter to assiocate it with filling boolean.")]
 	[SerializeField] GameObject pipe;
 	[Tooltip("Check it if this system pipe starts open.")]
 	[SerializeField] bool startsOpen;
@@ -23,21 +24,42 @@ public abstract class PrimarySystem : MonoBehaviour
 	[Header("⚠ DON'T TOUCH BELOW ⚠")]
 	public float currentCapacity;
 	public bool filling;
+	protected Color colorPipeClose;
+	protected Color colorPipeOpen;
+	SpriteShapeController controllerPipe;
+	SpriteShapeRenderer rendererPipe;
+	Material fillingMaterial;
 
 	protected virtual void Awake()
 	{
 		if (lever)
-		{
 			lever.associatedPrimarySystem = this;
-			if (startsOpen)
-				lever.Switch();
-		}
 		currentCapacity = startCapacity;
+	}
+
+	protected virtual void Start()
+	{
+		if (pipe)
+		{
+			controllerPipe = pipe.GetComponent<SpriteShapeController>();
+			rendererPipe = pipe.GetComponent<SpriteShapeRenderer>();
+			if (!startsOpen)
+			{
+				for (int i = 0; i < controllerPipe.spline.GetPointCount(); i++)
+					controllerPipe.spline.SetHeight(i, GameManager.instance.pipeCloseHeight);
+				rendererPipe.color = colorPipeClose;
+			}
+		}
+		if (startsOpen && lever)
+			lever.Switch();
+		fillingMaterial = transform.GetChild(0).GetComponent<SpriteRenderer>().material;
+		fillingMaterial.SetFloat("Height", currentCapacity / maxCapacity);
 	}
 
 	protected virtual void Update()
 	{
 		ContinuousFilling();
+		fillingMaterial.SetFloat("Height", currentCapacity / maxCapacity);
 	}
 
 	void ContinuousFilling()
@@ -63,5 +85,21 @@ public abstract class PrimarySystem : MonoBehaviour
 		}
 		else
 			return false;
+	}
+
+	public virtual void SwitchPipe()
+	{
+		if (filling)
+		{
+			for (int i = 0; i < controllerPipe.spline.GetPointCount(); i++)
+				controllerPipe.spline.SetHeight(i, 1);
+			rendererPipe.color = colorPipeOpen;
+		}
+		else
+		{
+			for (int i = 0; i < controllerPipe.spline.GetPointCount(); i++)
+				controllerPipe.spline.SetHeight(i, GameManager.instance.pipeCloseHeight);
+			rendererPipe.color = colorPipeClose;
+		}
 	}
 }

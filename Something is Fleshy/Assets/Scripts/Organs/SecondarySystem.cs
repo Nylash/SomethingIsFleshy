@@ -31,6 +31,10 @@ public class SecondarySystem : MonoBehaviour
 	[SerializeField] bool energyStartsOpen;
 	[Tooltip("Check it if this system oxygen pipe starts open.")]
 	[SerializeField] bool oxygenStartsOpen;
+	[Tooltip("Associated energy filling renderer.")]
+	[SerializeField] SpriteRenderer energyGaugeRenderer;
+	[Tooltip("Associated oxygen filling renderer.")]
+	[SerializeField] SpriteRenderer oxygenGaugeRenderer;
 #pragma warning restore 0649
 	#endregion
 
@@ -44,8 +48,41 @@ public class SecondarySystem : MonoBehaviour
 	SpriteShapeController controllerOxygenPipe;
 	SpriteShapeRenderer rendererEnergyPipe;
 	SpriteShapeRenderer rendererOxygenPipe;
+	Material energyFillingMaterial;
+	Material oxygenFillingMaterial;
 
 	private void Awake()
+	{
+		if (energyLever)
+		{
+			energyLever.associatedSecondarySystem = this;
+			energyLever.associatedRessource = LeverScript.RessourcesType.energy;
+		}
+		if (oxygenLever)
+		{
+			oxygenLever.associatedSecondarySystem = this;
+			oxygenLever.associatedRessource = LeverScript.RessourcesType.oxygen;
+		}
+		currentEnergy = startEnergy;
+		currentOxygen = startOxygen;
+		if (energyGaugeRenderer)
+		{
+			energyFillingMaterial = energyGaugeRenderer.material;
+			energyFillingMaterial.SetFloat("Height", currentEnergy / maxEnergy);
+		}
+			
+		if (oxygenGaugeRenderer)
+		{
+			oxygenFillingMaterial = oxygenGaugeRenderer.material;
+			oxygenFillingMaterial.SetFloat("Height", currentOxygen / maxOxygen);
+		}
+		if (!energyNeeded)
+			energyGaugeRenderer.enabled = false;
+		if (!oxygenNeeded)
+			oxygenGaugeRenderer.enabled = false;
+	}
+
+	private void Start()
 	{
 		if (energyPipe)
 		{
@@ -69,22 +106,10 @@ public class SecondarySystem : MonoBehaviour
 				rendererOxygenPipe.color = GameManager.instance.oxygenPipeCloseColor;
 			}
 		}
-		if (energyLever)
-		{
-			energyLever.associatedSecondarySystem = this;
-			energyLever.associatedRessource = LeverScript.RessourcesType.energy;
-			if (energyStartsOpen)
-				energyLever.Switch();
-		}
-		if (oxygenLever)
-		{
-			oxygenLever.associatedSecondarySystem = this;
-			oxygenLever.associatedRessource = LeverScript.RessourcesType.oxygen;
-			if (oxygenStartsOpen)
-				oxygenLever.Switch();
-		}
-		currentEnergy = startEnergy;
-		currentOxygen = startOxygen;
+		if (energyStartsOpen && energyLever)
+			energyLever.Switch();
+		if (oxygenStartsOpen && oxygenLever)
+			oxygenLever.Switch();
 	}
 
 	public void SwitchEnergyPipe()
@@ -127,6 +152,7 @@ public class SecondarySystem : MonoBehaviour
 				FillingEnergy();
 			else
 				EmptyingEnergy();
+			energyFillingMaterial.SetFloat("Height", currentEnergy / maxEnergy);
 		}
 		if (oxygenNeeded)
 		{
@@ -134,6 +160,7 @@ public class SecondarySystem : MonoBehaviour
 				FillingOxygen();
 			else
 				EmptyingOxygen();
+			oxygenFillingMaterial.SetFloat("Height", currentOxygen / maxOxygen);
 		}
 	}
 
