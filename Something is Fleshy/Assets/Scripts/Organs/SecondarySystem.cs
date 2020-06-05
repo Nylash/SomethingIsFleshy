@@ -75,7 +75,11 @@ public class SecondarySystem : MonoBehaviour
 		{
 			oxygenFillingMaterial = oxygenGaugeRenderer.material;
 			oxygenFillingMaterial.SetFloat("Height", currentOxygen / maxOxygen);
-		}			
+		}
+		if (!energyNeeded)
+			energyGaugeRenderer.enabled = false;
+		if (!oxygenNeeded)
+			oxygenGaugeRenderer.enabled = false;
 	}
 
 	private void Start()
