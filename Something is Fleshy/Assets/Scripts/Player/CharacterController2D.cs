@@ -27,7 +27,7 @@ public class CharacterController2D : MonoBehaviour
 	[SerializeField] int nbFramesCoyoteTime = 5;
 	[Tooltip("Hom many frames jump input is stocked when the player is not grounded.")]
 	[SerializeField] int nbFramesJumpBuffering = 10;
-	[Header("Ground/Wall Detection")]
+	[Header("Ground Detection")]
 	[SerializeField] LayerMask whatIsGround;
 	[SerializeField] Transform groundCheck;
 	[SerializeField] Vector2 groundCheckSize = new Vector2(1f, .25f);

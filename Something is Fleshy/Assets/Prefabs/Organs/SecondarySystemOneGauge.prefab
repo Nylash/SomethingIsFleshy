@@ -93,7 +93,7 @@ GameObject:
   - component: {fileID: 7208390168950376310}
   - component: {fileID: 7208390168950376311}
   m_Layer: 0
-  m_Name: SecondarySystemOneGauge_1
+  m_Name: SecondarySystemOneGauge
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -178,23 +178,23 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   energyNeeded: 1
-  oxygenNeeded: 0
   maxEnergy: 15
-  maxOxygen: 15
   startEnergy: 10
-  startOxygen: 10
   energyLever: {fileID: 0}
-  oxygenLever: {fileID: 0}
   energyPipe: {fileID: 0}
-  oxygenPipe: {fileID: 0}
   energyStartsOpen: 0
+  oxygenNeeded: 0
+  maxOxygen: 15
+  startOxygen: 10
+  oxygenLever: {fileID: 0}
+  oxygenPipe: {fileID: 0}
   oxygenStartsOpen: 0
   energyGaugeRenderer: {fileID: 6479053808489709116}
   oxygenGaugeRenderer: {fileID: 4418494535203980318}
   currentEnergy: 0
   currentOxygen: 0
-  fillingEnergy: 1
-  fillingOxygen: 1
+  fillingEnergy: 0
+  fillingOxygen: 0
 --- !u!1 &8060462585775295901
 GameObject:
   m_ObjectHideFlags: 0

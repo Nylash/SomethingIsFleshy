@@ -5,41 +5,53 @@ public class SecondarySystem : MonoBehaviour
 {
 	#region CONFIGURATION
 #pragma warning disable 0649
-	[Header("Parameters")]
+	[Space]
+	[Header("ENERGY")]
 	[Tooltip("Check it if this organ need energy.")]
 	[SerializeField] bool energyNeeded;
-	[Tooltip("Check it if this organ need oxygen.")]
-	[SerializeField] bool oxygenNeeded;
+	[ConditionalHide("energyNeeded", true)]
 	[Tooltip("Time before being empty energy stock when full and not currelty filling.")]
 	[SerializeField] float maxEnergy = 15f;
-	[Tooltip("Time before being empty oxygen stock when full and not currelty filling.")]
-	[SerializeField] float maxOxygen = 15f;
+	[ConditionalHide("energyNeeded", true)]
 	[Tooltip("Use this parameters to set at which energy capacity this system start.")]
 	[SerializeField] float startEnergy = 10f;
-	[Tooltip("Use this parameters to set at which oxygen capacity this system start.")]
-	[SerializeField] float startOxygen = 10f;
-	[Header("World objects")]
+	[ConditionalHide("energyNeeded", true)]
 	[Tooltip("Assign a lever to this parameter to assiocate it with energy filling boolean.")]
 	[SerializeField] LeverScript energyLever;
-	[Tooltip("Assign a lever to this parameter to assiocate it with oxygen filling boolean.")]
-	[SerializeField] LeverScript oxygenLever;
+	[ConditionalHide("energyNeeded", true)]
 	[Tooltip("Assign a pipe to this parameter to assiocate it with energy filling boolean.")]
 	[SerializeField] GameObject energyPipe;
-	[Tooltip("Assign a pipe to this parameter to assiocate it with oxygen filling boolean.")]
-	[SerializeField] GameObject oxygenPipe;
+	[ConditionalHide("energyNeeded", true)]
 	[Tooltip("Check it if this system energy pipe starts open.")]
 	[SerializeField] bool energyStartsOpen;
+	[Space]
+	[Header("OXYGEN")]
+	[Tooltip("Check it if this organ need oxygen.")]
+	[SerializeField] bool oxygenNeeded;
+	[ConditionalHide("oxygenNeeded", true)]
+	[Tooltip("Time before being empty oxygen stock when full and not currelty filling.")]
+	[SerializeField] float maxOxygen = 15f;
+	[ConditionalHide("oxygenNeeded", true)]
+	[Tooltip("Use this parameters to set at which oxygen capacity this system start.")]
+	[SerializeField] float startOxygen = 10f;
+	[ConditionalHide("oxygenNeeded", true)]
+	[Tooltip("Assign a lever to this parameter to assiocate it with oxygen filling boolean.")]
+	[SerializeField] LeverScript oxygenLever;
+	[ConditionalHide("oxygenNeeded", true)]
+	[Tooltip("Assign a pipe to this parameter to assiocate it with oxygen filling boolean.")]
+	[SerializeField] GameObject oxygenPipe;
+	[ConditionalHide("oxygenNeeded", true)]
 	[Tooltip("Check it if this system oxygen pipe starts open.")]
 	[SerializeField] bool oxygenStartsOpen;
+	[Space]
+	[Header("⚠ DON'T TOUCH BELOW ⚠")]
 	[Tooltip("Associated energy filling renderer.")]
 	[SerializeField] SpriteRenderer energyGaugeRenderer;
 	[Tooltip("Associated oxygen filling renderer.")]
 	[SerializeField] SpriteRenderer oxygenGaugeRenderer;
 #pragma warning restore 0649
 	#endregion
-
 	[Header("Variables")]
-	[Header("⚠ DON'T TOUCH BELOW ⚠")]
 	public float currentEnergy;
 	public float currentOxygen;
 	public bool fillingEnergy;
@@ -53,6 +65,8 @@ public class SecondarySystem : MonoBehaviour
 
 	private void Awake()
 	{
+		if (!energyNeeded && !oxygenNeeded)
+			Debug.LogWarning("Atleast one ressource must be needed by this system : " + name);
 		if (energyLever)
 		{
 			energyLever.associatedSecondarySystem = this;
@@ -110,6 +124,21 @@ public class SecondarySystem : MonoBehaviour
 			energyLever.Switch();
 		if (oxygenStartsOpen && oxygenLever)
 			oxygenLever.Switch();
+
+		if (energyNeeded)
+		{
+			if (!energyLever)
+				Debug.LogError("Please assign an energy lever to this secondary system : " + name);
+			if(!energyPipe)
+				Debug.LogError("Please assign an energy pipe to this secondary system : " + name);
+		}
+		if (!oxygenNeeded)
+		{
+			if (!oxygenLever)
+				Debug.LogError("Please assign an oxygen lever to this secondary system : " + name);
+			if (!oxygenPipe)
+				Debug.LogError("Please assign an oxygen pipe to this secondary system : " + name);
+		}
 	}
 
 	public void SwitchEnergyPipe()

@@ -10,6 +10,8 @@ public abstract class PrimarySystem : MonoBehaviour
 	[SerializeField] float maxCapacity = 35f;
 	[Tooltip("Use this parameters to set at which capacity this system start.")]
 	[SerializeField] float startCapacity = 20f;
+	[Tooltip("Multiplier ratio for filling over time. By default 1.")]
+	[Min(1f)] [SerializeField] float fillingMultiplier = 1;
 	[Header("World objects")]
 	[Tooltip("Assign a lever to this parameter to assiocate it with filling boolean.")]
 	[SerializeField] LeverScript lever;
@@ -54,6 +56,11 @@ public abstract class PrimarySystem : MonoBehaviour
 			lever.Switch();
 		fillingMaterial = transform.GetChild(0).GetComponent<SpriteRenderer>().material;
 		fillingMaterial.SetFloat("Height", currentCapacity / maxCapacity);
+
+		if (!lever)
+			Debug.LogError("Please assign a lever to this primary system : " + name);
+		if (!pipe)
+			Debug.LogError("Please assign a pipe to this primary system : " + name);
 	}
 
 	protected virtual void Update()
@@ -65,7 +72,7 @@ public abstract class PrimarySystem : MonoBehaviour
 	void ContinuousFilling()
 	{
 		if (filling)
-			Filling(Time.deltaTime);
+			Filling(Time.deltaTime * fillingMultiplier);
 	}
 
 	public virtual void Filling(float amount)
