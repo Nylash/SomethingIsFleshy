@@ -5,6 +5,7 @@ public class LeverScript : MonoBehaviour
     [Header("Variables")]
     [Header("⚠ DON'T TOUCH BELOW ⚠")]
     //Each lever is assiocated only to one system by script, either a primary or a secondary, in case of a secondary system, the ressource type must be specified
+    //Assignation is handle in Primary/Secondary system script.
     public PrimarySystem associatedPrimarySystem;
     public SecondarySystem associatedSecondarySystem;
     public RessourcesType associatedRessource;
@@ -22,6 +23,7 @@ public class LeverScript : MonoBehaviour
         if (associatedPrimarySystem)
         {
             associatedPrimarySystem.filling = !associatedPrimarySystem.filling;
+            associatedPrimarySystem.SwitchPipe();
             AnimHandler();
             return;
         }

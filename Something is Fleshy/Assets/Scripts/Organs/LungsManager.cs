@@ -8,6 +8,13 @@
         if (instance == null)
             instance = this;
         else if (instance != this)
-            Destroy(gameObject);
+            Destroy(gameObject); 
+    }
+
+    protected override void Start()
+    {
+        colorPipeOpen = GameManager.instance.oxygenPipeOpenColor;
+        colorPipeClose = GameManager.instance.oxygenPipeCloseColor;
+        base.Start();
     }
 }
