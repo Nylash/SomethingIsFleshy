@@ -1,0 +1,75 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!21 &2100000
+Material:
+  serializedVersion: 6
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: Organ
+  m_Shader: {fileID: -6465566751694194690, guid: 00b2e92bc3de3e9499d7008c9795a7a4,
+    type: 3}
+  m_ShaderKeywords: ETC1_EXTERNAL_ALPHA
+  m_LightmapFlags: 4
+  m_EnableInstancingVariants: 0
+  m_DoubleSidedGI: 0
+  m_CustomRenderQueue: -1
+  stringTagMap: {}
+  disabledShaderPasses: []
+  m_SavedProperties:
+    serializedVersion: 3
+    m_TexEnvs:
+    - Texture2D_25A1AE48:
+        m_Texture: {fileID: 2800000, guid: 97505959d108fb74e9e90a877f4b50d0, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - Texture2D_7AB8BE90:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _AlphaTex:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _MainTex:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _MaskTex:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _NormalMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _SampleTexture2D_74213FFB_Texture_1:
+        m_Texture: {fileID: 2800000, guid: 4ef5f67c803f90544b69cc897aedd339, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _Texture2DAsset_7532DA40_Out_0:
+        m_Texture: {fileID: 2800000, guid: 97505959d108fb74e9e90a877f4b50d0, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    m_Floats:
+    - Boolean_AE714DFA: 1
+    - Height: 0.618
+    - Vector1_208B57CE: 2
+    - Vector1_285457D4: 0.2
+    - Vector1_2F9120DA: 1.2
+    - Vector1_74BE2CC7: 4.3
+    - Vector1_8C6FA859: 0.11
+    - Vector1_B4487C6E: 0
+    - Vector1_D106668A: 0.5
+    - Vector1_D648C270: 0.13
+    - Vector1_E5CAFED7: 0.1
+    - Vector1_EF38DF5E: 10
+    - _EnableExternalAlpha: 0
+    m_Colors:
+    - Color_A03DF887: {r: 0.501519, g: 0.8207547, b: 0.32907617, a: 1}
+    - Color_AADC142D: {r: 0.41504213, g: 1, b: 0.4009434, a: 1}
+    - Color_C0415D3: {r: 0.3564792, g: 0.7169812, b: 0.2807049, a: 0}
+    - _Color: {r: 1, g: 1, b: 1, a: 1}
+    - _Flip: {r: 1, g: 1, b: 1, a: 1}
+    - _RendererColor: {r: 1, g: 1, b: 1, a: 1}
