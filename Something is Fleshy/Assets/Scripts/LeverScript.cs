@@ -31,9 +31,11 @@ public class LeverScript : MonoBehaviour
             {
                 case RessourcesType.energy:
                     associatedSecondarySystem.fillingEnergy = !associatedSecondarySystem.fillingEnergy;
+                    associatedSecondarySystem.SwitchEnergyPipe();
                     break;
                 case RessourcesType.oxygen:
                     associatedSecondarySystem.fillingOxygen = !associatedSecondarySystem.fillingOxygen;
+                    associatedSecondarySystem.SwitchOxygenPipe();
                     break;
             }
             AnimHandler();
