@@ -35,7 +35,12 @@ public abstract class PrimarySystem : MonoBehaviour
 	protected virtual void Awake()
 	{
 		if (lever)
-			lever.associatedPrimarySystem = this;
+		{
+			if (lever.doublePipeLever)
+				lever.doubleAssociatedPrimary.Add(this);
+			else
+				lever.associatedPrimarySystem = this;
+		}	
 		currentCapacity = startCapacity;
 	}
 
@@ -53,7 +58,15 @@ public abstract class PrimarySystem : MonoBehaviour
 			}
 		}
 		if (startsOpen && lever)
-			lever.Switch();
+		{
+			if (lever.doublePipeLever)
+			{
+				filling = !filling;
+				SwitchPipe();
+			}
+			else
+				lever.Switch();
+		}
 		fillingMaterial = transform.GetChild(0).GetComponent<SpriteRenderer>().material;
 		fillingMaterial.SetFloat("Height", currentCapacity / maxCapacity);
 

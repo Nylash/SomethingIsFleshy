@@ -69,13 +69,32 @@ public class SecondarySystem : MonoBehaviour
 			Debug.LogWarning("Atleast one ressource must be needed by this system : " + name);
 		if (energyLever)
 		{
-			energyLever.associatedSecondarySystem = this;
-			energyLever.associatedRessource = LeverScript.RessourcesType.energy;
+			if (energyLever.doublePipeLever)
+			{
+				energyLever.doubleAssociatedSecondary.Add(this);
+				int index = energyLever.doubleAssociatedSecondary.Count - 1;
+				energyLever.doubleAssociatedRessources[index] = LeverScript.RessourcesType.energy;
+			}
+			else
+			{
+				energyLever.associatedSecondarySystem = this;
+				energyLever.associatedRessource = LeverScript.RessourcesType.energy;
+			}
 		}
 		if (oxygenLever)
 		{
-			oxygenLever.associatedSecondarySystem = this;
-			oxygenLever.associatedRessource = LeverScript.RessourcesType.oxygen;
+			if (oxygenLever.doublePipeLever)
+			{
+				oxygenLever.doubleAssociatedSecondary.Add(this);
+				int index = energyLever.doubleAssociatedSecondary.Count - 1;
+				oxygenLever.doubleAssociatedRessources[index] = LeverScript.RessourcesType.oxygen;
+			}
+			else
+			{
+				oxygenLever.associatedSecondarySystem = this;
+				oxygenLever.associatedRessource = LeverScript.RessourcesType.oxygen;
+			}
+			
 		}
 		currentEnergy = startEnergy;
 		currentOxygen = startOxygen;
@@ -121,10 +140,26 @@ public class SecondarySystem : MonoBehaviour
 			}
 		}
 		if (energyStartsOpen && energyLever)
-			energyLever.Switch();
+		{
+			if (energyLever.doublePipeLever)
+			{
+				fillingEnergy = !fillingEnergy;
+				SwitchEnergyPipe();
+			}
+			else
+				energyLever.Switch();
+		}
+			
 		if (oxygenStartsOpen && oxygenLever)
-			oxygenLever.Switch();
-
+		{
+			if (oxygenLever.doublePipeLever)
+			{
+				fillingOxygen = !fillingOxygen;
+				SwitchOxygenPipe();
+			}
+			else
+				oxygenLever.Switch();
+		}
 		if (energyNeeded)
 		{
 			if (!energyLever)
@@ -132,7 +167,7 @@ public class SecondarySystem : MonoBehaviour
 			if(!energyPipe)
 				Debug.LogError("Please assign an energy pipe to this secondary system : " + name);
 		}
-		if (!oxygenNeeded)
+		if (oxygenNeeded)
 		{
 			if (!oxygenLever)
 				Debug.LogError("Please assign an oxygen lever to this secondary system : " + name);
