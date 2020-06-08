@@ -21,9 +21,9 @@ public class SecondarySystem : MonoBehaviour
 	[ConditionalHide("energyNeeded", true)]
 	[Tooltip("Assign a pipe to this parameter to assiocate it with energy filling boolean.")]
 	[SerializeField] GameObject energyPipe;
-	[ConditionalHide("energyNeeded", true)]
+	/*[ConditionalHide("energyNeeded", true)]
 	[Tooltip("Check it if this system energy pipe starts open.")]
-	[SerializeField] bool energyStartsOpen;
+	[SerializeField] bool energyStartsOpen;*/
 	[Space]
 	[Header("OXYGEN")]
 	[Tooltip("Check it if this organ need oxygen.")]
@@ -40,9 +40,9 @@ public class SecondarySystem : MonoBehaviour
 	[ConditionalHide("oxygenNeeded", true)]
 	[Tooltip("Assign a pipe to this parameter to assiocate it with oxygen filling boolean.")]
 	[SerializeField] GameObject oxygenPipe;
-	[ConditionalHide("oxygenNeeded", true)]
+	/*[ConditionalHide("oxygenNeeded", true)]
 	[Tooltip("Check it if this system oxygen pipe starts open.")]
-	[SerializeField] bool oxygenStartsOpen;
+	[SerializeField] bool oxygenStartsOpen;*/
 	[Space]
 	[Header("⚠ DON'T TOUCH BELOW ⚠")]
 	[Tooltip("Associated energy filling renderer.")]
@@ -51,11 +51,14 @@ public class SecondarySystem : MonoBehaviour
 	[SerializeField] SpriteRenderer oxygenGaugeRenderer;
 #pragma warning restore 0649
 	#endregion
+	[Header("Components")]
+	public Animator animator;
 	[Header("Variables")]
 	public float currentEnergy;
 	public float currentOxygen;
 	public bool fillingEnergy;
 	public bool fillingOxygen;
+	public bool onActivity;
 	SpriteShapeController controllerEnergyPipe;
 	SpriteShapeController controllerOxygenPipe;
 	SpriteShapeRenderer rendererEnergyPipe;
@@ -121,45 +124,45 @@ public class SecondarySystem : MonoBehaviour
 		{
 			controllerEnergyPipe = energyPipe.GetComponent<SpriteShapeController>();
 			rendererEnergyPipe = energyPipe.GetComponent<SpriteShapeRenderer>();
-			if (!energyStartsOpen)
-			{
+			//if (!energyStartsOpen)
+			//{
 				for (int i = 0; i < controllerEnergyPipe.spline.GetPointCount(); i++)
 					controllerEnergyPipe.spline.SetHeight(i, GameManager.instance.pipeCloseHeight);
 				rendererEnergyPipe.color = GameManager.instance.energyPipeCloseColor;
-			}
+			//}
 		}
 		if (oxygenPipe)
 		{
 			controllerOxygenPipe = oxygenPipe.GetComponent<SpriteShapeController>();
 			rendererOxygenPipe = oxygenPipe.GetComponent<SpriteShapeRenderer>();
-			if (!oxygenStartsOpen)
-			{
+			//if (!oxygenStartsOpen)
+			//{
 				for (int i = 0; i < controllerOxygenPipe.spline.GetPointCount(); i++)
 					controllerOxygenPipe.spline.SetHeight(i, GameManager.instance.pipeCloseHeight);
 				rendererOxygenPipe.color = GameManager.instance.oxygenPipeCloseColor;
-			}
+			//}
 		}
-		if (energyStartsOpen && energyLever)
-		{
-			if (energyLever.doublePipeLever)
-			{
-				fillingEnergy = !fillingEnergy;
-				SwitchEnergyPipe();
-			}
-			else
-				energyLever.Switch();
-		}
-			
-		if (oxygenStartsOpen && oxygenLever)
-		{
-			if (oxygenLever.doublePipeLever)
-			{
-				fillingOxygen = !fillingOxygen;
-				SwitchOxygenPipe();
-			}
-			else
-				oxygenLever.Switch();
-		}
+		//if (energyStartsOpen && energyLever)
+		//{
+		//	if (energyLever.doublePipeLever)
+		//	{
+		//		fillingEnergy = !fillingEnergy;
+		//		SwitchEnergyPipe();
+		//	}
+		//	else
+		//		energyLever.Switch();
+		//}
+
+		//if (oxygenStartsOpen && oxygenLever)
+		//{
+		//	if (oxygenLever.doublePipeLever)
+		//	{
+		//		fillingOxygen = !fillingOxygen;
+		//		SwitchOxygenPipe();
+		//	}
+		//	else
+		//		oxygenLever.Switch();
+		//}
 		if (energyNeeded)
 		{
 			if (!energyLever)
@@ -173,6 +176,31 @@ public class SecondarySystem : MonoBehaviour
 				Debug.LogError("Please assign an oxygen lever to this secondary system : " + name);
 			if (!oxygenPipe)
 				Debug.LogError("Please assign an oxygen pipe to this secondary system : " + name);
+		}
+		animator = GetComponent<Animator>();
+	}
+
+	private void Update()
+	{
+		if (onActivity)
+		{
+			if (energyNeeded)
+			{
+				if (fillingEnergy)
+					FillingEnergy();
+				else
+					EmptyingEnergy();
+				energyFillingMaterial.SetFloat("Height", currentEnergy / maxEnergy);
+			}
+			if (oxygenNeeded)
+			{
+				if (fillingOxygen)
+					FillingOxygen();
+				else
+					EmptyingOxygen();
+				oxygenFillingMaterial.SetFloat("Height", currentOxygen / maxOxygen);
+			}
+			CheckStopActivity();
 		}
 	}
 
@@ -205,26 +233,6 @@ public class SecondarySystem : MonoBehaviour
 			for (int i = 0; i < controllerOxygenPipe.spline.GetPointCount(); i++)
 				controllerOxygenPipe.spline.SetHeight(i, GameManager.instance.pipeCloseHeight);
 			rendererOxygenPipe.color = GameManager.instance.oxygenPipeCloseColor;
-		}
-	}
-
-	private void Update()
-	{
-		if (energyNeeded)
-		{
-			if (fillingEnergy)
-				FillingEnergy();
-			else
-				EmptyingEnergy();
-			energyFillingMaterial.SetFloat("Height", currentEnergy / maxEnergy);
-		}
-		if (oxygenNeeded)
-		{
-			if (fillingOxygen)
-				FillingOxygen();
-			else
-				EmptyingOxygen();
-			oxygenFillingMaterial.SetFloat("Height", currentOxygen / maxOxygen);
 		}
 	}
 
@@ -268,5 +276,31 @@ public class SecondarySystem : MonoBehaviour
 			currentOxygen -= Time.deltaTime;
 		else
 			currentOxygen = 0;
+	}
+
+	void CheckStopActivity()
+	{
+		if(energyNeeded && oxygenNeeded)
+		{
+			if (currentEnergy / maxEnergy >= 1 && currentOxygen / maxOxygen >= 1)
+				StopActivity();
+		}
+		else if (energyNeeded)
+		{
+			if (currentEnergy / maxEnergy >= 1)
+				StopActivity();
+		}
+		else if (oxygenNeeded)
+		{
+			if (currentOxygen / maxOxygen >= 1)
+				StopActivity();
+		}
+	}
+
+	void StopActivity()
+	{
+		onActivity = false;
+		SecondarySystemsManager.instance.secondarySystems.Add(this);
+		animator.SetBool("OnActivity", false);
 	}
 }

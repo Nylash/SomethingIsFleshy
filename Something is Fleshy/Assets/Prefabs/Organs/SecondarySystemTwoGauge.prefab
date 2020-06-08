@@ -93,8 +93,9 @@ GameObject:
   - component: {fileID: 3377994431444569134}
   - component: {fileID: 3377994431444569132}
   - component: {fileID: 3377994431444569133}
+  - component: {fileID: 167749198340104239}
   m_Layer: 0
-  m_Name: SecondarySystemTwoGauge_1
+  m_Name: SecondarySystemTwoGauge
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -179,23 +180,42 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   energyNeeded: 0
-  oxygenNeeded: 0
   maxEnergy: 15
-  maxOxygen: 15
   startEnergy: 10
-  startOxygen: 10
   energyLever: {fileID: 0}
-  oxygenLever: {fileID: 0}
   energyPipe: {fileID: 0}
+  oxygenNeeded: 0
+  maxOxygen: 15
+  startOxygen: 10
+  oxygenLever: {fileID: 0}
   oxygenPipe: {fileID: 0}
-  energyStartsOpen: 0
-  oxygenStartsOpen: 0
   energyGaugeRenderer: {fileID: 1369777905837503846}
   oxygenGaugeRenderer: {fileID: 8627192632715661124}
+  animator: {fileID: 0}
   currentEnergy: 0
   currentOxygen: 0
   fillingEnergy: 0
   fillingOxygen: 0
+  onActivity: 0
+--- !u!95 &167749198340104239
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3377994431444569135}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 84458e8c0161ec84c9d53082e78b10f0, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &4010041472322592075
 GameObject:
   m_ObjectHideFlags: 0

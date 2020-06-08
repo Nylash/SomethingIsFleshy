@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1770001783312019989}
   - component: {fileID: 5516669155998750807}
+  - component: {fileID: 1892749339}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -43,8 +44,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 286aecf63215c9a4eacf671ba408fc81, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pipeCloseHeight: 0.6
+  pipeCloseHeight: 0.85
   energyPipeOpenColor: {r: 1, g: 0.67569816, b: 0, a: 1}
   energyPipeCloseColor: {r: 1, g: 0.8510729, b: 0.5424528, a: 1}
   oxygenPipeOpenColor: {r: 0, g: 0.7272024, b: 1, a: 1}
   oxygenPipeCloseColor: {r: 0.5896226, g: 0.88895684, b: 1, a: 1}
+--- !u!114 &1892749339
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8365515437562039805}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 77762ae9dd9da224d930f530cac5d620, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  timeBeforeFirstActivity: 10
+  minTimeBetweenActivities: 15
+  maxTimeBetweenActivities: 30
+  refSecondarySystems: []
+  secondarySystems: []
