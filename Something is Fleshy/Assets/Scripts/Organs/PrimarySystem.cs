@@ -5,75 +5,26 @@ public abstract class PrimarySystem : MonoBehaviour
 {
 	#region CONFIGURATION
 #pragma warning disable 0649
-	[Header("Parameters")]
+	[Header("PARAMETERS")]
 	[Tooltip("Time before being empty when full and only one secondary system is open. If two secondary systems are open divide this value by 2 and so on..")]
 	[SerializeField] float maxCapacity = 35f;
 	[Tooltip("Use this parameters to set at which capacity this system start.")]
 	[SerializeField] float startCapacity = 20f;
 	[Tooltip("Multiplier ratio for filling over time. By default 1.")]
 	[Min(1f)] [SerializeField] float fillingMultiplier = 1;
-	[Header("World objects")]
-	[Tooltip("Assign a lever to this parameter to assiocate it with filling boolean.")]
-	[SerializeField] LeverScript lever;
-	[Tooltip("Assign a pipe to this parameter to assiocate it with filling boolean.")]
-	[SerializeField] GameObject pipe;
-	[Tooltip("Check it if this system pipe starts open.")]
-	[SerializeField] bool startsOpen;
 #pragma warning restore 0649
 	#endregion
-
 	[Header("Variables")]
 	[Header("⚠ DON'T TOUCH BELOW ⚠")]
 	public float currentCapacity;
 	public bool filling;
-	protected Color colorPipeClose;
-	protected Color colorPipeOpen;
-	SpriteShapeController controllerPipe;
-	SpriteShapeRenderer rendererPipe;
 	Material fillingMaterial;
 
 	protected virtual void Awake()
 	{
-		if (lever)
-		{
-			if (lever.doublePipeLever)
-				lever.doubleAssociatedPrimary.Add(this);
-			else
-				lever.associatedPrimarySystem = this;
-		}	
 		currentCapacity = startCapacity;
-	}
-
-	protected virtual void Start()
-	{
-		if (pipe)
-		{
-			controllerPipe = pipe.GetComponent<SpriteShapeController>();
-			rendererPipe = pipe.GetComponent<SpriteShapeRenderer>();
-			if (!startsOpen)
-			{
-				for (int i = 0; i < controllerPipe.spline.GetPointCount(); i++)
-					controllerPipe.spline.SetHeight(i, GameManager.instance.pipeCloseHeight);
-				rendererPipe.color = colorPipeClose;
-			}
-		}
-		if (startsOpen && lever)
-		{
-			if (lever.doublePipeLever)
-			{
-				filling = !filling;
-				SwitchPipe();
-			}
-			else
-				lever.Switch();
-		}
 		fillingMaterial = transform.GetChild(0).GetComponent<SpriteRenderer>().material;
 		fillingMaterial.SetFloat("Height", currentCapacity / maxCapacity);
-
-		if (!lever)
-			Debug.LogError("Please assign a lever to this primary system : " + name);
-		if (!pipe)
-			Debug.LogError("Please assign a pipe to this primary system : " + name);
 	}
 
 	protected virtual void Update()
@@ -105,21 +56,5 @@ public abstract class PrimarySystem : MonoBehaviour
 		}
 		else
 			return false;
-	}
-
-	public virtual void SwitchPipe()
-	{
-		if (filling)
-		{
-			for (int i = 0; i < controllerPipe.spline.GetPointCount(); i++)
-				controllerPipe.spline.SetHeight(i, 1);
-			rendererPipe.color = colorPipeOpen;
-		}
-		else
-		{
-			for (int i = 0; i < controllerPipe.spline.GetPointCount(); i++)
-				controllerPipe.spline.SetHeight(i, GameManager.instance.pipeCloseHeight);
-			rendererPipe.color = colorPipeClose;
-		}
 	}
 }

@@ -7,7 +7,7 @@ public class SecondarySystemsManager : MonoBehaviour
 
     #region CONFIGURATION
 #pragma warning disable 0649
-    [Header("Parameters")]
+    [Header("PARAMETERS")]
     [Tooltip("Time before the first activity.")]
     [SerializeField] float timeBeforeFirstActivity = 10f;
     [Tooltip("Minimal time between two activities.")]
@@ -40,7 +40,20 @@ public class SecondarySystemsManager : MonoBehaviour
         if(secondarySystems.Count > 0)
         {
             int index = Random.Range(0, secondarySystems.Count);
-            secondarySystems[index].onActivity = true;
+            int type = Random.Range(0, 2);
+            switch (type)
+            {
+                case 0:
+                    secondarySystems[index].energyNeeded = true;
+                    secondarySystems[index].energyGauge.SetActive(true);
+                    secondarySystems[index].currentEnergy = 0f;
+                    break;
+                case 1:
+                    secondarySystems[index].oxygenNeeded = true;
+                    secondarySystems[index].oxygenGauge.SetActive(true);
+                    secondarySystems[index].currentOxygen = 0f;
+                    break;
+            }
             secondarySystems[index].animator.SetBool("OnActivity", true);
             secondarySystems.RemoveAt(index);
         }

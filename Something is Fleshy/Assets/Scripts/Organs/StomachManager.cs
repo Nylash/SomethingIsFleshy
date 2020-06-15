@@ -10,11 +10,4 @@
         else if (instance != this)
             Destroy(gameObject);
     }
-
-    protected override void Start()
-    {
-        colorPipeOpen = GameManager.instance.energyPipeOpenColor;
-        colorPipeClose = GameManager.instance.energyPipeCloseColor;
-        base.Start();
-    }
 }

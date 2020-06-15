@@ -6,17 +6,15 @@ public class GameManager : MonoBehaviour
     public static GameManager instance;
 
 	#region CONFIGURATION
-	[Header("Global parameters")]
-	[Tooltip("Pipe's height when close.")]
-	[Range(.2f,1)] public float pipeCloseHeight;
-	[Tooltip("Energy pipe's color when open.")]
+	[Header("PARAMETERS")]
+	[Tooltip("Pipe's color when open and full of energy.")]
 	public Color energyPipeOpenColor;
-	[Tooltip("Energy pipe's color when close.")]
-	public Color energyPipeCloseColor;
-	[Tooltip("Oxygen pipe's color when open.")]
+	[Tooltip("Pipe's color when open and full of oxygen.")]
 	public Color oxygenPipeOpenColor;
-	[Tooltip("Oxygen pipe's color when close.")]
-	public Color oxygenPipeCloseColor;
+	[Tooltip("Pipe's color when open and empty.")]
+	public Color emptyPipeOpenColor;
+	[Tooltip("Pipe's color when close.")]
+	public Color pipeCloseColor;
 	#endregion
 
 	private void Awake()

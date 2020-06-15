@@ -44,11 +44,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 286aecf63215c9a4eacf671ba408fc81, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pipeCloseHeight: 0.85
   energyPipeOpenColor: {r: 1, g: 0.67569816, b: 0, a: 1}
-  energyPipeCloseColor: {r: 1, g: 0.8510729, b: 0.5424528, a: 1}
   oxygenPipeOpenColor: {r: 0, g: 0.7272024, b: 1, a: 1}
-  oxygenPipeCloseColor: {r: 0.5896226, g: 0.88895684, b: 1, a: 1}
+  emptyPipeOpenColor: {r: 0.8207547, g: 0.8207547, b: 0.8207547, a: 1}
+  pipeCloseColor: {r: 0.6132076, g: 0.6132076, b: 0.6132076, a: 0.7176471}
 --- !u!114 &1892749339
 MonoBehaviour:
   m_ObjectHideFlags: 0

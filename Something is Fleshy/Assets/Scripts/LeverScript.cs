@@ -1,98 +1,168 @@
 ﻿using UnityEngine;
-using System.Collections.Generic;
+using UnityEngine.U2D;
 
 public class LeverScript : MonoBehaviour
 {
-    [Header("Parameters")]
-    public bool doublePipeLever;
+    [Header("PARAMETERS")]
 #pragma warning disable 0649
-    [ConditionalHide("doublePipeLever", true)]
-    [SerializeField] bool startOnRight;
+    [Tooltip("Pipes associated to this lever.")]
+    [SerializeField] GameObject[] pipes = new GameObject[2];
+    [Tooltip("Levers associated to this lever's pipes. If one of the pipes is connected to a lever assign it here, on the good index (ex : if pipes[1] is connected to a lever, assign this lever to levers[1]).")]
+    [SerializeField] GameObject[] levers = new GameObject[2];
+    [Tooltip("Organs associated to this lever's pipes. Same details for the index as for the levers.")]
+    [SerializeField] GameObject[] organs = new GameObject[2];
+    [Tooltip("Check it if those pipes are at the start of the network.")]
+    [SerializeField] bool initialPipes;
 #pragma warning restore 0649
     [Header("Variables")]
     [Header("⚠ DON'T TOUCH BELOW ⚠")]
-    //Each lever is assiocated only to one system by script, either a primary or a secondary, in case of a secondary system, the ressource type must be specified
-    //Assignation is handle in Primary/Secondary system script.
-    public PrimarySystem associatedPrimarySystem;
-    public SecondarySystem associatedSecondarySystem;
-    public RessourcesType associatedRessource;
-    //Double pipe varaibles
-    public List<PrimarySystem> doubleAssociatedPrimary = new List<PrimarySystem>();
-    public List<SecondarySystem> doubleAssociatedSecondary = new List<SecondarySystem>();
-    public RessourcesType[] doubleAssociatedRessources = new RessourcesType[2];
-    //This bool is only used to animation
-    public bool isOpen;
+    public RessourcesType currentRessource;
+    RessourcesType lastFrameRessource;
+    LeverScript currentAssociatedLever;
+    PrimarySystem currentAssociatedPrimarySystem;
+    SecondarySystem currentAssociatedSecondarySystem;
+    int currentPipe;
+    //Only used for animation purpose
+    bool isOpen;
 
-    public void Start()
+    private void Start()
     {
-        if (doublePipeLever)
+        UpdatePipe();
+    }
+
+    private void Update()
+    {
+        if (lastFrameRessource != currentRessource)
+            UpdatePipe();
+        lastFrameRessource = currentRessource;
+    }
+
+    void UpdatePipe()
+    {
+        CleanPreviousAssociatedObjects();
+        if (levers[currentPipe])
         {
-            if (doubleAssociatedPrimary.Count != 2 && doubleAssociatedSecondary.Count != 2)
-                Debug.LogError("This lever is declared as a double pipe lever, but it hasn't two systems associated." + gameObject.name);
-            if (doubleAssociatedPrimary.Count > 0 && doubleAssociatedSecondary.Count > 0)
-                Debug.LogError("This lever is declared as double pipe lever, but it is associated to a primary and a secondary system. Please don't mix systems type." + gameObject.name);
-            if (startOnRight)
-                AnimHandler();
+            if (levers[currentPipe].GetComponent<LeverScript>())
+            {
+                currentAssociatedLever = levers[currentPipe].GetComponent<LeverScript>();
+                currentAssociatedLever.currentRessource = currentRessource;
+            }
+            else
+                Debug.LogError("The object associated to this pipe is not a lever (pipe : " + gameObject.name + " other lever : " + levers[currentPipe].name + ")");
+        }
+        else if (organs[currentPipe])
+        {
+            if (organs[currentPipe].GetComponent<PrimarySystem>())
+            {
+                if (initialPipes)
+                {
+                    if (organs[currentPipe].GetComponent<LungsManager>())
+                        currentRessource = RessourcesType.oxygen;
+                    else
+                        currentRessource = RessourcesType.energy;
+                    currentAssociatedPrimarySystem = organs[currentPipe].GetComponent<PrimarySystem>();
+                    currentAssociatedPrimarySystem.filling = true;
+                }
+                else
+                {
+                    if (organs[currentPipe].GetComponent<LungsManager>())
+                    {
+                        if(currentRessource == RessourcesType.oxygen)
+                        {
+                            currentAssociatedPrimarySystem = organs[currentPipe].GetComponent<PrimarySystem>();
+                            currentAssociatedPrimarySystem.filling = true;
+                        }
+                        else
+                        {
+                            //WRONG RESSOURCE
+                        }
+                    }
+                    else
+                    {
+                        if (currentRessource == RessourcesType.energy)
+                        {
+                            currentAssociatedPrimarySystem = organs[currentPipe].GetComponent<PrimarySystem>();
+                            currentAssociatedPrimarySystem.filling = true;
+                        }
+                        else
+                        {
+                            //WRONG RESSOURCE
+                        }
+                    }
+                }
+            }
+            else if (organs[currentPipe].GetComponent<SecondarySystem>())
+            {
+                currentAssociatedSecondarySystem = organs[currentPipe].GetComponent<SecondarySystem>();
+                if (currentAssociatedSecondarySystem.energyNeeded)
+                {
+                    if (currentRessource == RessourcesType.energy)
+                        currentAssociatedSecondarySystem.filling = true;
+                    else
+                    {
+                        //WRONG RESSOURCE
+                    }
+                }
+                else if (currentAssociatedSecondarySystem.oxygenNeeded)
+                {
+                    if(currentRessource == RessourcesType.oxygen)
+                        currentAssociatedSecondarySystem.filling = true;
+                    else
+                    {
+                        //WRONG RESSOURCE
+                    }
+                }
+            }
+            else
+                Debug.LogError("The object associated to this pipe is not an organ (pipe : " + gameObject.name + " organ : " + organs[currentPipe].name + ")");
         }
         else
+            Debug.LogError("There is no object associated to this pipe " + pipes[currentPipe]);
+        //COLORS
+        pipes[currentPipe].GetComponent<SpriteShapeRenderer>().color = GetOpenColor(currentRessource);
+        switch (currentPipe)
         {
-            if (associatedPrimarySystem && associatedSecondarySystem)
-                Debug.LogError("A lever can't be associated to 2 systems at one time. " + gameObject.name);
+            case 0:
+                pipes[1].GetComponent<SpriteShapeRenderer>().color = GameManager.instance.pipeCloseColor;
+                break;
+            case 1:
+                pipes[0].GetComponent<SpriteShapeRenderer>().color = GameManager.instance.pipeCloseColor;
+                break;
+        }
+    }
+
+    void CleanPreviousAssociatedObjects()
+    {
+        if (currentAssociatedLever)
+        {
+            currentAssociatedLever.currentRessource = RessourcesType.none;
+            currentAssociatedLever = null;
+        }
+        if (currentAssociatedPrimarySystem)
+        {
+            currentAssociatedPrimarySystem.filling = false;
+            currentAssociatedPrimarySystem = null;
+        }
+        if (currentAssociatedSecondarySystem)
+        {
+            currentAssociatedSecondarySystem.filling = false;
+            currentAssociatedSecondarySystem = null;
         }
     }
 
     public void Switch()
     {
-        if (doublePipeLever)
+        switch (currentPipe)
         {
-            foreach (PrimarySystem item in doubleAssociatedPrimary)
-            {
-                item.filling = !item.filling;
-                item.SwitchPipe();
-            }
-            for (int i = 0; i < 2; i++)
-            {
-                switch (doubleAssociatedRessources[i])
-                {
-                    case RessourcesType.energy:
-                        doubleAssociatedSecondary[i].fillingEnergy = !doubleAssociatedSecondary[i].fillingEnergy;
-                        doubleAssociatedSecondary[i].SwitchEnergyPipe();
-                        break;
-                    case RessourcesType.oxygen:
-                        doubleAssociatedSecondary[i].fillingOxygen = !doubleAssociatedSecondary[i].fillingOxygen;
-                        doubleAssociatedSecondary[i].SwitchOxygenPipe();
-                        break;
-                }
-            }
-            AnimHandler();
+            case 0:
+                currentPipe = 1;
+                break;
+            case 1:
+                currentPipe = 0;
+                break;
         }
-        else
-        {
-            if (associatedPrimarySystem)
-            {
-                associatedPrimarySystem.filling = !associatedPrimarySystem.filling;
-                associatedPrimarySystem.SwitchPipe();
-                AnimHandler();
-                return;
-            }
-            if (associatedSecondarySystem)
-            {
-                switch (associatedRessource)
-                {
-                    case RessourcesType.energy:
-                        associatedSecondarySystem.fillingEnergy = !associatedSecondarySystem.fillingEnergy;
-                        associatedSecondarySystem.SwitchEnergyPipe();
-                        break;
-                    case RessourcesType.oxygen:
-                        associatedSecondarySystem.fillingOxygen = !associatedSecondarySystem.fillingOxygen;
-                        associatedSecondarySystem.SwitchOxygenPipe();
-                        break;
-                }
-                AnimHandler();
-                return;
-            }
-            Debug.LogError("This lever is associated to no system. " + gameObject.name);
-        }
+        UpdatePipe();
+        AnimHandler();
     }
 
     void AnimHandler()
@@ -102,6 +172,21 @@ public class LeverScript : MonoBehaviour
             transform.GetChild(0).transform.eulerAngles = new Vector3(0, 0, -85);
         else
             transform.GetChild(0).transform.eulerAngles = new Vector3(0, 0, 0);
+    }
+
+    Color GetOpenColor(RessourcesType currentRessource)
+    {
+        switch (currentRessource)
+        {
+            case RessourcesType.none:
+                return GameManager.instance.emptyPipeOpenColor;
+            case RessourcesType.energy:
+                return GameManager.instance.energyPipeOpenColor;
+            case RessourcesType.oxygen:
+                return GameManager.instance.oxygenPipeOpenColor;
+            default:
+                return Color.red;
+        }
     }
 
     public enum RessourcesType
