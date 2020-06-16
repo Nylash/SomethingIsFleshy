@@ -96,7 +96,7 @@ GameObject:
   m_Layer: 0
   m_Name: SecondarySystem
   m_TagString: Untagged
-  m_Icon: {fileID: 0}
+  m_Icon: {fileID: -5442936267250999957, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -258,7 +258,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 3b309b798ddfc684a9b72f7d6832d528, type: 2}
+  - {fileID: 2100000, guid: 59d5bbb55ead25140bb6a572cf6d6678, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -421,7 +421,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: c1ad8cc137c1a234094bbfe73fa7f6ee, type: 2}
+  - {fileID: 2100000, guid: 47645c1ce19f17a4cafe78e7a66bc2a3, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

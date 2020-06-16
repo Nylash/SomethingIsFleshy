@@ -14,7 +14,7 @@ GameObject:
   m_Layer: 0
   m_Name: Lungs
   m_TagString: Untagged
-  m_Icon: {fileID: 0}
+  m_Icon: {fileID: -5442936267250999957, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -97,9 +97,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxCapacity: 35
   startCapacity: 20
-  lever: {fileID: 0}
-  pipe: {fileID: 0}
-  startsOpen: 0
+  fillingMultiplier: 1
   currentCapacity: 0
   filling: 0
 --- !u!1 &6243254861160685919

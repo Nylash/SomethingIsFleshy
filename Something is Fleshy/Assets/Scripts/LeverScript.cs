@@ -11,6 +11,7 @@ public class LeverScript : MonoBehaviour
     [SerializeField] GameObject[] associatedObjects = new GameObject[2];
     [Tooltip("Check it if those pipes are at the start of the network. (do nothing on double entry)")]
     [SerializeField] bool initialPipes;
+    [Tooltip("Check if the pipes are on double entry instead of classic double exit.")]
     [SerializeField] bool doubleEntry;
     [ConditionalHide("doubleEntry", true)]
     [Tooltip("Object at the end of the double pipes.")]

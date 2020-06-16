@@ -3,7 +3,6 @@ using System.Collections;
 
 public class SecondarySystem : MonoBehaviour
 {
-	#region CONFIGURATION
 #pragma warning disable 0649
 	[Header("PARAMETERS")]
 	[Tooltip("Time to full this system in energy.")]
@@ -13,7 +12,6 @@ public class SecondarySystem : MonoBehaviour
 	[Tooltip("Time before the system can pick again for an activity.")]
 	[SerializeField] float timeBeforeReadyForNewActivity = 10f;
 #pragma warning restore 0649
-	#endregion
 	[Space]
 	[Header("⚠ DON'T TOUCH BELOW ⚠")]
 	//[ConditionalHide("showVariables", true)]
@@ -29,15 +27,23 @@ public class SecondarySystem : MonoBehaviour
 	public bool energyNeeded;
 	public bool oxygenNeeded;
 	public bool filling;
-	Material energyFillingMaterial;
-	Material oxygenFillingMaterial;
+	MaterialPropertyBlock energyPropertyBlock;
+	MaterialPropertyBlock oxygenPropertyBlock;
+	SpriteRenderer energyRenderer;
+	SpriteRenderer oxygenRenderer;
 
 	private void Awake()
 	{
-		energyFillingMaterial = energyGauge.GetComponent<SpriteRenderer>().material;
-		energyFillingMaterial.SetFloat("Height", currentEnergy / energyAmoutNeeded);
-		oxygenFillingMaterial = oxygenGauge.GetComponent<SpriteRenderer>().material;
-		oxygenFillingMaterial.SetFloat("Height", currentOxygen / oxygenAmoutNeeded);
+		energyPropertyBlock = new MaterialPropertyBlock();
+		energyRenderer = energyGauge.GetComponent<SpriteRenderer>();
+		energyPropertyBlock.SetFloat("Height", currentEnergy / energyAmoutNeeded);
+		energyRenderer.SetPropertyBlock(energyPropertyBlock);
+
+		oxygenPropertyBlock = new MaterialPropertyBlock();
+		oxygenRenderer = oxygenGauge.GetComponent<SpriteRenderer>();
+		oxygenPropertyBlock.SetFloat("Height", currentOxygen / oxygenAmoutNeeded);
+		oxygenRenderer.SetPropertyBlock(oxygenPropertyBlock);
+
 		energyGauge.SetActive(false);
 		oxygenGauge.SetActive(false);
 		animator = GetComponent<Animator>();
@@ -49,13 +55,15 @@ public class SecondarySystem : MonoBehaviour
 			{
 				if (filling)
 					FillingEnergy();
-				energyFillingMaterial.SetFloat("Height", currentEnergy / energyAmoutNeeded);
+				energyPropertyBlock.SetFloat("Height", currentEnergy / energyAmoutNeeded);
+				energyRenderer.SetPropertyBlock(energyPropertyBlock);
 			}
 			else if (oxygenNeeded)
 			{
 				if (filling)
 					FillingOxygen();
-				oxygenFillingMaterial.SetFloat("Height", currentOxygen / oxygenAmoutNeeded);
+				oxygenPropertyBlock.SetFloat("Height", currentOxygen / oxygenAmoutNeeded);
+			oxygenRenderer.SetPropertyBlock(oxygenPropertyBlock);
 			}
 			CheckStopActivity();
 	}
