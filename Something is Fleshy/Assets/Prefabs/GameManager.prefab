@@ -47,7 +47,7 @@ MonoBehaviour:
   energyPipeOpenColor: {r: 1, g: 0.67569816, b: 0, a: 1}
   oxygenPipeOpenColor: {r: 0, g: 0.7272024, b: 1, a: 1}
   emptyPipeOpenColor: {r: 0.8207547, g: 0.8207547, b: 0.8207547, a: 1}
-  pipeCloseColor: {r: 0.6132076, g: 0.6132076, b: 0.6132076, a: 0.7176471}
+  pipeCloseColor: {r: 0, g: 0, b: 0, a: 1}
 --- !u!114 &1892749339
 MonoBehaviour:
   m_ObjectHideFlags: 0
