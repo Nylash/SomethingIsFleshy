@@ -7,12 +7,14 @@ public class LeverScript : MonoBehaviour
 #pragma warning disable 0649
     [Tooltip("Pipes associated to this lever.")]
     [SerializeField] GameObject[] pipes = new GameObject[2];
-    [Tooltip("Levers associated to this lever's pipes. If one of the pipes is connected to a lever assign it here, on the good index (ex : if pipes[1] is connected to a lever, assign this lever to levers[1]).")]
-    [SerializeField] GameObject[] levers = new GameObject[2];
-    [Tooltip("Organs associated to this lever's pipes. Same details for the index as for the levers.")]
-    [SerializeField] GameObject[] organs = new GameObject[2];
-    [Tooltip("Check it if those pipes are at the start of the network.")]
+    [Tooltip("Objects associated to this lever's pipes. Be sure to make the index coherent.")]
+    [SerializeField] GameObject[] associatedObjects = new GameObject[2];
+    [Tooltip("Check it if those pipes are at the start of the network. (do nothing on double entry)")]
     [SerializeField] bool initialPipes;
+    [SerializeField] bool doubleEntry;
+    [ConditionalHide("doubleEntry", true)]
+    [Tooltip("Object at the end of the double pipes.")]
+    [SerializeField] GameObject endObject;
 #pragma warning restore 0649
     [Header("Variables")]
     [Header("⚠ DON'T TOUCH BELOW ⚠")]
@@ -22,11 +24,29 @@ public class LeverScript : MonoBehaviour
     PrimarySystem currentAssociatedPrimarySystem;
     SecondarySystem currentAssociatedSecondarySystem;
     int currentPipe;
+    //Use when a double entry has a secondary system as end object
+    bool checkNeedDoubleEntryDone;
     //Only used for animation purpose
     bool isOpen;
 
     private void Start()
     {
+        if (doubleEntry)
+        {
+            if (endObject.GetComponent<LeverScript>())
+                currentAssociatedLever = endObject.GetComponent<LeverScript>();
+            else if (endObject.GetComponent<PrimarySystem>())
+            {
+                if(endObject.GetComponent<LungsManager>())
+                    currentAssociatedPrimarySystem = endObject.GetComponent<LungsManager>();
+                else
+                    currentAssociatedPrimarySystem = endObject.GetComponent<StomachManager>();
+            } 
+            else if (endObject.GetComponent<SecondarySystem>())
+                currentAssociatedSecondarySystem = endObject.GetComponent<SecondarySystem>();
+            else
+                Debug.LogError("There is no correct object associated at the end of this lever : " + gameObject.name + " current end object : " + endObject);
+        }
         UpdatePipe();
     }
 
@@ -35,90 +55,188 @@ public class LeverScript : MonoBehaviour
         if (lastFrameRessource != currentRessource)
             UpdatePipe();
         lastFrameRessource = currentRessource;
+        if(doubleEntry && currentAssociatedSecondarySystem)
+        {
+            if ((currentAssociatedSecondarySystem.energyNeeded || currentAssociatedSecondarySystem.oxygenNeeded) && !currentAssociatedSecondarySystem.filling)
+            {
+                if (!checkNeedDoubleEntryDone)
+                {
+                    UpdatePipe();
+                    checkNeedDoubleEntryDone = true;
+                }
+            }
+            else
+            {
+                if(checkNeedDoubleEntryDone)
+                    checkNeedDoubleEntryDone = false;
+            }    
+        }
     }
 
     void UpdatePipe()
     {
-        CleanPreviousAssociatedObjects();
-        if (levers[currentPipe])
+        if (doubleEntry)
         {
-            if (levers[currentPipe].GetComponent<LeverScript>())
+            UpdateDoubleEntry();
+            return;
+        }
+        CleanPreviousAssociatedObjects();
+        if (associatedObjects[currentPipe].GetComponent<LeverScript>())
+        {
+            currentAssociatedLever = associatedObjects[currentPipe].GetComponent<LeverScript>();
+            currentAssociatedLever.currentRessource = currentRessource;
+        }
+        else if (associatedObjects[currentPipe].GetComponent<PrimarySystem>())
+        {
+            if (initialPipes)
             {
-                currentAssociatedLever = levers[currentPipe].GetComponent<LeverScript>();
-                currentAssociatedLever.currentRessource = currentRessource;
+                if (associatedObjects[currentPipe].GetComponent<LungsManager>())
+                    currentRessource = RessourcesType.oxygen;
+                else
+                    currentRessource = RessourcesType.energy;
+                currentAssociatedPrimarySystem = associatedObjects[currentPipe].GetComponent<PrimarySystem>();
+                currentAssociatedPrimarySystem.filling = true;
             }
             else
-                Debug.LogError("The object associated to this pipe is not a lever (pipe : " + gameObject.name + " other lever : " + levers[currentPipe].name + ")");
-        }
-        else if (organs[currentPipe])
-        {
-            if (organs[currentPipe].GetComponent<PrimarySystem>())
             {
-                if (initialPipes)
+                if (associatedObjects[currentPipe].GetComponent<LungsManager>())
                 {
-                    if (organs[currentPipe].GetComponent<LungsManager>())
-                        currentRessource = RessourcesType.oxygen;
+                    if(currentRessource == RessourcesType.oxygen)
+                    {
+                        currentAssociatedPrimarySystem = associatedObjects[currentPipe].GetComponent<PrimarySystem>();
+                        currentAssociatedPrimarySystem.filling = true;
+                    }
                     else
-                        currentRessource = RessourcesType.energy;
-                    currentAssociatedPrimarySystem = organs[currentPipe].GetComponent<PrimarySystem>();
-                    currentAssociatedPrimarySystem.filling = true;
+                    {
+                        //WRONG RESSOURCE
+                    }
                 }
                 else
                 {
-                    if (organs[currentPipe].GetComponent<LungsManager>())
+                    if (currentRessource == RessourcesType.energy)
                     {
-                        if(currentRessource == RessourcesType.oxygen)
-                        {
-                            currentAssociatedPrimarySystem = organs[currentPipe].GetComponent<PrimarySystem>();
-                            currentAssociatedPrimarySystem.filling = true;
-                        }
-                        else
-                        {
-                            //WRONG RESSOURCE
-                        }
+                        currentAssociatedPrimarySystem = associatedObjects[currentPipe].GetComponent<PrimarySystem>();
+                        currentAssociatedPrimarySystem.filling = true;
                     }
                     else
                     {
-                        if (currentRessource == RessourcesType.energy)
-                        {
-                            currentAssociatedPrimarySystem = organs[currentPipe].GetComponent<PrimarySystem>();
-                            currentAssociatedPrimarySystem.filling = true;
-                        }
-                        else
-                        {
-                            //WRONG RESSOURCE
-                        }
+                        //WRONG RESSOURCE
                     }
                 }
             }
-            else if (organs[currentPipe].GetComponent<SecondarySystem>())
+        }
+        else if (associatedObjects[currentPipe].GetComponent<SecondarySystem>())
+        {
+            currentAssociatedSecondarySystem = associatedObjects[currentPipe].GetComponent<SecondarySystem>();
+            if (currentAssociatedSecondarySystem.energyNeeded)
             {
-                currentAssociatedSecondarySystem = organs[currentPipe].GetComponent<SecondarySystem>();
-                if (currentAssociatedSecondarySystem.energyNeeded)
+                if (currentRessource == RessourcesType.energy)
+                    currentAssociatedSecondarySystem.filling = true;
+                else
                 {
-                    if (currentRessource == RessourcesType.energy)
-                        currentAssociatedSecondarySystem.filling = true;
-                    else
-                    {
-                        //WRONG RESSOURCE
-                    }
+                    //WRONG RESSOURCE
                 }
-                else if (currentAssociatedSecondarySystem.oxygenNeeded)
+            }
+            else if (currentAssociatedSecondarySystem.oxygenNeeded)
+            {
+                if(currentRessource == RessourcesType.oxygen)
+                    currentAssociatedSecondarySystem.filling = true;
+                else
                 {
-                    if(currentRessource == RessourcesType.oxygen)
-                        currentAssociatedSecondarySystem.filling = true;
-                    else
-                    {
-                        //WRONG RESSOURCE
-                    }
+                    //WRONG RESSOURCE
+                }
+            }
+        }
+        else
+            Debug.LogError("There is no correct object associated to this pipe : "+pipes[currentPipe] +" actual object : "+associatedObjects[currentPipe]);
+        UpdatePipesDisplay();
+        lastFrameRessource = currentRessource;
+    }
+
+    void UpdateDoubleEntry()
+    {
+        if (associatedObjects[currentPipe].GetComponent<LeverScript>())
+        {
+            currentRessource = associatedObjects[currentPipe].GetComponent<LeverScript>().currentRessource;
+            UpdateEndObjectDoubleEntry();
+        }
+        else if (associatedObjects[currentPipe].GetComponent<PrimarySystem>())
+        {
+            if (associatedObjects[currentPipe].GetComponent<LungsManager>())
+                currentRessource = RessourcesType.oxygen;
+            else
+                currentRessource = RessourcesType.energy;
+            UpdateEndObjectDoubleEntry();
+        }
+        else if (associatedObjects[currentPipe].GetComponent<SecondarySystem>())
+        {
+            Debug.LogError("This case is not suppose to happen. Normally a pipe doesn't leave a secondary system. If you want to keep these please discuss about it with game designers :)");
+        }
+        else
+            Debug.LogError("There is no correct object associated to this pipe : " + pipes[currentPipe] + " actual object : " + associatedObjects[currentPipe]);
+        UpdatePipesDisplay();
+        lastFrameRessource = currentRessource;
+    }
+
+    void UpdateEndObjectDoubleEntry()
+    {
+        if (currentAssociatedLever)
+        {
+            currentAssociatedLever.currentRessource = currentRessource;
+        }
+        else if (currentAssociatedPrimarySystem)
+        {
+            if (currentAssociatedPrimarySystem is LungsManager)
+            {
+                if (currentRessource == RessourcesType.oxygen)
+                    currentAssociatedPrimarySystem.filling = true;
+                else
+                {
+                    currentAssociatedPrimarySystem.filling = false;
+                    //WRONG RESSOURCE
                 }
             }
             else
-                Debug.LogError("The object associated to this pipe is not an organ (pipe : " + gameObject.name + " organ : " + organs[currentPipe].name + ")");
+            {
+                if (currentRessource == RessourcesType.energy)
+                    currentAssociatedPrimarySystem.filling = true;
+                else
+                {
+                    currentAssociatedPrimarySystem.filling = false;
+                    //WRONG RESSOURCE
+                }
+            }
+        }
+        else if (currentAssociatedSecondarySystem)
+        {
+            if (currentAssociatedSecondarySystem.energyNeeded)
+            {
+                if (currentRessource == RessourcesType.energy)
+                    currentAssociatedSecondarySystem.filling = true;
+                else
+                {
+                    currentAssociatedSecondarySystem.filling = false;
+                    //WRONG RESSOURCE
+                }
+            }
+            else if (currentAssociatedSecondarySystem.oxygenNeeded)
+            {
+                if (currentRessource == RessourcesType.oxygen)
+                    currentAssociatedSecondarySystem.filling = true;
+                else
+                {
+                    currentAssociatedSecondarySystem.filling = true;
+                    //WRONG RESSOURCE
+                }
+            }
         }
         else
-            Debug.LogError("There is no object associated to this pipe " + pipes[currentPipe]);
-        //COLORS
+            Debug.LogError("There is no correct object associated at the end of this lever : " + gameObject.name + " current end object : " + endObject);
+
+    }
+
+    void UpdatePipesDisplay()
+    {
         pipes[currentPipe].GetComponent<SpriteShapeRenderer>().color = GetOpenColor(currentRessource);
         switch (currentPipe)
         {
