@@ -7,7 +7,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Lungs
+  m_Name: Oxygen4
   m_Shader: {fileID: -6465566751694194690, guid: 00b2e92bc3de3e9499d7008c9795a7a4,
     type: 3}
   m_ShaderKeywords: ETC1_EXTERNAL_ALPHA
@@ -21,7 +21,7 @@ Material:
     serializedVersion: 3
     m_TexEnvs:
     - Texture2D_25A1AE48:
-        m_Texture: {fileID: 2800000, guid: a17d70bc1b256ae4aa915168117f4907, type: 3}
+        m_Texture: {fileID: 2800000, guid: e89e5a6e288a7874b80fc9c3259ca543, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - Texture2D_7AB8BE90:
@@ -54,22 +54,22 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Floats:
     - Boolean_AE714DFA: 1
-    - Height: 1
+    - Height: 0.559
     - Vector1_208B57CE: 1
     - Vector1_285457D4: 0.2
     - Vector1_2F9120DA: 1.2
-    - Vector1_74BE2CC7: 6.65
+    - Vector1_74BE2CC7: 4.08
     - Vector1_8C6FA859: 0.11
     - Vector1_B4487C6E: 0
     - Vector1_D106668A: 0.5
-    - Vector1_D648C270: 0.13
+    - Vector1_D648C270: 0.08
     - Vector1_E5CAFED7: 0.05
-    - Vector1_EF38DF5E: 10
+    - Vector1_EF38DF5E: 8
     - _EnableExternalAlpha: 0
     m_Colors:
-    - Color_A03DF887: {r: 0.007843138, g: 0.89411765, b: 0.7529412, a: 1}
-    - Color_AADC142D: {r: 0.41037738, g: 1, b: 0.82313687, a: 1}
-    - Color_C0415D3: {r: 0.59385014, g: 0.7688705, b: 0.8018868, a: 0}
+    - Color_A03DF887: {r: 0.33241364, g: 0.7934416, b: 0.8490566, a: 1}
+    - Color_AADC142D: {r: 0.46431112, g: 0.8867924, b: 0.8867924, a: 1}
+    - Color_C0415D3: {r: 0.17221434, g: 0.77392614, b: 0.8113208, a: 0}
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _Flip: {r: 1, g: 1, b: 1, a: 1}
     - _RendererColor: {r: 1, g: 1, b: 1, a: 1}

@@ -67,8 +67,8 @@ Material:
     - Vector1_EF38DF5E: 10
     - _EnableExternalAlpha: 0
     m_Colors:
-    - Color_A03DF887: {r: 1, g: 1, b: 1, a: 1}
-    - Color_AADC142D: {r: 0.41504213, g: 1, b: 0.4009434, a: 1}
+    - Color_A03DF887: {r: 1, g: 0.9035688, b: 0.2028302, a: 1}
+    - Color_AADC142D: {r: 0.9811321, g: 0.9675146, b: 0.087931626, a: 1}
     - Color_C0415D3: {r: 0.3564792, g: 0.7169812, b: 0.2807049, a: 0}
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _Flip: {r: 1, g: 1, b: 1, a: 1}
