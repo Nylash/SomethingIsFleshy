@@ -55,6 +55,8 @@ public class SecondarySystem : MonoBehaviour
 			{
 				if (filling)
 					FillingEnergy();
+				else
+					HeartManager.instance.TakeDamage(Time.deltaTime);
 				energyPropertyBlock.SetFloat("Height", currentEnergy / energyAmoutNeeded);
 				energyRenderer.SetPropertyBlock(energyPropertyBlock);
 			}
@@ -62,6 +64,8 @@ public class SecondarySystem : MonoBehaviour
 			{
 				if (filling)
 					FillingOxygen();
+				else
+					HeartManager.instance.TakeDamage(Time.deltaTime);
 				oxygenPropertyBlock.SetFloat("Height", currentOxygen / oxygenAmoutNeeded);
 			oxygenRenderer.SetPropertyBlock(oxygenPropertyBlock);
 			}

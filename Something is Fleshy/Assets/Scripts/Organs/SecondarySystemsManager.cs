@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Collections;
 using UnityEngine;
 
 public class SecondarySystemsManager : MonoBehaviour
@@ -14,6 +15,8 @@ public class SecondarySystemsManager : MonoBehaviour
     [SerializeField] float minTimeBetweenActivities = 15f;
     [Tooltip("Maximal time between two activities.")]
     [SerializeField] float maxTimeBetweenActivities = 30f;
+    [Tooltip("Time during which player knows that a secondary system will need a ressource, but without HP loss.")]
+    [SerializeField] float timeBeforeHealthLoss = 5f;
 #pragma warning restore 0649
     #endregion
 
@@ -40,23 +43,35 @@ public class SecondarySystemsManager : MonoBehaviour
         if(secondarySystems.Count > 0)
         {
             int index = Random.Range(0, secondarySystems.Count);
-            int type = Random.Range(0, 2);
-            switch (type)
-            {
-                case 0:
-                    secondarySystems[index].energyNeeded = true;
-                    secondarySystems[index].energyGauge.SetActive(true);
-                    secondarySystems[index].currentEnergy = 0f;
-                    break;
-                case 1:
-                    secondarySystems[index].oxygenNeeded = true;
-                    secondarySystems[index].oxygenGauge.SetActive(true);
-                    secondarySystems[index].currentOxygen = 0f;
-                    break;
-            }
             secondarySystems[index].animator.SetBool("OnActivity", true);
-            secondarySystems.RemoveAt(index);
+            StartCoroutine(LaunchActivity(index));
         }
         Invoke("StartActivity", Random.Range(minTimeBetweenActivities, maxTimeBetweenActivities));
+    }
+
+    IEnumerator LaunchActivity(int index)
+    {
+        yield return new WaitForSeconds(timeBeforeHealthLoss);
+        int type = Random.Range(0, 2);
+        switch (type)
+        {
+            case 0:
+                secondarySystems[index].energyNeeded = true;
+                secondarySystems[index].energyGauge.SetActive(true);
+                secondarySystems[index].currentEnergy = 0f;
+                break;
+            case 1:
+                secondarySystems[index].oxygenNeeded = true;
+                secondarySystems[index].oxygenGauge.SetActive(true);
+                secondarySystems[index].currentOxygen = 0f;
+                break;
+        }
+        secondarySystems.RemoveAt(index);
+    }
+
+    public void StartActivityByDebug()
+    {
+        CancelInvoke("StartActivity");
+        StartActivity();
     }
 }

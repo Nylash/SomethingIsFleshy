@@ -239,13 +239,18 @@ public class LeverScript : MonoBehaviour
     void UpdatePipesDisplay()
     {
         pipes[currentPipe].GetComponent<SpriteShapeRenderer>().color = GetOpenColor(currentRessource);
+        pipes[currentPipe].GetComponent<SpriteShapeRenderer>().sortingOrder = 0;
         switch (currentPipe)
         {
             case 0:
                 pipes[1].GetComponent<SpriteShapeRenderer>().color = GameManager.instance.pipeCloseColor;
+                pipes[1].GetComponent<SpriteShapeRenderer>().sortingOrder = -1;
+                //Change spriteShape
                 break;
             case 1:
                 pipes[0].GetComponent<SpriteShapeRenderer>().color = GameManager.instance.pipeCloseColor;
+                pipes[1].GetComponent<SpriteShapeRenderer>().sortingOrder = -1;
+                //Change spriteShape
                 break;
         }
     }
