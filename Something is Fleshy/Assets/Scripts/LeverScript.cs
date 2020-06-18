@@ -53,24 +53,30 @@ public class LeverScript : MonoBehaviour
 
     private void Update()
     {
-        if (lastFrameRessource != currentRessource)
-            UpdatePipe();
-        lastFrameRessource = currentRessource;
-        if(doubleEntry && currentAssociatedSecondarySystem)
+        if (GameManager.instance.levelStarted)
         {
-            if ((currentAssociatedSecondarySystem.energyNeeded || currentAssociatedSecondarySystem.oxygenNeeded) && !currentAssociatedSecondarySystem.filling)
+            if (!HeartManager.instance.defeatOrVictory && !GameManager.instance.levelPaused)
             {
-                if (!checkNeedDoubleEntryDone)
-                {
+                if (lastFrameRessource != currentRessource)
                     UpdatePipe();
-                    checkNeedDoubleEntryDone = true;
+                lastFrameRessource = currentRessource;
+                if (doubleEntry && currentAssociatedSecondarySystem)
+                {
+                    if ((currentAssociatedSecondarySystem.energyNeeded || currentAssociatedSecondarySystem.oxygenNeeded) && !currentAssociatedSecondarySystem.filling)
+                    {
+                        if (!checkNeedDoubleEntryDone)
+                        {
+                            UpdatePipe();
+                            checkNeedDoubleEntryDone = true;
+                        }
+                    }
+                    else
+                    {
+                        if (checkNeedDoubleEntryDone)
+                            checkNeedDoubleEntryDone = false;
+                    }
                 }
             }
-            else
-            {
-                if(checkNeedDoubleEntryDone)
-                    checkNeedDoubleEntryDone = false;
-            }    
         }
     }
 
@@ -240,17 +246,18 @@ public class LeverScript : MonoBehaviour
     {
         pipes[currentPipe].GetComponent<SpriteShapeRenderer>().color = GetOpenColor(currentRessource);
         pipes[currentPipe].GetComponent<SpriteShapeRenderer>().sortingOrder = 0;
+        pipes[currentPipe].GetComponent<SpriteShapeController>().spriteShape = GameManager.instance.pipeOpenShape;
         switch (currentPipe)
         {
             case 0:
                 pipes[1].GetComponent<SpriteShapeRenderer>().color = GameManager.instance.pipeCloseColor;
                 pipes[1].GetComponent<SpriteShapeRenderer>().sortingOrder = -1;
-                //Change spriteShape
+                pipes[1].GetComponent<SpriteShapeController>().spriteShape = GameManager.instance.pipeCloseShape;
                 break;
             case 1:
                 pipes[0].GetComponent<SpriteShapeRenderer>().color = GameManager.instance.pipeCloseColor;
-                pipes[1].GetComponent<SpriteShapeRenderer>().sortingOrder = -1;
-                //Change spriteShape
+                pipes[0].GetComponent<SpriteShapeRenderer>().sortingOrder = -1;
+                pipes[0].GetComponent<SpriteShapeController>().spriteShape = GameManager.instance.pipeCloseShape;
                 break;
         }
     }

@@ -1,5 +1,5 @@
 ﻿using UnityEngine;
-using TMPro;
+using UnityEngine.EventSystems;
 
 public class HeartManager : MonoBehaviour
 {
@@ -11,17 +11,12 @@ public class HeartManager : MonoBehaviour
 	[Tooltip("Max health, 1 HP = 1 sec")]
 	[SerializeField] float maxHealth;
 	[Space]
-	[Header("UI Objects")]
 	[Header("⚠ DON'T TOUCH BELOW ⚠")]
-	[SerializeField] TextMeshProUGUI UI_timer;
-	[SerializeField] Canvas UI_defeatCanvas;
-	[SerializeField] TextMeshProUGUI UI_defeatFullTimer;
-	[SerializeField] TextMeshProUGUI UI_defeatActualTimer;
-#pragma warning restore 0649
 	[Header("Variables")]
 	public float currentHealth;
+	public float currentTimer;
+	public bool defeatOrVictory;
 	Material fillingMaterial;
-	float currentTimer;
 
 	private void Awake()
     {
@@ -29,7 +24,7 @@ public class HeartManager : MonoBehaviour
             instance = this;
         else if (instance != this)
             Destroy(gameObject);
-		UI_timer.text = timeToFinish.ToString();
+		UI_Manager.instance.UI_timerValue.text = timeToFinish.ToString();
 		currentTimer = timeToFinish;
     }
 
@@ -42,8 +37,16 @@ public class HeartManager : MonoBehaviour
 
 	private void Update()
 	{
-		currentTimer -= Time.deltaTime;
-		UI_timer.text = ((int)currentTimer).ToString();
+		if (GameManager.instance.levelStarted)
+		{
+			if(!defeatOrVictory && !GameManager.instance.levelPaused)
+			{
+				currentTimer -= Time.deltaTime;
+				UI_Manager.instance.UI_timerValue.text = ((int)currentTimer).ToString();
+				if (currentTimer <= 0)
+					Victory();
+			}
+		}
 	}
 
 	public void TakeDamage(float amount)
@@ -59,8 +62,19 @@ public class HeartManager : MonoBehaviour
 
 	void Defeat()
 	{
-		UI_defeatFullTimer.text = timeToFinish.ToString() + " seconds";
-		UI_defeatActualTimer.text = ((int)currentTimer).ToString() + " seconds";
-		UI_defeatCanvas.enabled = true;
+		UI_Manager.instance.UI_defeatFullTimer.text = timeToFinish.ToString() + " seconds";
+		UI_Manager.instance.UI_defeatActualTimer.text = (timeToFinish - (int)currentTimer).ToString() + " seconds";
+		UI_Manager.instance.UI_defeatCanvas.enabled = true;
+		EventSystem.current.SetSelectedGameObject(UI_Manager.instance.UI_defeatButton.gameObject);
+		defeatOrVictory = true;
+		SecondarySystemsManager.instance.StopActivityCall();
+	}
+
+	void Victory()
+	{
+		UI_Manager.instance.UI_victoryCanvas.enabled = true;
+		EventSystem.current.SetSelectedGameObject(UI_Manager.instance.UI_victoryButton.gameObject);
+		defeatOrVictory = true;
+		SecondarySystemsManager.instance.StopActivityCall();
 	}
 }

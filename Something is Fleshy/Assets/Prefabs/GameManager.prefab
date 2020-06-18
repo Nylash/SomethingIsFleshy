@@ -47,7 +47,11 @@ MonoBehaviour:
   energyPipeOpenColor: {r: 1, g: 0.67569816, b: 0, a: 1}
   oxygenPipeOpenColor: {r: 0, g: 0.7272024, b: 1, a: 1}
   emptyPipeOpenColor: {r: 0.8207547, g: 0.8207547, b: 0.8207547, a: 1}
-  pipeCloseColor: {r: 0, g: 0, b: 0, a: 1}
+  pipeCloseColor: {r: 0.3773585, g: 0.3755785, b: 0.3755785, a: 1}
+  pipeOpenShape: {fileID: 11400000, guid: bb2921a37e575594abf66d4bed2111bf, type: 2}
+  pipeCloseShape: {fileID: 11400000, guid: c1787f02087482745ba878ebf0d8c8f6, type: 2}
+  levelStarted: 0
+  levelPaused: 0
 --- !u!114 &1892749339
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -63,5 +67,6 @@ MonoBehaviour:
   timeBeforeFirstActivity: 10
   minTimeBetweenActivities: 15
   maxTimeBetweenActivities: 30
+  timeBeforeHealthLoss: 5
   refSecondarySystems: []
   secondarySystems: []

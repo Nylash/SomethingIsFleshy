@@ -79,13 +79,21 @@ public class CharacterController2D : MonoBehaviour
 
 	private void FixedUpdate()
 	{
-		GroundDetection();
-		CoyoteTimeSystem();
-		JumpBufferingSystem();
-		Move(movementInput);
-		KeepJumping();
-		if (showMovementDebug)
-			Debug.DrawLine(transform.position, transform.position - new Vector3(0, -.1f, 0), debugColor, 10);
+		if (GameManager.instance.levelStarted)
+		{
+			if (!HeartManager.instance.defeatOrVictory && !GameManager.instance.levelPaused)
+			{
+				GroundDetection();
+				CoyoteTimeSystem();
+				JumpBufferingSystem();
+				Move(movementInput);
+				KeepJumping();
+				if (showMovementDebug)
+					Debug.DrawLine(transform.position, transform.position - new Vector3(0, -.1f, 0), debugColor, 10);
+			}
+			else
+				rb.velocity = Vector2.zero;
+		}
 	}
 
 	void GroundDetection()
@@ -138,23 +146,29 @@ public class CharacterController2D : MonoBehaviour
 
 	void StartJumping()
 	{
-		if (isGrounded)
+		if (GameManager.instance.levelStarted)
 		{
-			jumpBuffering = false;
-			isGrounded = false;
-			isJumping = true;
-			framesCounterCoyoteTime = 0;
-			jumpTimeCounter = 0f;
-			if(movementInput != 0)
-				rb.velocity = new Vector2((facingRight ? 1 : -1) * initialXJumpForce, initialYJumpForce);
-			else
-				rb.velocity = new Vector2(0f, initialYJumpForce);
-			debugColor = jumpColor;
-		}
-		else
-		{
-			jumpBuffering = true;
-			framesCounterJumpBuffering = 0;
+			if (!HeartManager.instance.defeatOrVictory && !GameManager.instance.levelPaused)
+			{
+				if (isGrounded)
+				{
+					jumpBuffering = false;
+					isGrounded = false;
+					isJumping = true;
+					framesCounterCoyoteTime = 0;
+					jumpTimeCounter = 0f;
+					if (movementInput != 0)
+						rb.velocity = new Vector2((facingRight ? 1 : -1) * initialXJumpForce, initialYJumpForce);
+					else
+						rb.velocity = new Vector2(0f, initialYJumpForce);
+					debugColor = jumpColor;
+				}
+				else
+				{
+					jumpBuffering = true;
+					framesCounterJumpBuffering = 0;
+				}
+			}
 		}
 	}
 

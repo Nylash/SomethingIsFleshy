@@ -30,15 +30,21 @@ public class InteractionManager : MonoBehaviour
 
     void Interaction()
     {
-        if (canInteract)
+        if (GameManager.instance.levelStarted)
         {
-            switch (currentInteractableType)
+            if (!HeartManager.instance.defeatOrVictory && !GameManager.instance.levelPaused)
             {
-                case InteractableType.lever:
-                    interactableObject.GetComponent<LeverScript>().Switch();
-                    break;
-                case InteractableType.button:
-                    break;
+                if (canInteract)
+                {
+                    switch (currentInteractableType)
+                    {
+                        case InteractableType.lever:
+                            interactableObject.GetComponent<LeverScript>().Switch();
+                            break;
+                        case InteractableType.button:
+                            break;
+                    }
+                }
             }
         }
     }

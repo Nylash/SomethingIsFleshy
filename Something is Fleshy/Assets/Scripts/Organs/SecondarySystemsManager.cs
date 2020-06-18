@@ -69,9 +69,9 @@ public class SecondarySystemsManager : MonoBehaviour
         secondarySystems.RemoveAt(index);
     }
 
-    public void StartActivityByDebug()
+    public void StopActivityCall()
     {
         CancelInvoke("StartActivity");
-        StartActivity();
+        StopCoroutine("LaunchActivity");
     }
 }

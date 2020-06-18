@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using UnityEngine.U2D;
 
 public abstract class PrimarySystem : MonoBehaviour
 {
@@ -35,8 +34,14 @@ public abstract class PrimarySystem : MonoBehaviour
 
 	void ContinuousFilling()
 	{
-		if (filling)
-			Filling(Time.deltaTime * fillingMultiplier);
+		if (GameManager.instance.levelStarted)
+		{
+			if (!HeartManager.instance.defeatOrVictory && !GameManager.instance.levelPaused)
+			{
+				if (filling)
+					Filling(Time.deltaTime * fillingMultiplier);
+			}
+		}
 	}
 
 	public virtual void Filling(float amount)

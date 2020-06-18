@@ -1,5 +1,5 @@
 ﻿using UnityEngine;
-using UnityEditor.Rendering;
+using UnityEngine.U2D;
 
 public class GameManager : MonoBehaviour
 {
@@ -15,7 +15,15 @@ public class GameManager : MonoBehaviour
 	public Color emptyPipeOpenColor;
 	[Tooltip("Pipe's color when close.")]
 	public Color pipeCloseColor;
+	[Tooltip("Pipe's shape when open.")]
+	public SpriteShape pipeOpenShape;
+	[Tooltip("Pipe's shape when close.")]
+	public SpriteShape pipeCloseShape;
 	#endregion
+	[Header("Variables")]
+	[Header("⚠ DON'T TOUCH BELOW ⚠")]
+	public bool levelStarted;
+	public bool levelPaused;
 
 	private void Awake()
     {
@@ -24,4 +32,9 @@ public class GameManager : MonoBehaviour
         else if (instance != this)
             Destroy(gameObject);
     }
+
+	private void Start()
+	{
+		levelStarted = true;
+	}
 }
