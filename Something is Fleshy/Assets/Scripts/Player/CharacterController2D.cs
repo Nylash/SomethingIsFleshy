@@ -3,6 +3,8 @@ using UnityEngine;
 
 public class CharacterController2D : MonoBehaviour
 {
+	public static CharacterController2D instance;
+
 	#region CONFIGURATION
 #pragma warning disable 0649
 	[Header("Movement")]
@@ -42,7 +44,11 @@ public class CharacterController2D : MonoBehaviour
 
 	[Header("Components")]
 	[Header("⚠ DON'T TOUCH BELOW ⚠")]
-	Rigidbody2D rb;
+	public Animator animator;
+	public Rigidbody2D rb;
+	public ParticleSystem walkFX;
+	public GameObject JLFXspot;
+	public GameObject JLFX;
 	ActionsMap actionsMap;
 
 	[Header("Variables")]
@@ -67,6 +73,11 @@ public class CharacterController2D : MonoBehaviour
 
 	private void Awake()
 	{
+		if (instance == null)
+			instance = this;
+		else if (instance != this)
+			Destroy(gameObject);
+
 		rb = GetComponent<Rigidbody2D>();
 
 		actionsMap = new ActionsMap();
@@ -83,13 +94,16 @@ public class CharacterController2D : MonoBehaviour
 		{
 			if (!HeartManager.instance.defeatOrVictory && !GameManager.instance.levelPaused)
 			{
-				GroundDetection();
-				CoyoteTimeSystem();
-				JumpBufferingSystem();
-				Move(movementInput);
-				KeepJumping();
-				if (showMovementDebug)
-					Debug.DrawLine(transform.position, transform.position - new Vector3(0, -.1f, 0), debugColor, 10);
+				if (!animator.GetBool("Interacting"))
+				{
+					GroundDetection();
+					CoyoteTimeSystem();
+					JumpBufferingSystem();
+					Move(movementInput);
+					KeepJumping();
+					if (showMovementDebug)
+						Debug.DrawLine(transform.position, transform.position - new Vector3(0, -.1f, 0), debugColor, 10);
+				}
 			}
 			else
 				rb.velocity = Vector2.zero;
@@ -108,14 +122,20 @@ public class CharacterController2D : MonoBehaviour
 				isGrounded = true;
 				if (!wasGrounded)
 				{
-					//Landing
+					walkFX.Play();
+					animator.SetBool("Landing",true);
+					Instantiate(JLFX, JLFXspot.transform.position, JLFX.transform.rotation);
 				}
 			}
 		}
 		if (isGrounded)
 			debugColor = groundedColor;
 		else
+		{
 			debugColor = fallColor;
+			walkFX.Stop();
+			animator.SetBool("Landing", false);
+		}	
 	}
 
 	void CoyoteTimeSystem()
@@ -152,6 +172,8 @@ public class CharacterController2D : MonoBehaviour
 			{
 				if (isGrounded)
 				{
+					animator.speed = 1;
+					animator.SetTrigger("Jump");
 					jumpBuffering = false;
 					isGrounded = false;
 					isJumping = true;
@@ -162,6 +184,7 @@ public class CharacterController2D : MonoBehaviour
 					else
 						rb.velocity = new Vector2(0f, initialYJumpForce);
 					debugColor = jumpColor;
+					Instantiate(JLFX, JLFXspot.transform.position, JLFX.transform.rotation);
 				}
 				else
 				{
@@ -205,9 +228,22 @@ public class CharacterController2D : MonoBehaviour
 				Flip(false);
 			else if (horizontalMove < 0 && facingRight)
 				Flip(false);
+
+			if(horizontalMove != 0f)
+			{
+				animator.SetBool("Running", true);
+				animator.speed = Mathf.Lerp(.5f, 1f, Mathf.Abs(horizontalMove));
+			}
+			else
+			{
+				animator.SetBool("Running", false);
+				animator.speed = 1;
+			}
 		}
 		else
 		{
+			animator.SetBool("Running", false);
+			animator.speed = 1;
 			if (horizontalMove > 0 && !facingRight)
 				Flip(true);
 			else if (horizontalMove < 0 && facingRight)

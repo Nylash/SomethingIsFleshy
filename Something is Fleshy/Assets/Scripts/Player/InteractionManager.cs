@@ -36,6 +36,12 @@ public class InteractionManager : MonoBehaviour
             {
                 if (canInteract)
                 {
+                    if (!CharacterController2D.instance.animator.GetBool("Interacting"))
+                    {
+                        CharacterController2D.instance.animator.SetTrigger("StartInteracting");
+                        CharacterController2D.instance.animator.SetBool("Interacting", true);
+                    }
+                    CharacterController2D.instance.rb.velocity = Vector2.zero;
                     switch (currentInteractableType)
                     {
                         case InteractableType.lever:

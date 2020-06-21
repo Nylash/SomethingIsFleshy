@@ -58,6 +58,9 @@ TagManager:
   - name: Player
     uniqueID: 1935276343
     locked: 0
+  - name: Player FX
+    uniqueID: 2622226395
+    locked: 0
   - name: Ground
     uniqueID: 2212278699
     locked: 0
