@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6392911582391626619}
   m_Layer: 0
-  m_Name: BlocksA
+  m_Name: BlockA
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -90,7 +90,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6392911584132190856}
   m_Layer: 0
-  m_Name: BlocksB
+  m_Name: BlockB
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

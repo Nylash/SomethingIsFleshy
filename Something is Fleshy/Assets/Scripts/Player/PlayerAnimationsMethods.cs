@@ -2,8 +2,29 @@
 
 public class PlayerAnimationsMethods : MonoBehaviour
 {
-    public void EndInteraction()
+    [Header("Variables")]
+    [Header("⚠ DON'T TOUCH BELOW ⚠")]
+    public Vector3 tpPosition;
+
+    private void Start()
+    {
+        CharacterController2D.instance.animMethodsScript = this;
+    }
+
+    void EndInteraction()
     {
         CharacterController2D.instance.animator.SetBool("Interacting", false);
+    }
+
+    void EndTeleporting()
+    {
+        CharacterController2D.instance.animator.SetBool("Teleporting", false);
+        print("end");
+    }
+
+    void DoTeleportation()
+    {
+        CharacterController2D.instance.transform.position = tpPosition;
+        print("doing");
     }
 }

@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Ground
   - Lever
+  - TP
   layers:
   - Default
   - TransparentFX
@@ -54,6 +55,9 @@ TagManager:
     locked: 0
   - name: OrganGauge
     uniqueID: 1124628597
+    locked: 0
+  - name: TP
+    uniqueID: 456380007
     locked: 0
   - name: Player
     uniqueID: 1935276343

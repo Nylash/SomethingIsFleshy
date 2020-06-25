@@ -49,6 +49,7 @@ public class CharacterController2D : MonoBehaviour
 	public ParticleSystem walkFX;
 	public GameObject JLFXspot;
 	public GameObject JLFX;
+	public PlayerAnimationsMethods animMethodsScript;
 	ActionsMap actionsMap;
 
 	[Header("Variables")]
@@ -92,7 +93,7 @@ public class CharacterController2D : MonoBehaviour
 	{
 		if (GameManager.instance.levelStarted)
 		{
-			if (!HeartManager.instance.defeatOrVictory && !GameManager.instance.levelPaused)
+			if (!HeartManager.instance.defeatOrVictory && !GameManager.instance.levelPaused && !animator.GetBool("Interacting") && !animator.GetBool("Teleporting"))
 			{
 				if (!animator.GetBool("Interacting"))
 				{
@@ -168,7 +169,7 @@ public class CharacterController2D : MonoBehaviour
 	{
 		if (GameManager.instance.levelStarted)
 		{
-			if (!HeartManager.instance.defeatOrVictory && !GameManager.instance.levelPaused)
+			if (!HeartManager.instance.defeatOrVictory && !GameManager.instance.levelPaused && !animator.GetBool("Interacting") && !animator.GetBool("Teleporting"))
 			{
 				if (isGrounded)
 				{
@@ -281,6 +282,20 @@ public class CharacterController2D : MonoBehaviour
 		{
 			Gizmos.color = Color.yellow;
 			Gizmos.DrawWireCube(groundCheck.position, groundCheckSize);
+		}
+	}
+
+	private void OnTriggerEnter2D(Collider2D collision)
+	{
+		if (collision.CompareTag("TP"))
+		{
+			print(animator.GetBool("Teleporting"));
+			if (!animator.GetBool("Teleporting"))
+			{
+				animMethodsScript.tpPosition = collision.GetComponentInParent<Teleporters>().GetTPLocation(collision.gameObject);
+				animator.SetTrigger("StartTeleporting");
+				animator.SetBool("Teleporting", true);
+			}
 		}
 	}
 }

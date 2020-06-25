@@ -32,7 +32,7 @@ public class InteractionManager : MonoBehaviour
     {
         if (GameManager.instance.levelStarted)
         {
-            if (!HeartManager.instance.defeatOrVictory && !GameManager.instance.levelPaused)
+            if (!HeartManager.instance.defeatOrVictory && !GameManager.instance.levelPaused && !CharacterController2D.instance.animator.GetBool("Interacting"))
             {
                 if (canInteract)
                 {
