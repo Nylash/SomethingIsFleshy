@@ -19,12 +19,15 @@ public class PlayerAnimationsMethods : MonoBehaviour
     void EndTeleporting()
     {
         CharacterController2D.instance.animator.SetBool("Teleporting", false);
-        print("end");
     }
 
     void DoTeleportation()
     {
         CharacterController2D.instance.transform.position = tpPosition;
-        print("doing");
+    }
+
+    void EndShocked()
+    {
+        CharacterController2D.instance.animator.SetBool("Shocked", false);
     }
 }

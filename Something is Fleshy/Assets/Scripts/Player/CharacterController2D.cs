@@ -93,18 +93,15 @@ public class CharacterController2D : MonoBehaviour
 	{
 		if (GameManager.instance.levelStarted)
 		{
-			if (!HeartManager.instance.defeatOrVictory && !GameManager.instance.levelPaused && !animator.GetBool("Interacting") && !animator.GetBool("Teleporting"))
+			if (!HeartManager.instance.defeatOrVictory && !GameManager.instance.levelPaused && AnimationNotCurrentlyBlocking())
 			{
-				if (!animator.GetBool("Interacting"))
-				{
-					GroundDetection();
-					CoyoteTimeSystem();
-					JumpBufferingSystem();
-					Move(movementInput);
-					KeepJumping();
-					if (showMovementDebug)
-						Debug.DrawLine(transform.position, transform.position - new Vector3(0, -.1f, 0), debugColor, 10);
-				}
+				GroundDetection();
+				CoyoteTimeSystem();
+				JumpBufferingSystem();
+				Move(movementInput);
+				KeepJumping();
+				if (showMovementDebug)
+					Debug.DrawLine(transform.position, transform.position - new Vector3(0, -.1f, 0), debugColor, 10);
 			}
 			else
 				rb.velocity = Vector2.zero;
@@ -169,7 +166,7 @@ public class CharacterController2D : MonoBehaviour
 	{
 		if (GameManager.instance.levelStarted)
 		{
-			if (!HeartManager.instance.defeatOrVictory && !GameManager.instance.levelPaused && !animator.GetBool("Interacting") && !animator.GetBool("Teleporting"))
+			if (!HeartManager.instance.defeatOrVictory && !GameManager.instance.levelPaused && AnimationNotCurrentlyBlocking())
 			{
 				if (isGrounded)
 				{
@@ -289,13 +286,26 @@ public class CharacterController2D : MonoBehaviour
 	{
 		if (collision.CompareTag("TP"))
 		{
-			print(animator.GetBool("Teleporting"));
-			if (!animator.GetBool("Teleporting"))
+			if (AnimationNotCurrentlyBlocking())
 			{
 				animMethodsScript.tpPosition = collision.GetComponentInParent<Teleporters>().GetTPLocation(collision.gameObject);
 				animator.SetTrigger("StartTeleporting");
 				animator.SetBool("Teleporting", true);
 			}
 		}
+	}
+
+	private void OnCollisionEnter2D(Collision2D collision)
+	{
+		if (collision.gameObject.CompareTag("ElectricPlatform"))
+		{
+			animator.SetTrigger("StartShocked");
+			animator.SetBool("Shocked", true);
+		}
+	}
+
+	public bool AnimationNotCurrentlyBlocking()
+	{
+		return !animator.GetBool("Interacting") && !animator.GetBool("Teleporting") && !animator.GetBool("Shocked");
 	}
 }

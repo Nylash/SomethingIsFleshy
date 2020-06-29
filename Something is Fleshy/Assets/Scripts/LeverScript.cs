@@ -28,7 +28,7 @@ public class LeverScript : MonoBehaviour
     //Use when a double entry has a secondary system as end object
     bool checkNeedDoubleEntryDone;
     //Only used for animation purpose
-    bool isOpen;
+    bool isSwitched;
 
     private void Start()
     {
@@ -298,8 +298,8 @@ public class LeverScript : MonoBehaviour
 
     void AnimHandler()
     {
-        isOpen = !isOpen;
-        if (isOpen)
+        isSwitched = !isSwitched;
+        if (isSwitched)
             transform.GetChild(0).transform.eulerAngles = new Vector3(0, 0, -85);
         else
             transform.GetChild(0).transform.eulerAngles = new Vector3(0, 0, 0);

@@ -32,11 +32,11 @@ public class InteractionManager : MonoBehaviour
     {
         if (GameManager.instance.levelStarted)
         {
-            if (!HeartManager.instance.defeatOrVictory && !GameManager.instance.levelPaused && !CharacterController2D.instance.animator.GetBool("Interacting"))
+            if (!HeartManager.instance.defeatOrVictory && !GameManager.instance.levelPaused && CharacterController2D.instance.AnimationNotCurrentlyBlocking())
             {
                 if (canInteract)
                 {
-                    if (!CharacterController2D.instance.animator.GetBool("Interacting"))
+                    if (CharacterController2D.instance.AnimationNotCurrentlyBlocking())
                     {
                         CharacterController2D.instance.animator.SetTrigger("StartInteracting");
                         CharacterController2D.instance.animator.SetBool("Interacting", true);
@@ -47,7 +47,8 @@ public class InteractionManager : MonoBehaviour
                         case InteractableType.lever:
                             interactableObject.GetComponent<LeverScript>().Switch();
                             break;
-                        case InteractableType.button:
+                        case InteractableType.electricLever:
+                            interactableObject.GetComponent<ElectricSwitch>().Switch();
                             break;
                     }
                 }
@@ -63,6 +64,12 @@ public class InteractionManager : MonoBehaviour
             interactableObject = collision.gameObject;
             currentInteractableType = InteractableType.lever;
         }
+        else if (collision.gameObject.CompareTag("ElectricLever"))
+        {
+            canInteract = true;
+            interactableObject = collision.gameObject;
+            currentInteractableType = InteractableType.electricLever;
+        }
     }
 
     private void OnTriggerExit2D(Collider2D collision)
@@ -73,10 +80,16 @@ public class InteractionManager : MonoBehaviour
             interactableObject = null;
             currentInteractableType = InteractableType.none;
         }
+        else if (collision.gameObject.CompareTag("ElectricLever"))
+        {
+            canInteract = false;
+            interactableObject = null;
+            currentInteractableType = InteractableType.none;
+        }
     }
 
     public enum InteractableType
     {
-        none, lever, button,
+        none, lever, electricLever,
     }
 }
