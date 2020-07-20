@@ -9,6 +9,7 @@ TagManager:
   - ElectricLever
   - ElectricPlatform
   - MovingPlatform
+  - JumpPad
   layers:
   - Default
   - TransparentFX

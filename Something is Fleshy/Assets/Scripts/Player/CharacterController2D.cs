@@ -54,14 +54,13 @@ public class CharacterController2D : MonoBehaviour
 
 	[Header("Variables")]
 	//Movement variable
+	public GameObject associatedMovingPlatform;
 	bool isGrounded;
 	bool wasGrounded;
 	bool facingRight = true;
 	float movementInput;
+	public float jumpPadForce;
 	Vector3 velocity = Vector3.zero;
-
-	public GameObject associatedMovingPlatform;
-
 	//Jump variable
 	bool isJumping;
 	float jumpTimeCounter;
@@ -181,9 +180,9 @@ public class CharacterController2D : MonoBehaviour
 					framesCounterCoyoteTime = 0;
 					jumpTimeCounter = 0f;
 					if (movementInput != 0)
-						rb.velocity = new Vector2((facingRight ? 1 : -1) * initialXJumpForce, initialYJumpForce);
+						rb.velocity = new Vector2((facingRight ? 1 : -1) * initialXJumpForce, initialYJumpForce + jumpPadForce);
 					else
-						rb.velocity = new Vector2(0f, initialYJumpForce);
+						rb.velocity = new Vector2(0f, initialYJumpForce + jumpPadForce);
 					debugColor = jumpColor;
 					Instantiate(JLFX, JLFXspot.transform.position, JLFX.transform.rotation);
 				}
@@ -317,6 +316,9 @@ public class CharacterController2D : MonoBehaviour
 				associatedMovingPlatform = collision.gameObject;
 				transform.parent = associatedMovingPlatform.transform;
 				break;
+			case "JumpPad":
+				jumpPadForce = collision.gameObject.GetComponent<JumpPad>().jumpPadForce;
+				break;
 			default:
 				break;
 		}
@@ -342,6 +344,9 @@ public class CharacterController2D : MonoBehaviour
 			case "MovingPlatform":
 				associatedMovingPlatform = null;
 				transform.parent = null;
+				break;
+			case "JumpPad":
+				jumpPadForce = 0;
 				break;
 			default:
 				break;
