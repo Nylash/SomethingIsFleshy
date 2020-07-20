@@ -59,6 +59,9 @@ public class CharacterController2D : MonoBehaviour
 	bool facingRight = true;
 	float movementInput;
 	Vector3 velocity = Vector3.zero;
+
+	public GameObject associatedMovingPlatform;
+
 	//Jump variable
 	bool isJumping;
 	float jumpTimeCounter;
@@ -219,6 +222,22 @@ public class CharacterController2D : MonoBehaviour
 	{
 		if (isGrounded)
 		{
+			if (associatedMovingPlatform)
+			{
+				if (horizontalMove == 0)
+				{
+					if (transform.parent != associatedMovingPlatform.transform)
+						transform.parent = associatedMovingPlatform.transform;
+				}
+				else
+					transform.parent = null;
+			}
+			else
+			{
+				if (transform.parent != null)
+					transform.parent = null;
+			}
+
 			Vector3 targetVelocity = new Vector2(horizontalMove * movementSpeed, rb.velocity.y);
 			rb.velocity = Vector3.SmoothDamp(rb.velocity, targetVelocity, ref velocity, movementSmoothing);
 
@@ -284,23 +303,48 @@ public class CharacterController2D : MonoBehaviour
 
 	private void OnTriggerEnter2D(Collider2D collision)
 	{
-		if (collision.CompareTag("TP"))
+		switch (collision.tag)
 		{
-			if (AnimationNotCurrentlyBlocking())
-			{
-				animMethodsScript.tpPosition = collision.GetComponentInParent<Teleporters>().GetTPLocation(collision.gameObject);
-				animator.SetTrigger("StartTeleporting");
-				animator.SetBool("Teleporting", true);
-			}
+			case "TP":
+				if (AnimationNotCurrentlyBlocking())
+				{
+					animMethodsScript.tpPosition = collision.GetComponentInParent<Teleporters>().GetTPLocation(collision.gameObject);
+					animator.SetTrigger("StartTeleporting");
+					animator.SetBool("Teleporting", true);
+				}
+				break;
+			case "MovingPlatform":
+				associatedMovingPlatform = collision.gameObject;
+				transform.parent = associatedMovingPlatform.transform;
+				break;
+			default:
+				break;
 		}
 	}
 
 	private void OnCollisionEnter2D(Collision2D collision)
 	{
-		if (collision.gameObject.CompareTag("ElectricPlatform"))
+		switch (collision.gameObject.tag)
 		{
-			animator.SetTrigger("StartShocked");
-			animator.SetBool("Shocked", true);
+			case "ElectricPlatform":
+				animator.SetTrigger("StartShocked");
+				animator.SetBool("Shocked", true);
+				break;
+			default:
+				break;
+		}
+	}
+
+	private void OnTriggerExit2D(Collider2D collision)
+	{
+		switch (collision.gameObject.tag)
+		{
+			case "MovingPlatform":
+				associatedMovingPlatform = null;
+				transform.parent = null;
+				break;
+			default:
+				break;
 		}
 	}
 

@@ -8,6 +8,7 @@ TagManager:
   - TP
   - ElectricLever
   - ElectricPlatform
+  - MovingPlatform
   layers:
   - Default
   - TransparentFX
