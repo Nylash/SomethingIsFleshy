@@ -331,7 +331,11 @@ public class CharacterController2D : MonoBehaviour
 			case "ElectricPlatform":
 				animator.SetTrigger("StartShocked");
 				animator.SetBool("Shocked", true);
+				
 				break;
+				/*case "piko" :
+				 HeartManager.instance.TakeDamage(dégaaat);
+				 break;*/
 			default:
 				break;
 		}
