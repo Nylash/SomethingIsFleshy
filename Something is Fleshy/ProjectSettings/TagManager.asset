@@ -10,6 +10,9 @@ TagManager:
   - ElectricPlatform
   - MovingPlatform
   - JumpPad
+  - LevelCenter
+  - CamZoom
+  - CamGlobal
   layers:
   - Default
   - TransparentFX
