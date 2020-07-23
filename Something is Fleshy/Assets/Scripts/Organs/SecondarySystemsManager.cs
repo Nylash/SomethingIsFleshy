@@ -44,25 +44,32 @@ public class SecondarySystemsManager : MonoBehaviour
         {
             int index = Random.Range(0, secondarySystems.Count);
             secondarySystems[index].animator.SetBool("OnActivity", true);
-            StartCoroutine(LaunchActivity(index));
+            int type = Random.Range(0, 2);
+            switch (type)
+            {
+                case 0:
+                    secondarySystems[index].energyGauge.SetActive(true);
+                    break;
+                case 1:
+                    secondarySystems[index].oxygenGauge.SetActive(true);
+                    break;
+            }
+            StartCoroutine(LaunchActivity(index, type));
         }
         Invoke("StartActivity", Random.Range(minTimeBetweenActivities, maxTimeBetweenActivities));
     }
 
-    IEnumerator LaunchActivity(int index)
+    IEnumerator LaunchActivity(int index, int type)
     {
         yield return new WaitForSeconds(timeBeforeHealthLoss);
-        int type = Random.Range(0, 2);
         switch (type)
         {
             case 0:
                 secondarySystems[index].energyNeeded = true;
-                secondarySystems[index].energyGauge.SetActive(true);
                 secondarySystems[index].currentEnergy = 0f;
                 break;
             case 1:
                 secondarySystems[index].oxygenNeeded = true;
-                secondarySystems[index].oxygenGauge.SetActive(true);
                 secondarySystems[index].currentOxygen = 0f;
                 break;
         }
