@@ -50,6 +50,7 @@ MonoBehaviour:
   pipeCloseColor: {r: 0.3773585, g: 0.3755785, b: 0.3755785, a: 1}
   pipeOpenShape: {fileID: 11400000, guid: bb2921a37e575594abf66d4bed2111bf, type: 2}
   pipeCloseShape: {fileID: 11400000, guid: c1787f02087482745ba878ebf0d8c8f6, type: 2}
+  nerveDamage: 5
   levelStarted: 0
   levelPaused: 0
 --- !u!114 &1892749339

@@ -13,6 +13,7 @@ TagManager:
   - LevelCenter
   - CamZoom
   - CamGlobal
+  - Nerve
   layers:
   - Default
   - TransparentFX

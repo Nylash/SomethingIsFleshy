@@ -30,4 +30,9 @@ public class PlayerAnimationsMethods : MonoBehaviour
     {
         CharacterController2D.instance.animator.SetBool("Shocked", false);
     }
+
+    void EndHurt()
+    {
+        CharacterController2D.instance.animator.SetBool("Hurt", false);
+    }
 }

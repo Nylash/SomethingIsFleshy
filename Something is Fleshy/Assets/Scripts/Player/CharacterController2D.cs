@@ -333,9 +333,15 @@ public class CharacterController2D : MonoBehaviour
 				animator.SetBool("Shocked", true);
 				
 				break;
-				/*case "piko" :
-				 HeartManager.instance.TakeDamage(dégaaat);
-				 break;*/
+			case "Nerve" :
+				if (!animator.GetBool("Hurt"))
+				{
+					HeartManager.instance.TakeDamage(GameManager.instance.nerveDamage);
+					collision.gameObject.GetComponent<Animator>().SetTrigger("Hit");
+					animator.SetBool("Hurt", true);
+					animator.SetTrigger("StartHurt");
+				}
+				break;
 			default:
 				break;
 		}

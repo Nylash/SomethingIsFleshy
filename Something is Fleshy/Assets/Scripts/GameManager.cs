@@ -19,6 +19,8 @@ public class GameManager : MonoBehaviour
 	public SpriteShape pipeOpenShape;
 	[Tooltip("Pipe's shape when close.")]
 	public SpriteShape pipeCloseShape;
+	[Tooltip("How many damage is deal to the heart when the player hit a nerve.")]
+	public float nerveDamage = 5f;
 	#endregion
 	[Header("Variables")]
 	[Header("⚠ DON'T TOUCH BELOW ⚠")]
