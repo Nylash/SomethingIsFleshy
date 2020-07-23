@@ -54,11 +54,11 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Floats:
     - Boolean_AE714DFA: 1
-    - Height: 0.326
+    - Height: 0
     - Vector1_208B57CE: 2
     - Vector1_285457D4: 0.2
     - Vector1_2F9120DA: 1.2
-    - Vector1_74BE2CC7: 4.08
+    - Vector1_74BE2CC7: 2.68
     - Vector1_8C6FA859: 0.11
     - Vector1_B4487C6E: 0
     - Vector1_D106668A: 0.5
