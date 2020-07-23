@@ -5038,6 +5038,30 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1892749339, guid: 9719e81b153f0914ebc60d15fdb1de3f, type: 3}
+      propertyPath: packA.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1892749339, guid: 9719e81b153f0914ebc60d15fdb1de3f, type: 3}
+      propertyPath: packB.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1892749339, guid: 9719e81b153f0914ebc60d15fdb1de3f, type: 3}
+      propertyPath: packA.Array.data[0]
+      value: 
+      objectReference: {fileID: 1049784148}
+    - target: {fileID: 1892749339, guid: 9719e81b153f0914ebc60d15fdb1de3f, type: 3}
+      propertyPath: packA.Array.data[1]
+      value: 
+      objectReference: {fileID: 894860113}
+    - target: {fileID: 1892749339, guid: 9719e81b153f0914ebc60d15fdb1de3f, type: 3}
+      propertyPath: packB.Array.data[1]
+      value: 
+      objectReference: {fileID: 791474719}
+    - target: {fileID: 1892749339, guid: 9719e81b153f0914ebc60d15fdb1de3f, type: 3}
+      propertyPath: packB.Array.data[0]
+      value: 
+      objectReference: {fileID: 1164439107}
     - target: {fileID: 1770001783312019989, guid: 9719e81b153f0914ebc60d15fdb1de3f,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -6195,6 +6219,18 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 791474715}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &791474719 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7208390168950376311, guid: 02736761b2909fc4dbec11a54edd584e,
+    type: 3}
+  m_PrefabInstance: {fileID: 791474715}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 791474717}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1e6792c4090f25e44921c795c4f08fee, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &797207795 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2272133455611472162, guid: c66d66e6a61e8f54f875956619bc119e,
@@ -8572,6 +8608,18 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 894860109}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &894860113 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7208390168950376311, guid: 02736761b2909fc4dbec11a54edd584e,
+    type: 3}
+  m_PrefabInstance: {fileID: 894860109}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 894860111}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1e6792c4090f25e44921c795c4f08fee, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &901896613
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -10809,6 +10857,18 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 1049784144}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1049784148 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7208390168950376311, guid: 02736761b2909fc4dbec11a54edd584e,
+    type: 3}
+  m_PrefabInstance: {fileID: 1049784144}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1049784146}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1e6792c4090f25e44921c795c4f08fee, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1108360285
 GameObject:
   m_ObjectHideFlags: 0
@@ -10933,6 +10993,18 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 1164439103}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1164439107 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7208390168950376311, guid: 02736761b2909fc4dbec11a54edd584e,
+    type: 3}
+  m_PrefabInstance: {fileID: 1164439103}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1164439105}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1e6792c4090f25e44921c795c4f08fee, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &1166901348 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2672497195557854814, guid: 60b50a5ff4870704da38dd19cb88656f,
@@ -11158,7 +11230,7 @@ PrefabInstance:
     - target: {fileID: 3207447065868730712, guid: 8d06d1b731884de4f8f1c425cf55aff5,
         type: 3}
       propertyPath: orthographic size
-      value: 10
+      value: 18.5
       objectReference: {fileID: 0}
     - target: {fileID: 3207447065868730715, guid: 8d06d1b731884de4f8f1c425cf55aff5,
         type: 3}

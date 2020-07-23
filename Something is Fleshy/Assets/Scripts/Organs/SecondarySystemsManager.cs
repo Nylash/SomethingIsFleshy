@@ -17,63 +17,78 @@ public class SecondarySystemsManager : MonoBehaviour
     [SerializeField] float maxTimeBetweenActivities = 30f;
     [Tooltip("Time during which player knows that a secondary system will need a ressource, but without HP loss.")]
     [SerializeField] float timeBeforeHealthLoss = 5f;
+    [SerializeField] List<SecondarySystem> packA = new List<SecondarySystem>();
+    [SerializeField] List<SecondarySystem> packB = new List<SecondarySystem>();
+    [SerializeField] List<SecondarySystem> packC = new List<SecondarySystem>();
+    [SerializeField] List<SecondarySystem> packD = new List<SecondarySystem>();
 #pragma warning restore 0649
     #endregion
 
     [Header("Variables")]
     [Header("⚠ DON'T TOUCH BELOW ⚠")]
-    public SecondarySystem[] refSecondarySystems;
-    public List<SecondarySystem> secondarySystems = new List<SecondarySystem>();
+    List<List<SecondarySystem>> refAllSecondarySystems = new List<List<SecondarySystem>>();
+    List<List<SecondarySystem>> allSecondarySystems = new List<List<SecondarySystem>>();
 
     private void Awake()
     {
         if (instance == null)
             instance = this;
         else if (instance != this)
-            Destroy(gameObject);
+            Destroy(gameObject);  
 
-        refSecondarySystems = FindObjectsOfType<SecondarySystem>();
-        secondarySystems.AddRange(refSecondarySystems);
+        if(packA.Count > 0)
+            refAllSecondarySystems.Add(packA);
+        if (packB.Count > 0)
+            refAllSecondarySystems.Add(packB);
+        if (packC.Count > 0)
+            refAllSecondarySystems.Add(packC);
+        if (packD.Count > 0)
+            refAllSecondarySystems.Add(packD);
+
+        allSecondarySystems.AddRange(refAllSecondarySystems);
 
         Invoke("StartActivity", timeBeforeFirstActivity);
     }
 
     void StartActivity()
     {
-        if(secondarySystems.Count > 0)
+        if(allSecondarySystems.Count > 0)
         {
-            int index = Random.Range(0, secondarySystems.Count);
-            secondarySystems[index].animator.SetBool("OnActivity", true);
+            int selectedPack = Random.Range(0, allSecondarySystems.Count);
+            int selectedSecondarySystem = Random.Range(0, allSecondarySystems[selectedPack].Count);
+            allSecondarySystems[selectedPack][selectedSecondarySystem].animator.SetBool("OnActivity", true);
             int type = Random.Range(0, 2);
             switch (type)
             {
                 case 0:
-                    secondarySystems[index].energyGauge.SetActive(true);
+                    allSecondarySystems[selectedPack][selectedSecondarySystem].energyGauge.SetActive(true);
                     break;
                 case 1:
-                    secondarySystems[index].oxygenGauge.SetActive(true);
+                    allSecondarySystems[selectedPack][selectedSecondarySystem].oxygenGauge.SetActive(true);
                     break;
             }
-            StartCoroutine(LaunchActivity(index, type));
+            StartCoroutine(LaunchActivity(allSecondarySystems[selectedPack], allSecondarySystems[selectedPack][selectedSecondarySystem], type));
         }
         Invoke("StartActivity", Random.Range(minTimeBetweenActivities, maxTimeBetweenActivities));
     }
 
-    IEnumerator LaunchActivity(int index, int type)
+    IEnumerator LaunchActivity(List<SecondarySystem> selectedPack, SecondarySystem selectedSystem, int type)
     {
         yield return new WaitForSeconds(timeBeforeHealthLoss);
         switch (type)
         {
             case 0:
-                secondarySystems[index].energyNeeded = true;
-                secondarySystems[index].currentEnergy = 0f;
+                selectedSystem.energyNeeded = true;
+                selectedSystem.currentEnergy = 0f;
                 break;
             case 1:
-                secondarySystems[index].oxygenNeeded = true;
-                secondarySystems[index].currentOxygen = 0f;
+                selectedSystem.oxygenNeeded = true;
+                selectedSystem.currentOxygen = 0f;
                 break;
         }
-        secondarySystems.RemoveAt(index);
+        allSecondarySystems.Clear();
+        allSecondarySystems.AddRange(refAllSecondarySystems);
+        allSecondarySystems.Remove(selectedPack);
     }
 
     public void StopActivityCall()

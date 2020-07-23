@@ -9,8 +9,6 @@ public class SecondarySystem : MonoBehaviour
 	[SerializeField] float energyAmoutNeeded = 10f;
 	[Tooltip("Time to full this system in oxygen.")]
 	[SerializeField] float oxygenAmoutNeeded = 10f;
-	[Tooltip("Time before the system can pick again for an activity.")]
-	[SerializeField] float timeBeforeReadyForNewActivity = 10f;
 #pragma warning restore 0649
 	[Space]
 	[Header("⚠ DON'T TOUCH BELOW ⚠")]
@@ -105,16 +103,16 @@ public class SecondarySystem : MonoBehaviour
 		if (energyNeeded)
 		{
 			if (currentEnergy / energyAmoutNeeded >= 1)
-				StartCoroutine(StopActivity());
+				StopActivity();
 		}
 		else if (oxygenNeeded)
 		{
 			if (currentOxygen / oxygenAmoutNeeded >= 1)
-				StartCoroutine(StopActivity());
+				StopActivity();
 		}
 	}
 
-	IEnumerator StopActivity()
+	void StopActivity()
 	{
 		energyNeeded = false;
 		oxygenNeeded = false;
@@ -123,7 +121,5 @@ public class SecondarySystem : MonoBehaviour
 		animator.SetBool("OnActivity", false);
 		currentEnergy = 0f;
 		currentOxygen = 0f;
-		yield return new WaitForSeconds(timeBeforeReadyForNewActivity);
-		SecondarySystemsManager.instance.secondarySystems.Add(this);
 	}
 }
