@@ -25,6 +25,7 @@ public class LeverScript : MonoBehaviour
     PrimarySystem currentAssociatedPrimarySystem;
     SecondarySystem currentAssociatedSecondarySystem;
     int currentPipe;
+
     //Use when a double entry has a secondary system as end object
     bool checkNeedDoubleEntryDone;
     //Only used for animation purpose
@@ -60,6 +61,13 @@ public class LeverScript : MonoBehaviour
                 if (lastFrameRessource != currentRessource)
                     UpdatePipe();
                 lastFrameRessource = currentRessource;
+                if (currentAssociatedSecondarySystem)
+                {
+                    if (currentAssociatedSecondarySystem.oxygenNeeded && currentRessource == RessourcesType.oxygen && !currentAssociatedSecondarySystem.filling)
+                        UpdatePipe();
+                    if (currentAssociatedSecondarySystem.energyNeeded && currentRessource == RessourcesType.energy && !currentAssociatedSecondarySystem.filling)
+                        UpdatePipe();
+                }
                 if (doubleEntry && currentAssociatedSecondarySystem)
                 {
                     if ((currentAssociatedSecondarySystem.energyNeeded || currentAssociatedSecondarySystem.oxygenNeeded) && !currentAssociatedSecondarySystem.filling)
@@ -146,7 +154,7 @@ public class LeverScript : MonoBehaviour
             }
             else if (currentAssociatedSecondarySystem.oxygenNeeded)
             {
-                if(currentRessource == RessourcesType.oxygen)
+                if (currentRessource == RessourcesType.oxygen)
                     currentAssociatedSecondarySystem.filling = true;
                 else
                 {
@@ -246,7 +254,10 @@ public class LeverScript : MonoBehaviour
     {
         pipes[currentPipe].GetComponent<SpriteShapeRenderer>().color = GetOpenColor(currentRessource);
         pipes[currentPipe].GetComponent<SpriteShapeRenderer>().sortingOrder = 0;
-        pipes[currentPipe].GetComponent<SpriteShapeController>().spriteShape = GameManager.instance.pipeOpenShape;
+        if (pipes[currentPipe].GetComponent<SpriteShapeRenderer>().color == GameManager.instance.emptyPipeOpenColor)
+            pipes[currentPipe].GetComponent<SpriteShapeController>().spriteShape = GameManager.instance.pipeCloseShape;
+        else
+            pipes[currentPipe].GetComponent<SpriteShapeController>().spriteShape = GameManager.instance.pipeOpenShape;
         switch (currentPipe)
         {
             case 0:

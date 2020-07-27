@@ -61,9 +61,11 @@ public class SecondarySystemsManager : MonoBehaviour
             switch (type)
             {
                 case 0:
+                    allSecondarySystems[selectedPack][selectedSecondarySystem].currentEnergy = 0f;
                     allSecondarySystems[selectedPack][selectedSecondarySystem].energyGauge.SetActive(true);
                     break;
                 case 1:
+                    allSecondarySystems[selectedPack][selectedSecondarySystem].currentOxygen = 0f;
                     allSecondarySystems[selectedPack][selectedSecondarySystem].oxygenGauge.SetActive(true);
                     break;
             }
@@ -79,11 +81,9 @@ public class SecondarySystemsManager : MonoBehaviour
         {
             case 0:
                 selectedSystem.energyNeeded = true;
-                selectedSystem.currentEnergy = 0f;
                 break;
             case 1:
                 selectedSystem.oxygenNeeded = true;
-                selectedSystem.currentOxygen = 0f;
                 break;
         }
         allSecondarySystems.Clear();

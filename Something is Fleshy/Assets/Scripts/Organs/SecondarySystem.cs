@@ -53,21 +53,27 @@ public class SecondarySystem : MonoBehaviour
 		{
 			if (!HeartManager.instance.defeatOrVictory && !GameManager.instance.levelPaused)
 			{
-				if (energyNeeded)
+				if (energyGauge.activeSelf)
 				{
-					if (filling)
-						FillingEnergy();
-					else
-						HeartManager.instance.TakeDamage(Time.deltaTime);
+					if (energyNeeded)
+					{
+						if (filling)
+							FillingEnergy();
+						else
+							HeartManager.instance.TakeDamage(Time.deltaTime);
+					}
 					energyPropertyBlock.SetFloat("Height", currentEnergy / energyAmoutNeeded);
 					energyRenderer.SetPropertyBlock(energyPropertyBlock);
 				}
-				else if (oxygenNeeded)
+				else if (oxygenGauge.activeSelf)
 				{
-					if (filling)
-						FillingOxygen();
-					else
-						HeartManager.instance.TakeDamage(Time.deltaTime);
+					if (oxygenNeeded)
+					{
+						if (filling)
+							FillingOxygen();
+						else
+							HeartManager.instance.TakeDamage(Time.deltaTime);
+					}
 					oxygenPropertyBlock.SetFloat("Height", currentOxygen / oxygenAmoutNeeded);
 					oxygenRenderer.SetPropertyBlock(oxygenPropertyBlock);
 				}
