@@ -1,5 +1,5 @@
 ﻿using UnityEngine;
-using System.Collections;
+using System.Collections.Generic;
 
 public class SecondarySystem : MonoBehaviour
 {
@@ -20,6 +20,7 @@ public class SecondarySystem : MonoBehaviour
 	[Header("Components")]
 	public Animator animator;
 	[Header("Variables")]
+	public List<SecondarySystem> associatedPack = new List<SecondarySystem>();
 	public float currentEnergy;
 	public float currentOxygen;
 	public bool energyNeeded;
@@ -121,6 +122,7 @@ public class SecondarySystem : MonoBehaviour
 
 	void StopActivity()
 	{
+		filling = false;
 		energyNeeded = false;
 		oxygenNeeded = false;
 		canDealDamage = false;
@@ -133,5 +135,6 @@ public class SecondarySystem : MonoBehaviour
 		energyRenderer.SetPropertyBlock(energyPropertyBlock);
 		oxygenPropertyBlock.SetFloat("Height", currentOxygen / oxygenAmoutNeeded);
 		oxygenRenderer.SetPropertyBlock(oxygenPropertyBlock);
+		SecondarySystemsManager.instance.AddPack(associatedPack);
 	}
 }

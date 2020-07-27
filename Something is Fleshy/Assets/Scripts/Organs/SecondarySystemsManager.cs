@@ -26,8 +26,8 @@ public class SecondarySystemsManager : MonoBehaviour
 
     [Header("Variables")]
     [Header("⚠ DON'T TOUCH BELOW ⚠")]
-    List<List<SecondarySystem>> refAllSecondarySystems = new List<List<SecondarySystem>>();
-    List<List<SecondarySystem>> allSecondarySystems = new List<List<SecondarySystem>>();
+    public List<List<SecondarySystem>> allSecondarySystems = new List<List<SecondarySystem>>();
+    bool startWhenOnePackIsReady;
 
     private void Awake()
     {
@@ -37,22 +37,20 @@ public class SecondarySystemsManager : MonoBehaviour
             Destroy(gameObject);  
 
         if(packA.Count > 0)
-            refAllSecondarySystems.Add(packA);
+            allSecondarySystems.Add(packA);
         if (packB.Count > 0)
-            refAllSecondarySystems.Add(packB);
+            allSecondarySystems.Add(packB);
         if (packC.Count > 0)
-            refAllSecondarySystems.Add(packC);
+            allSecondarySystems.Add(packC);
         if (packD.Count > 0)
-            refAllSecondarySystems.Add(packD);
-
-        allSecondarySystems.AddRange(refAllSecondarySystems);
+            allSecondarySystems.Add(packD);
 
         Invoke("StartActivity", timeBeforeFirstActivity);
     }
 
     void StartActivity()
     {
-        if(allSecondarySystems.Count > 0)
+        if (allSecondarySystems.Count > 0)
         {
             int selectedPack = Random.Range(0, allSecondarySystems.Count);
             int selectedSecondarySystem = Random.Range(0, allSecondarySystems[selectedPack].Count);
@@ -71,18 +69,30 @@ public class SecondarySystemsManager : MonoBehaviour
                     allSecondarySystems[selectedPack][selectedSecondarySystem].oxygenNeeded = true;
                     break;
             }
-            StartCoroutine(LaunchActivity(allSecondarySystems[selectedPack], allSecondarySystems[selectedPack][selectedSecondarySystem]));
+            StartCoroutine(LaunchActivity(allSecondarySystems[selectedPack][selectedSecondarySystem]));
+            allSecondarySystems[selectedPack][selectedSecondarySystem].associatedPack = allSecondarySystems[selectedPack];
+            allSecondarySystems.Remove(allSecondarySystems[selectedPack]);
         }
+        else
+            startWhenOnePackIsReady = true;
         Invoke("StartActivity", Random.Range(minTimeBetweenActivities, maxTimeBetweenActivities));
     }
 
-    IEnumerator LaunchActivity(List<SecondarySystem> selectedPack, SecondarySystem selectedSystem)
+    IEnumerator LaunchActivity(SecondarySystem selectedSystem)
     {
         yield return new WaitForSeconds(timeBeforeHealthLoss);
         selectedSystem.canDealDamage = true;
-        allSecondarySystems.Clear();
-        allSecondarySystems.AddRange(refAllSecondarySystems);
-        allSecondarySystems.Remove(selectedPack);
+    }
+
+    public void AddPack(List<SecondarySystem> pack)
+    {
+        allSecondarySystems.Add(pack);
+        if(allSecondarySystems.Count == 1 && startWhenOnePackIsReady)
+        {
+            startWhenOnePackIsReady = false;
+            CancelInvoke("StartActivity");
+            Invoke("StartActivity", 1);
+        }
     }
 
     public void StopActivityCall()
