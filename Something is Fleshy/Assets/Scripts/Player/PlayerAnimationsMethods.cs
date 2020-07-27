@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using System.Collections;
 
 public class PlayerAnimationsMethods : MonoBehaviour
 {
@@ -29,10 +30,5 @@ public class PlayerAnimationsMethods : MonoBehaviour
     void EndShocked()
     {
         CharacterController2D.instance.animator.SetBool("Shocked", false);
-    }
-
-    void EndHurt()
-    {
-        CharacterController2D.instance.animator.SetBool("Hurt", false);
     }
 }

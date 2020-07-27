@@ -33,6 +33,10 @@ public class CharacterController2D : MonoBehaviour
 	[SerializeField] LayerMask whatIsGround;
 	[SerializeField] Transform groundCheck;
 	[SerializeField] Vector2 groundCheckSize = new Vector2(1f, .25f);
+	[Header("On nerve parameters")]
+	[SerializeField] float invicibilityTime = .5f;
+	[Range(0.01f, .25f)] [SerializeField] float animationSpeed;
+	[SerializeField] SpriteRenderer[] whatIsBlinking;
 	[Header("Debug")]
 	[SerializeField] bool showCheckerDebug = true;
 	[SerializeField] bool showMovementDebug = true;
@@ -53,7 +57,7 @@ public class CharacterController2D : MonoBehaviour
 	ActionsMap actionsMap;
 
 	[Header("Variables")]
-	//Movement variable
+	//Movement variables
 	public GameObject associatedMovingPlatform;
 	bool isGrounded;
 	bool wasGrounded;
@@ -61,14 +65,16 @@ public class CharacterController2D : MonoBehaviour
 	float movementInput;
 	public float jumpPadForce;
 	Vector3 velocity = Vector3.zero;
-	//Jump variable
+	//Jump variables
 	bool isJumping;
 	float jumpTimeCounter;
-	//Polish jump variable
+	//Polish jump variables
 	bool jumpBuffering;
 	int framesCounterCoyoteTime;
 	int framesCounterJumpBuffering;
-	//Debug variable
+	//Anim variables
+	bool isOnNerve;
+	//Debug variables
 	Color debugColor;
 
 	private void OnEnable() => actionsMap.Gameplay.Enable();
@@ -334,12 +340,12 @@ public class CharacterController2D : MonoBehaviour
 				
 				break;
 			case "Nerve" :
-				if (!animator.GetBool("Hurt"))
+				if (!isOnNerve)
 				{
 					HeartManager.instance.TakeDamage(GameManager.instance.nerveDamage);
 					collision.gameObject.GetComponent<Animator>().SetTrigger("Hit");
-					animator.SetBool("Hurt", true);
-					animator.SetTrigger("StartHurt");
+					isOnNerve = true;
+					StartCoroutine(OnNerveAnimation());
 				}
 				break;
 			default:
@@ -361,6 +367,26 @@ public class CharacterController2D : MonoBehaviour
 			default:
 				break;
 		}
+	}
+
+	IEnumerator OnNerveAnimation()
+	{
+		float timer = 0f;
+		while(timer < invicibilityTime)
+		{
+			foreach (SpriteRenderer item in whatIsBlinking)
+			{
+				if (item.color.a == 1)
+					item.color = new Color(item.color.r, item.color.g, item.color.b, .25f);
+				else
+					item.color = new Color(item.color.r, item.color.g, item.color.b, 1);
+			}
+			yield return new WaitForSeconds(animationSpeed);
+			timer += animationSpeed;
+		}
+		foreach(SpriteRenderer item in whatIsBlinking)
+				item.color = new Color(item.color.r, item.color.g, item.color.b, 1);
+		isOnNerve = false;
 	}
 
 	public bool AnimationNotCurrentlyBlocking()
