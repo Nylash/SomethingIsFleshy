@@ -25,6 +25,7 @@ public class SecondarySystem : MonoBehaviour
 	public bool energyNeeded;
 	public bool oxygenNeeded;
 	public bool filling;
+	public bool canDealDamage;
 	MaterialPropertyBlock energyPropertyBlock;
 	MaterialPropertyBlock oxygenPropertyBlock;
 	SpriteRenderer energyRenderer;
@@ -59,7 +60,7 @@ public class SecondarySystem : MonoBehaviour
 					{
 						if (filling)
 							FillingEnergy();
-						else
+						else if(canDealDamage)
 							HeartManager.instance.TakeDamage(Time.deltaTime);
 					}
 					energyPropertyBlock.SetFloat("Height", currentEnergy / energyAmoutNeeded);
@@ -71,7 +72,7 @@ public class SecondarySystem : MonoBehaviour
 					{
 						if (filling)
 							FillingOxygen();
-						else
+						else if(canDealDamage)
 							HeartManager.instance.TakeDamage(Time.deltaTime);
 					}
 					oxygenPropertyBlock.SetFloat("Height", currentOxygen / oxygenAmoutNeeded);
@@ -122,10 +123,15 @@ public class SecondarySystem : MonoBehaviour
 	{
 		energyNeeded = false;
 		oxygenNeeded = false;
+		canDealDamage = false;
 		energyGauge.SetActive(false);
 		oxygenGauge.SetActive(false);
 		animator.SetBool("OnActivity", false);
 		currentEnergy = 0f;
 		currentOxygen = 0f;
+		energyPropertyBlock.SetFloat("Height", currentEnergy / energyAmoutNeeded);
+		energyRenderer.SetPropertyBlock(energyPropertyBlock);
+		oxygenPropertyBlock.SetFloat("Height", currentOxygen / oxygenAmoutNeeded);
+		oxygenRenderer.SetPropertyBlock(oxygenPropertyBlock);
 	}
 }

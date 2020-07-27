@@ -63,29 +63,23 @@ public class SecondarySystemsManager : MonoBehaviour
                 case 0:
                     allSecondarySystems[selectedPack][selectedSecondarySystem].currentEnergy = 0f;
                     allSecondarySystems[selectedPack][selectedSecondarySystem].energyGauge.SetActive(true);
+                    allSecondarySystems[selectedPack][selectedSecondarySystem].energyNeeded = true;
                     break;
                 case 1:
                     allSecondarySystems[selectedPack][selectedSecondarySystem].currentOxygen = 0f;
                     allSecondarySystems[selectedPack][selectedSecondarySystem].oxygenGauge.SetActive(true);
+                    allSecondarySystems[selectedPack][selectedSecondarySystem].oxygenNeeded = true;
                     break;
             }
-            StartCoroutine(LaunchActivity(allSecondarySystems[selectedPack], allSecondarySystems[selectedPack][selectedSecondarySystem], type));
+            StartCoroutine(LaunchActivity(allSecondarySystems[selectedPack], allSecondarySystems[selectedPack][selectedSecondarySystem]));
         }
         Invoke("StartActivity", Random.Range(minTimeBetweenActivities, maxTimeBetweenActivities));
     }
 
-    IEnumerator LaunchActivity(List<SecondarySystem> selectedPack, SecondarySystem selectedSystem, int type)
+    IEnumerator LaunchActivity(List<SecondarySystem> selectedPack, SecondarySystem selectedSystem)
     {
         yield return new WaitForSeconds(timeBeforeHealthLoss);
-        switch (type)
-        {
-            case 0:
-                selectedSystem.energyNeeded = true;
-                break;
-            case 1:
-                selectedSystem.oxygenNeeded = true;
-                break;
-        }
+        selectedSystem.canDealDamage = true;
         allSecondarySystems.Clear();
         allSecondarySystems.AddRange(refAllSecondarySystems);
         allSecondarySystems.Remove(selectedPack);
