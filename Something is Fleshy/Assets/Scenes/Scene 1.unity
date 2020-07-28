@@ -7165,7 +7165,7 @@ PrefabInstance:
     - target: {fileID: 5073433986323243501, guid: cf75b22b3c98d5046b2b34b5e349ab31,
         type: 3}
       propertyPath: startCapacity
-      value: 10
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 5073433986323243502, guid: cf75b22b3c98d5046b2b34b5e349ab31,
         type: 3}
@@ -8327,7 +8327,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1892749339, guid: 9719e81b153f0914ebc60d15fdb1de3f, type: 3}
       propertyPath: timeBeforeFirstActivity
-      value: 6
+      value: 12
       objectReference: {fileID: 0}
     - target: {fileID: 1892749339, guid: 9719e81b153f0914ebc60d15fdb1de3f, type: 3}
       propertyPath: minTimeBetweenActivities
@@ -16727,7 +16727,7 @@ PrefabInstance:
     - target: {fileID: 6629100206749871380, guid: 111b09151528f54428e904146be76fa4,
         type: 3}
       propertyPath: startCapacity
-      value: 10
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 6629100206749871382, guid: 111b09151528f54428e904146be76fa4,
         type: 3}
