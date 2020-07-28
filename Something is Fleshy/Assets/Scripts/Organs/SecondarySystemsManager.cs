@@ -17,6 +17,7 @@ public class SecondarySystemsManager : MonoBehaviour
     [SerializeField] float maxTimeBetweenActivities = 30f;
     [Tooltip("Time during which player knows that a secondary system will need a ressource, but without HP loss.")]
     [SerializeField] float timeBeforeHealthLoss = 5f;
+    [Range(0,50)] [SerializeField] int ressourceRandomEqualizerValue = 10;
     [SerializeField] List<SecondarySystem> packA = new List<SecondarySystem>();
     [SerializeField] List<SecondarySystem> packB = new List<SecondarySystem>();
     [SerializeField] List<SecondarySystem> packC = new List<SecondarySystem>();
@@ -26,6 +27,7 @@ public class SecondarySystemsManager : MonoBehaviour
 
     [Header("Variables")]
     [Header("⚠ DON'T TOUCH BELOW ⚠")]
+    public int randomRessourceEqualizer;
     public List<List<SecondarySystem>> allSecondarySystems = new List<List<SecondarySystem>>();
     bool startWhenOnePackIsReady;
 
@@ -55,15 +57,14 @@ public class SecondarySystemsManager : MonoBehaviour
             int selectedPack = Random.Range(0, allSecondarySystems.Count);
             int selectedSecondarySystem = Random.Range(0, allSecondarySystems[selectedPack].Count);
             allSecondarySystems[selectedPack][selectedSecondarySystem].animator.SetBool("OnActivity", true);
-            int type = Random.Range(0, 2);
-            switch (type)
+            switch (GetRandomType())
             {
-                case 0:
+                case LeverScript.RessourcesType.energy:
                     allSecondarySystems[selectedPack][selectedSecondarySystem].currentEnergy = 0f;
                     allSecondarySystems[selectedPack][selectedSecondarySystem].energyGauge.SetActive(true);
                     allSecondarySystems[selectedPack][selectedSecondarySystem].energyNeeded = true;
                     break;
-                case 1:
+                case LeverScript.RessourcesType.oxygen:
                     allSecondarySystems[selectedPack][selectedSecondarySystem].currentOxygen = 0f;
                     allSecondarySystems[selectedPack][selectedSecondarySystem].oxygenGauge.SetActive(true);
                     allSecondarySystems[selectedPack][selectedSecondarySystem].oxygenNeeded = true;
@@ -82,6 +83,28 @@ public class SecondarySystemsManager : MonoBehaviour
     {
         yield return new WaitForSeconds(timeBeforeHealthLoss);
         selectedSystem.canDealDamage = true;
+    }
+
+    LeverScript.RessourcesType GetRandomType()
+    {
+        int random = Random.Range(0, 100);
+        random += randomRessourceEqualizer;
+        if (random < 50)
+        {
+            if (randomRessourceEqualizer < 0)
+                randomRessourceEqualizer = ressourceRandomEqualizerValue;
+            else
+                randomRessourceEqualizer += ressourceRandomEqualizerValue;
+            return LeverScript.RessourcesType.oxygen;
+        }
+        else
+        {
+            if (randomRessourceEqualizer > 0)
+                randomRessourceEqualizer = -ressourceRandomEqualizerValue;
+            else
+                randomRessourceEqualizer -= ressourceRandomEqualizerValue;
+            return LeverScript.RessourcesType.energy;
+        }
     }
 
     public void AddPack(List<SecondarySystem> pack)

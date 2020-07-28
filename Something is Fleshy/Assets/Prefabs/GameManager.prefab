@@ -65,9 +65,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 77762ae9dd9da224d930f530cac5d620, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  timeBeforeFirstActivity: 10
-  minTimeBetweenActivities: 15
-  maxTimeBetweenActivities: 30
+  timeBeforeFirstActivity: 2
+  minTimeBetweenActivities: 10
+  maxTimeBetweenActivities: 15
   timeBeforeHealthLoss: 5
-  refSecondarySystems: []
-  secondarySystems: []
+  ressourceRandomEqualizerValue: 15
+  packA:
+  - {fileID: 0}
+  - {fileID: 0}
+  packB:
+  - {fileID: 0}
+  - {fileID: 0}
+  packC: []
+  packD: []
+  randomRessourceEqualizer: 0
