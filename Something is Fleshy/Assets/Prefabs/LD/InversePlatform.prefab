@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 9168556617797394385}
   - component: {fileID: 983734783789731206}
   m_Layer: 8
-  m_Name: InversePlatforme
+  m_Name: InversePlatform
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -74,7 +74,7 @@ SpriteShapeRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -2082688597
-  m_SortingLayer: 6
+  m_SortingLayer: 8
   m_SortingOrder: 0
   m_Color: {r: 0.48597345, g: 0.6886792, b: 0.3930669, a: 1}
   m_MaskInteraction: 0
