@@ -21,6 +21,7 @@ public class SecondarySystem : MonoBehaviour
 	public Animator animator;
 	[Header("Variables")]
 	public List<SecondarySystem> associatedPack = new List<SecondarySystem>();
+	public GameObject associatedHint;
 	public float currentEnergy;
 	public float currentOxygen;
 	public bool energyNeeded;
@@ -136,5 +137,8 @@ public class SecondarySystem : MonoBehaviour
 		oxygenPropertyBlock.SetFloat("Height", currentOxygen / oxygenAmoutNeeded);
 		oxygenRenderer.SetPropertyBlock(oxygenPropertyBlock);
 		SecondarySystemsManager.instance.AddPack(associatedPack);
+		HintSecondarySystemManager.instance.activeSecondarySystems.Remove(this);
+		if (associatedHint)
+			Destroy(associatedHint);
 	}
 }

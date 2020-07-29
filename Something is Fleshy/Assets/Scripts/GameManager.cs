@@ -7,10 +7,10 @@ public class GameManager : MonoBehaviour
 
 	#region CONFIGURATION
 	[Header("PARAMETERS")]
-	[Tooltip("Pipe's color when open and full of energy.")]
-	public Color energyPipeOpenColor;
-	[Tooltip("Pipe's color when open and full of oxygen.")]
-	public Color oxygenPipeOpenColor;
+	[Tooltip("Color associated to energy, uses for FX,pipes...")]
+	public Color energyColor;
+	[Tooltip("Color associated to oxygen, uses for FX,pipes...")]
+	public Color oxygenColor;
 	[Tooltip("Pipe's color when open and empty.")]
 	public Color emptyPipeOpenColor;
 	[Tooltip("Pipe's color when close.")]

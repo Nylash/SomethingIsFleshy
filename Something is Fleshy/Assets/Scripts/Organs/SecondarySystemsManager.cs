@@ -47,6 +47,9 @@ public class SecondarySystemsManager : MonoBehaviour
         if (packD.Count > 0)
             allSecondarySystems.Add(packD);
 
+        if (allSecondarySystems.Count == 0)
+            Debug.LogError("You need to assign some Secondary Systems to atleast one pack (GameManager).");
+
         Invoke("StartActivity", timeBeforeFirstActivity);
     }
 
@@ -71,6 +74,7 @@ public class SecondarySystemsManager : MonoBehaviour
                     break;
             }
             StartCoroutine(LaunchActivity(allSecondarySystems[selectedPack][selectedSecondarySystem]));
+            HintSecondarySystemManager.instance.activeSecondarySystems.Add(allSecondarySystems[selectedPack][selectedSecondarySystem]);
             allSecondarySystems[selectedPack][selectedSecondarySystem].associatedPack = allSecondarySystems[selectedPack];
             allSecondarySystems.Remove(allSecondarySystems[selectedPack]);
         }

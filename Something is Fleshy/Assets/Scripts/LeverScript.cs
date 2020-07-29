@@ -323,9 +323,9 @@ public class LeverScript : MonoBehaviour
             case RessourcesType.none:
                 return GameManager.instance.emptyPipeOpenColor;
             case RessourcesType.energy:
-                return GameManager.instance.energyPipeOpenColor;
+                return GameManager.instance.energyColor;
             case RessourcesType.oxygen:
-                return GameManager.instance.oxygenPipeOpenColor;
+                return GameManager.instance.oxygenColor;
             default:
                 return Color.red;
         }
