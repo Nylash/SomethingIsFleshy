@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using UnityEngine.U2D;
+using System.Collections.Generic;
 
 public class LeverScript : MonoBehaviour
 {
@@ -16,15 +17,19 @@ public class LeverScript : MonoBehaviour
     [ConditionalHide("doubleEntry", true)]
     [Tooltip("Object at the end of the double pipes.")]
     [SerializeField] GameObject endObject;
+    [Header("Leaks zones")]
+    [SerializeField] List<LeakZone> pipe0LeaksZones = new List<LeakZone>();
+    [SerializeField] List<LeakZone> pipe1LeaksZones = new List<LeakZone>();
 #pragma warning restore 0649
     [Header("Variables")]
     [Header("⚠ DON'T TOUCH BELOW ⚠")]
     public RessourcesType currentRessource;
+    public List<LeakZone>[] allLeaksZones = new List<LeakZone>[2];
+    public int currentPipe;
     RessourcesType lastFrameRessource;
     LeverScript currentAssociatedLever;
     PrimarySystem currentAssociatedPrimarySystem;
     SecondarySystem currentAssociatedSecondarySystem;
-    int currentPipe;
 
     //Use when a double entry has a secondary system as end object
     bool checkNeedDoubleEntryDone;
@@ -50,6 +55,13 @@ public class LeverScript : MonoBehaviour
                 Debug.LogError("There is no correct object associated at the end of this lever : " + gameObject.name + " current end object : " + endObject);
         }
         UpdatePipe();
+
+        if (pipe0LeaksZones.Count != 0)
+            allLeaksZones[0] = pipe0LeaksZones;
+        if (pipe1LeaksZones.Count != 0)
+            allLeaksZones[1] = pipe1LeaksZones;
+        if (allLeaksZones[0] != null || allLeaksZones[1] != null)
+            LeaksManager.instance.leversWithLeaksZones.Add(this);
     }
 
     private void Update()

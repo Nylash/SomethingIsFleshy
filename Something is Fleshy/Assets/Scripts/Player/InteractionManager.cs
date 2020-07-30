@@ -50,6 +50,9 @@ public class InteractionManager : MonoBehaviour
                         case InteractableType.electricLever:
                             interactableObject.GetComponent<ElectricSwitch>().Switch();
                             break;
+                        case InteractableType.leak:
+                            interactableObject.GetComponent<Leak>().PatchLeak();
+                            break;
                     }
                 }
             }
@@ -58,38 +61,55 @@ public class InteractionManager : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.CompareTag("Lever"))
+        switch (collision.gameObject.tag)
         {
-            canInteract = true;
-            interactableObject = collision.gameObject;
-            currentInteractableType = InteractableType.lever;
-        }
-        else if (collision.gameObject.CompareTag("ElectricLever"))
-        {
-            canInteract = true;
-            interactableObject = collision.gameObject;
-            currentInteractableType = InteractableType.electricLever;
+            case "Lever":
+                canInteract = true;
+                interactableObject = collision.gameObject;
+                currentInteractableType = InteractableType.lever;
+                break;
+            case "ElectricLever":
+                canInteract = true;
+                interactableObject = collision.gameObject;
+                currentInteractableType = InteractableType.electricLever;
+                break;
+            case "Leak":
+                canInteract = true;
+                interactableObject = collision.gameObject;
+                currentInteractableType = InteractableType.leak;
+                break;
         }
     }
 
     private void OnTriggerExit2D(Collider2D collision)
     {
-        if (collision.gameObject.CompareTag("Lever"))
+        switch (collision.gameObject.tag)
         {
-            canInteract = false;
-            interactableObject = null;
-            currentInteractableType = InteractableType.none;
-        }
-        else if (collision.gameObject.CompareTag("ElectricLever"))
-        {
-            canInteract = false;
-            interactableObject = null;
-            currentInteractableType = InteractableType.none;
+            case "Lever":
+                if (currentInteractableType == InteractableType.lever)
+                    goto case "CLEAN CASE";
+                else
+                    break;
+            case "ElectricLever":
+                if (currentInteractableType == InteractableType.electricLever)
+                    goto case "CLEAN CASE";
+                else
+                    break;
+            case "Leak":
+                if (currentInteractableType == InteractableType.leak)
+                    goto case "CLEAN CASE";
+                else
+                    break;
+            case "CLEAN CASE":
+                canInteract = false;
+                interactableObject = null;
+                currentInteractableType = InteractableType.none;
+                break;
         }
     }
 
     public enum InteractableType
     {
-        none, lever, electricLever,
+        none, lever, electricLever, leak,
     }
 }

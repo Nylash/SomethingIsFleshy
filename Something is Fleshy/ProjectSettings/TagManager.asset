@@ -14,6 +14,7 @@ TagManager:
   - CamZoom
   - CamGlobal
   - Nerve
+  - Leak
   layers:
   - Default
   - TransparentFX
@@ -56,6 +57,9 @@ TagManager:
     locked: 0
   - name: Pipe
     uniqueID: 2790816243
+    locked: 0
+  - name: Leak
+    uniqueID: 2737172865
     locked: 0
   - name: Organ
     uniqueID: 696649615

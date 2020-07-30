@@ -57,6 +57,14 @@ public class @ActionsMap : IInputActionCollection, IDisposable
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """"
+                },
+                {
+                    ""name"": ""Debug"",
+                    ""type"": ""Button"",
+                    ""id"": ""503cb4f9-0047-4352-be40-9a83d9bad1d8"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
                 }
             ],
             ""bindings"": [
@@ -244,6 +252,17 @@ public class @ActionsMap : IInputActionCollection, IDisposable
                     ""processors"": """",
                     ""groups"": ""Gamepad"",
                     ""action"": ""SwitchCamera"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""b6a03552-12ca-4a99-9eed-4bb28303f6ea"",
+                    ""path"": ""<Keyboard>/i"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard"",
+                    ""action"": ""Debug"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -459,6 +478,7 @@ public class @ActionsMap : IInputActionCollection, IDisposable
         m_Gameplay_Interact = m_Gameplay.FindAction("Interact", throwIfNotFound: true);
         m_Gameplay_Pause = m_Gameplay.FindAction("Pause", throwIfNotFound: true);
         m_Gameplay_SwitchCamera = m_Gameplay.FindAction("SwitchCamera", throwIfNotFound: true);
+        m_Gameplay_Debug = m_Gameplay.FindAction("Debug", throwIfNotFound: true);
         // UI
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
         m_UI_Move = m_UI.FindAction("Move", throwIfNotFound: true);
@@ -517,6 +537,7 @@ public class @ActionsMap : IInputActionCollection, IDisposable
     private readonly InputAction m_Gameplay_Interact;
     private readonly InputAction m_Gameplay_Pause;
     private readonly InputAction m_Gameplay_SwitchCamera;
+    private readonly InputAction m_Gameplay_Debug;
     public struct GameplayActions
     {
         private @ActionsMap m_Wrapper;
@@ -526,6 +547,7 @@ public class @ActionsMap : IInputActionCollection, IDisposable
         public InputAction @Interact => m_Wrapper.m_Gameplay_Interact;
         public InputAction @Pause => m_Wrapper.m_Gameplay_Pause;
         public InputAction @SwitchCamera => m_Wrapper.m_Gameplay_SwitchCamera;
+        public InputAction @Debug => m_Wrapper.m_Gameplay_Debug;
         public InputActionMap Get() { return m_Wrapper.m_Gameplay; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -550,6 +572,9 @@ public class @ActionsMap : IInputActionCollection, IDisposable
                 @SwitchCamera.started -= m_Wrapper.m_GameplayActionsCallbackInterface.OnSwitchCamera;
                 @SwitchCamera.performed -= m_Wrapper.m_GameplayActionsCallbackInterface.OnSwitchCamera;
                 @SwitchCamera.canceled -= m_Wrapper.m_GameplayActionsCallbackInterface.OnSwitchCamera;
+                @Debug.started -= m_Wrapper.m_GameplayActionsCallbackInterface.OnDebug;
+                @Debug.performed -= m_Wrapper.m_GameplayActionsCallbackInterface.OnDebug;
+                @Debug.canceled -= m_Wrapper.m_GameplayActionsCallbackInterface.OnDebug;
             }
             m_Wrapper.m_GameplayActionsCallbackInterface = instance;
             if (instance != null)
@@ -569,6 +594,9 @@ public class @ActionsMap : IInputActionCollection, IDisposable
                 @SwitchCamera.started += instance.OnSwitchCamera;
                 @SwitchCamera.performed += instance.OnSwitchCamera;
                 @SwitchCamera.canceled += instance.OnSwitchCamera;
+                @Debug.started += instance.OnDebug;
+                @Debug.performed += instance.OnDebug;
+                @Debug.canceled += instance.OnDebug;
             }
         }
     }
@@ -639,6 +667,7 @@ public class @ActionsMap : IInputActionCollection, IDisposable
         void OnInteract(InputAction.CallbackContext context);
         void OnPause(InputAction.CallbackContext context);
         void OnSwitchCamera(InputAction.CallbackContext context);
+        void OnDebug(InputAction.CallbackContext context);
     }
     public interface IUIActions
     {
