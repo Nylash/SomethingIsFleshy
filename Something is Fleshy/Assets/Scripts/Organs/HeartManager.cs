@@ -9,7 +9,7 @@ public class HeartManager : MonoBehaviour
 	[Tooltip("Time to end level (in seconds).")]
 	[SerializeField] int timeToFinish = 180;
 	[Tooltip("Max health, 1 HP = 1 sec")]
-	[SerializeField] float maxHealth;
+	public float maxHealth;
 	[Space]
 	[Header("⚠ DON'T TOUCH BELOW ⚠")]
 	[Header("Variables")]

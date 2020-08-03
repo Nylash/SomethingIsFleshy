@@ -17,7 +17,9 @@ public class SecondarySystemsManager : MonoBehaviour
     [SerializeField] float maxTimeBetweenActivities = 30f;
     [Tooltip("Time during which player knows that a secondary system will need a ressource, but without HP loss.")]
     [SerializeField] float timeBeforeHealthLoss = 5f;
-    [Range(0,50)] [SerializeField] int ressourceRandomEqualizerValue = 10;
+    [Tooltip("Value that increase probability of the other ressource when one is chosen." +
+        "By default prob are 50-50, but when one is chosen it became 60-40 (if this value is 10).")]
+    [Range(0,50)] [SerializeField] int ressourceRandomWeightValue = 10;
     [SerializeField] List<SecondarySystem> packA = new List<SecondarySystem>();
     [SerializeField] List<SecondarySystem> packB = new List<SecondarySystem>();
     [SerializeField] List<SecondarySystem> packC = new List<SecondarySystem>();
@@ -27,7 +29,8 @@ public class SecondarySystemsManager : MonoBehaviour
 
     [Header("Variables")]
     [Header("⚠ DON'T TOUCH BELOW ⚠")]
-    public int randomRessourceEqualizer;
+    //If this value if positive it increase energy prob, if it is negative it increase oxygen prob
+    public int randomRessourceWeight;
     public List<List<SecondarySystem>> allSecondarySystems = new List<List<SecondarySystem>>();
     bool startWhenOnePackIsReady;
 
@@ -92,21 +95,21 @@ public class SecondarySystemsManager : MonoBehaviour
     LeverScript.RessourcesType GetRandomType()
     {
         int random = Random.Range(0, 100);
-        random += randomRessourceEqualizer;
+        random += randomRessourceWeight;
         if (random < 50)
         {
-            if (randomRessourceEqualizer < 0)
-                randomRessourceEqualizer = ressourceRandomEqualizerValue;
+            if (randomRessourceWeight < 0)
+                randomRessourceWeight = ressourceRandomWeightValue;
             else
-                randomRessourceEqualizer += ressourceRandomEqualizerValue;
+                randomRessourceWeight += ressourceRandomWeightValue;
             return LeverScript.RessourcesType.oxygen;
         }
         else
         {
-            if (randomRessourceEqualizer > 0)
-                randomRessourceEqualizer = -ressourceRandomEqualizerValue;
+            if (randomRessourceWeight > 0)
+                randomRessourceWeight = -ressourceRandomWeightValue;
             else
-                randomRessourceEqualizer -= ressourceRandomEqualizerValue;
+                randomRessourceWeight -= ressourceRandomWeightValue;
             return LeverScript.RessourcesType.energy;
         }
     }

@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class InteractionManager : MonoBehaviour
 {
@@ -12,6 +13,7 @@ public class InteractionManager : MonoBehaviour
     bool canInteract;
     GameObject interactableObject;
     InteractableType currentInteractableType;
+    float holdTimer;
 
     private void OnEnable() => actionsMap.Gameplay.Enable();
     private void OnDisable() => actionsMap.Gameplay.Disable();
@@ -25,10 +27,33 @@ public class InteractionManager : MonoBehaviour
 
         actionsMap = new ActionsMap();
 
-        actionsMap.Gameplay.Interact.started += ctx => Interaction();
+        actionsMap.Gameplay.Interact.started += ctx => InteractionStarted();
+        actionsMap.Gameplay.Interact.canceled += ctx => InteractionHoldCanceled();
+
     }
 
-    void Interaction()
+    private void Update()
+    {
+        if (GameManager.instance.levelStarted)
+        {
+            if (!HeartManager.instance.defeatOrVictory && !GameManager.instance.levelPaused)
+            {
+                if (CharacterController2D.instance.animator.GetBool("Holding"))
+                {
+                    holdTimer += Time.deltaTime;
+                    UI_Manager.instance.UI_leakGaugeIn.fillAmount = holdTimer / LeaksManager.instance.timeToRepair;
+                    if (holdTimer >= LeaksManager.instance.timeToRepair)
+                    {
+                        UI_Manager.instance.UI_leakGaugeCanvas.enabled = false;
+                        interactableObject.GetComponent<Leak>().PatchLeak();
+                        CharacterController2D.instance.animator.SetBool("Holding", false);
+                    }
+                }
+            }
+        }
+    }
+
+    void InteractionStarted()
     {
         if (GameManager.instance.levelStarted)
         {
@@ -36,11 +61,6 @@ public class InteractionManager : MonoBehaviour
             {
                 if (canInteract)
                 {
-                    if (CharacterController2D.instance.AnimationNotCurrentlyBlocking())
-                    {
-                        CharacterController2D.instance.animator.SetTrigger("StartInteracting");
-                        CharacterController2D.instance.animator.SetBool("Interacting", true);
-                    }
                     CharacterController2D.instance.rb.velocity = Vector2.zero;
                     switch (currentInteractableType)
                     {
@@ -51,7 +71,42 @@ public class InteractionManager : MonoBehaviour
                             interactableObject.GetComponent<ElectricSwitch>().Switch();
                             break;
                         case InteractableType.leak:
-                            interactableObject.GetComponent<Leak>().PatchLeak();
+                            holdTimer = 0f;
+                            UI_Manager.instance.UI_leakGaugeCanvas.transform.position = new Vector3(Camera.main.WorldToScreenPoint(transform.position).x, Camera.main.WorldToScreenPoint(transform.position + new Vector3(0,2f,0)).y, 0);
+                            UI_Manager.instance.UI_leakGaugeIn.fillAmount = 0;
+                            UI_Manager.instance.UI_leakGaugeCanvas.enabled = true;
+                            goto HoldInteractionAnim;
+                    }
+                    if (CharacterController2D.instance.AnimationNotCurrentlyBlocking())
+                    {
+                        CharacterController2D.instance.animator.SetTrigger("StartInteracting");
+                        CharacterController2D.instance.animator.SetBool("Interacting", true);
+                    }
+                    return;
+                HoldInteractionAnim:
+                    if (CharacterController2D.instance.AnimationNotCurrentlyBlocking())
+                    {
+                        CharacterController2D.instance.animator.SetTrigger("StartHolding");
+                        CharacterController2D.instance.animator.SetBool("Holding", true);
+                    }
+                }
+            }
+        }
+    }
+
+    void InteractionHoldCanceled()
+    {
+        if (GameManager.instance.levelStarted)
+        {
+            if (!HeartManager.instance.defeatOrVictory && !GameManager.instance.levelPaused)
+            {
+                if (canInteract && CharacterController2D.instance.animator.GetBool("Holding"))
+                {
+                    switch (currentInteractableType)
+                    {
+                        case InteractableType.leak:
+                            CharacterController2D.instance.animator.SetBool("Holding", false);
+                            UI_Manager.instance.UI_leakGaugeCanvas.enabled = false;
                             break;
                     }
                 }
@@ -96,6 +151,7 @@ public class InteractionManager : MonoBehaviour
                 else
                     break;
             case "Leak":
+                //if gauge destroy it
                 if (currentInteractableType == InteractableType.leak)
                     goto case "CLEAN CASE";
                 else

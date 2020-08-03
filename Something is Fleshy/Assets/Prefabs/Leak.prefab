@@ -15,7 +15,7 @@ GameObject:
   m_Layer: 0
   m_Name: Leak
   m_TagString: Leak
-  m_Icon: {fileID: 5132851093641282708, guid: 0000000000000000d000000000000000, type: 0}
+  m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -46,6 +46,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   FXprefab: {fileID: 2153536652816491261, guid: 674d3d7f797c0524d8e52a0fb0b02dd7,
+    type: 3}
+  bandagePrefab: {fileID: 3451493739730486092, guid: 0bcf3446e180d9d4fb9b48cf8463acc0,
     type: 3}
   associatedPipeLeaksZones: []
   associatedLever: {fileID: 0}

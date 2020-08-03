@@ -6,6 +6,7 @@ public class Leak : MonoBehaviour
     [Header("PARAMETERS")]
 #pragma warning disable 0649
     [SerializeField] GameObject FXprefab;
+    [SerializeField] GameObject bandagePrefab;
 #pragma warning restore 0649
     [Header("Variables")]
     [Header("⚠ DON'T TOUCH BELOW ⚠")]
@@ -57,6 +58,9 @@ public class Leak : MonoBehaviour
     public void PatchLeak()
     {
         associatedLever.allLeaksZones[associatedPipe] = associatedPipeLeaksZones;
+        Instantiate(bandagePrefab, transform.position, transform.rotation);
+        Destroy(FX);
+        LeaksManager.instance.allLeaks.Remove(gameObject);
         Destroy(gameObject);
     }
 }

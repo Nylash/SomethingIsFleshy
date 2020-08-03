@@ -6,7 +6,7 @@ public abstract class PrimarySystem : MonoBehaviour
 #pragma warning disable 0649
 	[Header("PARAMETERS")]
 	[Tooltip("Time before being empty when full and only one secondary system is open. If two secondary systems are open divide this value by 2 and so on..")]
-	[SerializeField] float maxCapacity = 35f;
+	public float maxCapacity = 35f;
 	[Tooltip("Use this parameters to set at which capacity this system start.")]
 	[SerializeField] float startCapacity = 20f;
 	[Tooltip("Multiplier ratio for filling over time. By default 1.")]

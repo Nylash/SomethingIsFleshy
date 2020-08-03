@@ -391,6 +391,6 @@ public class CharacterController2D : MonoBehaviour
 
 	public bool AnimationNotCurrentlyBlocking()
 	{
-		return !animator.GetBool("Interacting") && !animator.GetBool("Teleporting") && !animator.GetBool("Shocked");
+		return !animator.GetBool("Interacting") && !animator.GetBool("Teleporting") && !animator.GetBool("Shocked") && !animator.GetBool("Holding");
 	}
 }
