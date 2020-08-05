@@ -59,7 +59,7 @@ public class LeaksManager : MonoBehaviour
     {
         if (allLeaks.Count != 0)
             return;
-        if(StomachManager.instance.currentCapacity / StomachManager.instance.maxCapacity > .6f && LungsManager.instance.currentCapacity / LungsManager.instance.maxCapacity > .6f)
+        if (StomachManager.instance.currentCapacity / StomachManager.instance.maxCapacity > .6f && LungsManager.instance.currentCapacity / LungsManager.instance.maxCapacity > .6f)
             runStateWeight += leakProbWeightValue;
         if (HeartManager.instance.currentHealth / HeartManager.instance.maxHealth < .2f)
             runStateWeight -= leakProbWeightValue;

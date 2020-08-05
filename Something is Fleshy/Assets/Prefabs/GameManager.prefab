@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 1770001783312019989}
   - component: {fileID: 5516669155998750807}
   - component: {fileID: 1892749339}
+  - component: {fileID: 1442325289}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -65,11 +66,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 77762ae9dd9da224d930f530cac5d620, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  timeBeforeFirstActivity: 2
-  minTimeBetweenActivities: 10
-  maxTimeBetweenActivities: 15
-  timeBeforeHealthLoss: 5
-  ressourceRandomEqualizerValue: 15
+  timeBeforeFirstActivity: 12
+  minTimeBetweenActivities: 17
+  maxTimeBetweenActivities: 20
+  timeBeforeHealthLoss: 8
+  ressourceRandomWeightValue: 10
   packA:
   - {fileID: 0}
   - {fileID: 0}
@@ -78,4 +79,25 @@ MonoBehaviour:
   - {fileID: 0}
   packC: []
   packD: []
-  randomRessourceEqualizer: 0
+  randomRessourceWeight: 0
+--- !u!114 &1442325289
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8365515437562039805}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 61e7124897d01e84f8b1f0086a7937e0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  timeBeforeFirstCheckForLeak: 15
+  timeIntervalForCheckForLeak: 15
+  probabilityLeak: 10
+  leakPrefab: {fileID: 2985575670311895097, guid: 9e91570b890f30f429b91feac610a39d,
+    type: 3}
+  leakProbWeightValue: 20
+  timeToRepair: 1.5
+  leversWithLeaksZones: []
+  allLeaks: []
