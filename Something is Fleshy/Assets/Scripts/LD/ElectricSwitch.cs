@@ -41,30 +41,12 @@ public class ElectricSwitch : MonoBehaviour
         colorPlatformsB = platformsB[0].color;
         if (!startWithPlatformsB)
         {
-            foreach (SpriteShapeRenderer item in platformsA)
-            {
-                item.color = colorPlatformsA;
-                item.tag = "ElectricPlatform";
-            }
-            foreach (SpriteShapeRenderer item in platformsB)
-            {
-                item.color = initialColor;
-                item.tag = "Untagged";
-            }
+            MakeSwitch(platformsA, platformsB, colorPlatformsA);
         }
         else
         {
             platformsA_activated = false;
-            foreach (SpriteShapeRenderer item in platformsA)
-            {
-                item.color = initialColor;
-                item.tag = "Untagged";
-            }
-            foreach (SpriteShapeRenderer item in platformsB)
-            {
-                item.color = colorPlatformsB;
-                item.tag = "ElectricPlatform";
-            }
+            MakeSwitch(platformsB, platformsA, colorPlatformsB);
         }
     }
 
@@ -73,32 +55,42 @@ public class ElectricSwitch : MonoBehaviour
         if (platformsA_activated)
         {
             platformsA_activated = false;
-            foreach (SpriteShapeRenderer item in platformsA)
-            {
-                item.color = initialColor;
-                item.tag = "Untagged";
-            }
-            foreach (SpriteShapeRenderer item in platformsB)
-            {
-                item.color = colorPlatformsB;
-                item.tag = "ElectricPlatform";
-            }
+            MakeSwitch(platformsB, platformsA, colorPlatformsB);
         }
         else
         {
             platformsA_activated = true;
-            foreach (SpriteShapeRenderer item in platformsA)
+            MakeSwitch(platformsA, platformsB, colorPlatformsA);
+        }
+        AnimHandler();
+    }
+
+    void MakeSwitch(SpriteShapeRenderer[] activated, SpriteShapeRenderer[] desactivated, Color activatedColor)
+    {
+        foreach (SpriteShapeRenderer item in activated)
+        {
+            if(item.gameObject.layer != 8)
             {
-                item.color = colorPlatformsA;
+                item.GetComponent<ElectricWall>().Activate();
+            }
+            else
+            {
+                item.color = activatedColor;
                 item.tag = "ElectricPlatform";
             }
-            foreach (SpriteShapeRenderer item in platformsB)
+        }
+        foreach (SpriteShapeRenderer item in desactivated)
+        {
+            if (item.gameObject.layer != 8)
+            {
+                item.GetComponent<ElectricWall>().Desactivate();
+            }
+            else
             {
                 item.color = initialColor;
                 item.tag = "Untagged";
             }
         }
-        AnimHandler();
     }
 
     void AnimHandler()
