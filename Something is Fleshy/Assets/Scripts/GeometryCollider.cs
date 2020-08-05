@@ -10,7 +10,6 @@ using UnityEditor;
 [ExecuteAlways]
 public class GeometryCollider : MonoBehaviour
 {
-    [SerializeField]
     bool m_UpdateCollider = false;
 
     int m_HashCode = 0;
@@ -155,6 +154,11 @@ public class GeometryCollider : MonoBehaviour
                 break;
             }
         }
+    }
+
+    public void Bake()
+    {
+        Bake(gameObject, true);
     }
 
 #if UNITY_EDITOR

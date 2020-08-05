@@ -37,8 +37,10 @@ public class ElectricSwitch : MonoBehaviour
         {
             platformsB[i] = transform.GetChild(2).transform.GetChild(i).GetComponent<SpriteShapeRenderer>();
         }
-        colorPlatformsA = platformsA[0].color;
-        colorPlatformsB = platformsB[0].color;
+        if(nbPlatformsA > 0)
+            colorPlatformsA = platformsA[0].color;
+        if(nbPlatformsB > 0)
+            colorPlatformsB = platformsB[0].color;
         if (!startWithPlatformsB)
         {
             MakeSwitch(platformsA, platformsB, colorPlatformsA);
