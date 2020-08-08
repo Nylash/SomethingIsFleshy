@@ -51,6 +51,7 @@ MonoBehaviour:
     type: 3}
   associatedPipeLeaksZones: []
   associatedLever: {fileID: 0}
+  associatedHint: {fileID: 0}
   associatedPipe: 0
 --- !u!61 &1691565144952988611
 BoxCollider2D:
@@ -126,5 +127,5 @@ SpriteRenderer:
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
-  m_MaskInteraction: 0
+  m_MaskInteraction: 1
   m_SpriteSortPoint: 0
