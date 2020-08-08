@@ -2,20 +2,21 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-public class HintSecondarySystemManager : MonoBehaviour
+
+public class HintLeakManager : MonoBehaviour
 {
-    public static HintSecondarySystemManager instance;
+    public static HintLeakManager instance;
 
 #pragma warning disable 0649
     [Header("PARAMETERS")]
     [Tooltip("Curve use to make the hint follow screen's edges.")]
-    public AnimationCurve pivotValue;
     [SerializeField] GameObject hintPrefab;
 #pragma warning restore 0649
     [Space]
     [Header("⚠ DON'T TOUCH BELOW ⚠")]
     [Header("Variables")]
-    public List<SecondarySystem> activeSecondarySystems = new List<SecondarySystem>();
+    public List<Leak> activesLeaks = new List<Leak>();
+    AnimationCurve pivotValue;
 
     private void Awake()
     {
@@ -25,33 +26,34 @@ public class HintSecondarySystemManager : MonoBehaviour
             Destroy(gameObject);
     }
 
+    private void Start()
+    {
+        pivotValue = HintSecondarySystemManager.instance.pivotValue;
+    }
+
     private void Update()
     {
         if (CameraManager.instance.VCamZoom.activeSelf)
         {
-            foreach (SecondarySystem item in activeSecondarySystems)
+            foreach (Leak item in activesLeaks)
             {
                 Vector3 screenPoint = Camera.main.WorldToViewportPoint(item.transform.position);
                 bool onScreen = screenPoint.x > 0 && screenPoint.x < 1 && screenPoint.y > 0 && screenPoint.y < 1;
                 if (onScreen)
                 {
-                    if(item.associatedHint && item.associatedHint.activeSelf)
+                    if (item.associatedHint && item.associatedHint.activeSelf)
                         item.associatedHint.SetActive(false);
                 }
                 else
                 {
                     if (item.associatedHint)
                     {
-                        if(!item.associatedHint.activeSelf)
+                        if (!item.associatedHint.activeSelf)
                             item.associatedHint.SetActive(true);
-                    }  
+                    }
                     else
                     {
                         item.associatedHint = Instantiate(hintPrefab, transform);
-                        if (item.energyNeeded)
-                            item.associatedHint.transform.GetChild(0).GetComponent<Image>().color = GameManager.instance.energyColor;
-                        else
-                            item.associatedHint.transform.GetChild(0).GetComponent<Image>().color = GameManager.instance.oxygenColor;
                     }
                     float angle = Vector2.SignedAngle(item.associatedHint.transform.up, (Camera.main.WorldToScreenPoint(item.transform.position) - item.associatedHint.transform.position).normalized);
                     item.associatedHint.transform.Rotate(new Vector3(0, 0, angle));
@@ -64,7 +66,7 @@ public class HintSecondarySystemManager : MonoBehaviour
         }
         else
         {
-            foreach (SecondarySystem item in activeSecondarySystems)
+            foreach (Leak item in activesLeaks)
             {
                 if (item.associatedHint && item.associatedHint.activeSelf)
                     item.associatedHint.SetActive(false);

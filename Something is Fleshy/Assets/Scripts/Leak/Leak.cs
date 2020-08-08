@@ -12,6 +12,7 @@ public class Leak : MonoBehaviour
     [Header("⚠ DON'T TOUCH BELOW ⚠")]
     public List<LeakZone> associatedPipeLeaksZones;
     public LeverScript associatedLever;
+    public GameObject associatedHint;
     public int associatedPipe;
     GameObject FX;
     ParticleSystem.MainModule fxMainModule;
@@ -23,6 +24,7 @@ public class Leak : MonoBehaviour
         fxMainModule = FX.GetComponent<ParticleSystem>().main;
         fxEmissionModule = FX.GetComponent<ParticleSystem>().emission;
         transform.eulerAngles = new Vector3(0, 0, Random.Range(0f, 360f));
+        HintLeakManager.instance.activesLeaks.Add(this);
     }
 
     private void Update()
@@ -61,6 +63,9 @@ public class Leak : MonoBehaviour
         Instantiate(bandagePrefab, transform.position, transform.rotation);
         Destroy(FX);
         LeaksManager.instance.allLeaks.Remove(gameObject);
+        HintLeakManager.instance.activesLeaks.Remove(this);
+        if (associatedHint)
+            Destroy(associatedHint);
         Destroy(gameObject);
     }
 }

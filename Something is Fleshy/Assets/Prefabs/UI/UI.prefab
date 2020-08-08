@@ -2667,6 +2667,7 @@ GameObject:
   - component: {fileID: 6583510078025324681}
   - component: {fileID: 8807571100092906177}
   - component: {fileID: 1609424591}
+  - component: {fileID: 486090137}
   m_Layer: 5
   m_Name: UI
   m_TagString: Untagged
@@ -2830,6 +2831,21 @@ MonoBehaviour:
   hintPrefab: {fileID: 5864862026548436991, guid: d4e22ce1ddecec647946a14751edbc94,
     type: 3}
   activeSecondarySystems: []
+--- !u!114 &486090137
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6583510078025324694}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 48714f74ab897ea439b0d9cd8318f1ea, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hintPrefab: {fileID: 5864862026548436991, guid: c5d467ac1fd397e4c89f016a1c0338ec,
+    type: 3}
+  activesLeaks: []
 --- !u!1 &7507496005574260290
 GameObject:
   m_ObjectHideFlags: 0

@@ -42,6 +42,7 @@ public class InteractionManager : MonoBehaviour
                 {
                     holdTimer += Time.deltaTime;
                     UI_Manager.instance.UI_leakGaugeIn.fillAmount = holdTimer / LeaksManager.instance.timeToRepair;
+                    UI_Manager.instance.UI_leakGaugeCanvas.transform.position = new Vector3(Camera.main.WorldToScreenPoint(transform.position).x, Camera.main.WorldToScreenPoint(transform.position + new Vector3(0, 2f, 0)).y, 0);
                     if (holdTimer >= LeaksManager.instance.timeToRepair)
                     {
                         UI_Manager.instance.UI_leakGaugeCanvas.enabled = false;
