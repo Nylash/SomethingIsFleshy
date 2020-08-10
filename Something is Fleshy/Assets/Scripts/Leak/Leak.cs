@@ -17,12 +17,16 @@ public class Leak : MonoBehaviour
     GameObject FX;
     ParticleSystem.MainModule fxMainModule;
     ParticleSystem.EmissionModule fxEmissionModule;
+    ParticleSystem.MainModule fxMainModuleChild;
+    ParticleSystem.EmissionModule fxEmissionModuleChild;
 
     private void Start()
     {
         FX = Instantiate(FXprefab, transform.position, FXprefab.transform.rotation);
         fxMainModule = FX.GetComponent<ParticleSystem>().main;
         fxEmissionModule = FX.GetComponent<ParticleSystem>().emission;
+        fxMainModuleChild = FX.transform.GetChild(0).GetComponent<ParticleSystem>().main;
+        fxEmissionModuleChild = FX.transform.GetChild(0).GetComponent<ParticleSystem>().emission;
         transform.eulerAngles = new Vector3(0, 0, Random.Range(0f, 360f));
         HintLeakManager.instance.activesLeaks.Add(this);
     }
@@ -36,24 +40,37 @@ public class Leak : MonoBehaviour
                 case LeverScript.RessourcesType.energy:
                     StomachManager.instance.Emptying(Time.deltaTime);
                     if(fxMainModule.startColor.color != GameManager.instance.energyColor)
+                    {
                         fxMainModule.startColor = GameManager.instance.energyColor;
+                        fxMainModuleChild.startColor = GameManager.instance.energyColor;
+                    }  
                     break;
                 case LeverScript.RessourcesType.oxygen:
                     LungsManager.instance.Emptying(Time.deltaTime);
                     if (fxMainModule.startColor.color != GameManager.instance.oxygenColor)
+                    {
                         fxMainModule.startColor = GameManager.instance.oxygenColor;
+                        fxMainModuleChild.startColor = GameManager.instance.oxygenColor;
+                    }
                     break;
                 case LeverScript.RessourcesType.none:
                     fxEmissionModule.enabled = false;
+                    fxEmissionModuleChild.enabled = false;
                     break;
             }
             if (!fxEmissionModule.enabled && associatedLever.currentRessource != LeverScript.RessourcesType.none)
+            {
                 fxEmissionModule.enabled = true;
+                fxEmissionModuleChild.enabled = true;
+            }    
         }
         else
         {
             if (fxEmissionModule.enabled)
+            {
                 fxEmissionModule.enabled = false;
+                fxEmissionModuleChild.enabled = false;
+            }   
         }
     }
 
