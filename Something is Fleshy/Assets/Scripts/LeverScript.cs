@@ -17,12 +17,13 @@ public class LeverScript : MonoBehaviour
     [ConditionalHide("doubleEntry", true)]
     [Tooltip("Object at the end of the double pipes.")]
     [SerializeField] GameObject endObject;
+
+    [Header("Variables")]
+    [Header("⚠ DON'T TOUCH BELOW ⚠")]
     [Header("Leaks zones")]
     [SerializeField] List<LeakZone> pipe0LeaksZones = new List<LeakZone>();
     [SerializeField] List<LeakZone> pipe1LeaksZones = new List<LeakZone>();
 #pragma warning restore 0649
-    [Header("Variables")]
-    [Header("⚠ DON'T TOUCH BELOW ⚠")]
     public RessourcesType currentRessource;
     public List<LeakZone>[] allLeaksZones = new List<LeakZone>[2];
     public int currentPipe;
@@ -55,6 +56,15 @@ public class LeverScript : MonoBehaviour
                 Debug.LogError("There is no correct object associated at the end of this lever : " + gameObject.name + " current end object : " + endObject);
         }
         UpdatePipe();
+
+        foreach (LeakZone item in pipes[0].GetComponentsInChildren<LeakZone>())
+        {
+            pipe0LeaksZones.Add(item);
+        }
+        foreach (LeakZone item in pipes[1].GetComponentsInChildren<LeakZone>())
+        {
+            pipe1LeaksZones.Add(item);
+        }
 
         if (pipe0LeaksZones.Count != 0)
             allLeaksZones[0] = pipe0LeaksZones;

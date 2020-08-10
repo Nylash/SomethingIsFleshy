@@ -2814,7 +2814,7 @@ PrefabInstance:
     - target: {fileID: 3478768265959703450, guid: 8655963e876619142b62dcdc8876e46f,
         type: 3}
       propertyPath: pipe1LeaksZones.Array.size
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3478768265959703450, guid: 8655963e876619142b62dcdc8876e46f,
         type: 3}
@@ -2925,7 +2925,7 @@ PrefabInstance:
     - target: {fileID: 3478768265959703450, guid: 8655963e876619142b62dcdc8876e46f,
         type: 3}
       propertyPath: pipe0LeaksZones.Array.size
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3478768265959703450, guid: 8655963e876619142b62dcdc8876e46f,
         type: 3}
@@ -19922,12 +19922,12 @@ PrefabInstance:
     - target: {fileID: 3478768265959703450, guid: 8655963e876619142b62dcdc8876e46f,
         type: 3}
       propertyPath: pipe0LeaksZones.Array.size
-      value: 4
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3478768265959703450, guid: 8655963e876619142b62dcdc8876e46f,
         type: 3}
       propertyPath: pipe1LeaksZones.Array.size
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3478768265959703450, guid: 8655963e876619142b62dcdc8876e46f,
         type: 3}
