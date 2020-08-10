@@ -47,6 +47,8 @@ MonoBehaviour:
   updateWhilePlaying: 0
   emitter1: {fileID: 0}
   emitter2: {fileID: 0}
+  emitterPrefab: {fileID: 3498416978715331428, guid: f3298b92e97ab4e409310e3c9dda855b,
+    type: 3}
   lineMaterial: {fileID: 10306, guid: 0000000000000000f000000000000000, type: 0}
 --- !u!1971053207 &7989095428999380215
 SpriteShapeRenderer:
