@@ -54,8 +54,11 @@ public class SecondarySystem : MonoBehaviour
 
 		if (memberIsBoned)
 			memberAnimator = transform.parent.parent.parent.GetComponent<Animator>();
-		else
-			memberAnimator = transform.parent.GetComponent<Animator>();
+        else
+        {
+			if(transform.parent.GetComponent<Animator>())
+				memberAnimator = transform.parent.GetComponent<Animator>();
+		}	
 	}
 
 	private void Update()
@@ -138,7 +141,8 @@ public class SecondarySystem : MonoBehaviour
 		energyGauge.SetActive(false);
 		oxygenGauge.SetActive(false);
 		animator.SetBool("OnActivity", false);
-		memberAnimator.SetBool("Active", false);
+		if(memberAnimator)
+			memberAnimator.SetBool("Active", false);
 		currentEnergy = 0f;
 		currentOxygen = 0f;
 		energyPropertyBlock.SetFloat("Height", currentEnergy / energyAmoutNeeded);
