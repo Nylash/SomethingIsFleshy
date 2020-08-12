@@ -9,6 +9,8 @@ public class SecondarySystem : MonoBehaviour
 	[SerializeField] float energyAmoutNeeded = 10f;
 	[Tooltip("Time to full this system in oxygen.")]
 	[SerializeField] float oxygenAmoutNeeded = 10f;
+	[Tooltip("Check this if the member associated to this SS  uses bones.")]
+	[SerializeField] bool memberIsBoned;
 #pragma warning restore 0649
 	[Space]
 	[Header("⚠ DON'T TOUCH BELOW ⚠")]
@@ -19,6 +21,7 @@ public class SecondarySystem : MonoBehaviour
 	public GameObject oxygenGauge;
 	[Header("Components")]
 	public Animator animator;
+	public Animator memberAnimator;
 	[Header("Variables")]
 	public List<SecondarySystem> associatedPack = new List<SecondarySystem>();
 	public GameObject associatedHint;
@@ -48,6 +51,11 @@ public class SecondarySystem : MonoBehaviour
 		energyGauge.SetActive(false);
 		oxygenGauge.SetActive(false);
 		animator = GetComponent<Animator>();
+
+		if (memberIsBoned)
+			memberAnimator = transform.parent.parent.parent.GetComponent<Animator>();
+		else
+			memberAnimator = transform.parent.GetComponent<Animator>();
 	}
 
 	private void Update()
@@ -130,6 +138,7 @@ public class SecondarySystem : MonoBehaviour
 		energyGauge.SetActive(false);
 		oxygenGauge.SetActive(false);
 		animator.SetBool("OnActivity", false);
+		memberAnimator.SetBool("Active", false);
 		currentEnergy = 0f;
 		currentOxygen = 0f;
 		energyPropertyBlock.SetFloat("Height", currentEnergy / energyAmoutNeeded);
