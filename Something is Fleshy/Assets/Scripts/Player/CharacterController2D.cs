@@ -53,7 +53,6 @@ public class CharacterController2D : MonoBehaviour
 	public ParticleSystem walkFX;
 	public GameObject JLFXspot;
 	public GameObject JLFX;
-	public PlayerAnimationsMethods animMethodsScript;
 	ActionsMap actionsMap;
 
 	[Header("Variables")]
@@ -310,14 +309,6 @@ public class CharacterController2D : MonoBehaviour
 	{
 		switch (collision.tag)
 		{
-			case "TP":
-				if (AnimationNotCurrentlyBlocking())
-				{
-					animMethodsScript.tpPosition = collision.GetComponentInParent<Teleporters>().GetTPLocation(collision.gameObject);
-					animator.SetTrigger("StartTeleporting");
-					animator.SetBool("Teleporting", true);
-				}
-				break;
 			case "MovingPlatform":
 				associatedMovingPlatform = collision.gameObject;
 				transform.parent = associatedMovingPlatform.transform;

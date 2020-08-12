@@ -10,6 +10,7 @@ public class InteractionManager : MonoBehaviour
     ActionsMap actionsMap;
 
     [Header("Variables")]
+    public PlayerAnimationsMethods animMethodsScript;
     bool canInteract;
     GameObject interactableObject;
     InteractableType currentInteractableType;
@@ -77,6 +78,14 @@ public class InteractionManager : MonoBehaviour
                             UI_Manager.instance.UI_leakGaugeIn.fillAmount = 0;
                             UI_Manager.instance.UI_leakGaugeCanvas.enabled = true;
                             goto HoldInteractionAnim;
+                        case InteractableType.teleporter:
+                            if (CharacterController2D.instance.AnimationNotCurrentlyBlocking())
+                            {
+                                animMethodsScript.tpPosition = interactableObject.GetComponentInParent<Teleporters>().GetTPLocation(interactableObject.gameObject);
+                                CharacterController2D.instance.animator.SetTrigger("StartTeleporting");
+                                CharacterController2D.instance.animator.SetBool("Teleporting", true);
+                            }
+                            break;
                     }
                     if (CharacterController2D.instance.AnimationNotCurrentlyBlocking())
                     {
@@ -119,20 +128,21 @@ public class InteractionManager : MonoBehaviour
     {
         switch (collision.gameObject.tag)
         {
+            case "TP":
+                currentInteractableType = InteractableType.teleporter;
+                goto case "GENERAL CASE";
             case "Lever":
-                canInteract = true;
-                interactableObject = collision.gameObject;
                 currentInteractableType = InteractableType.lever;
-                break;
+                goto case "GENERAL CASE";
             case "ElectricLever":
-                canInteract = true;
-                interactableObject = collision.gameObject;
                 currentInteractableType = InteractableType.electricLever;
-                break;
+                goto case "GENERAL CASE";
             case "Leak":
+                currentInteractableType = InteractableType.leak;
+                goto case "GENERAL CASE";
+            case "GENERAL CASE":
                 canInteract = true;
                 interactableObject = collision.gameObject;
-                currentInteractableType = InteractableType.leak;
                 break;
         }
     }
@@ -152,8 +162,14 @@ public class InteractionManager : MonoBehaviour
                 else
                     break;
             case "Leak":
-                //if gauge destroy it
+                if (UI_Manager.instance.UI_leakGaugeCanvas)
+                    UI_Manager.instance.UI_leakGaugeCanvas.enabled = false;
                 if (currentInteractableType == InteractableType.leak)
+                    goto case "CLEAN CASE";
+                else
+                    break;
+            case "TP":
+                if (currentInteractableType == InteractableType.teleporter)
                     goto case "CLEAN CASE";
                 else
                     break;
@@ -167,6 +183,6 @@ public class InteractionManager : MonoBehaviour
 
     public enum InteractableType
     {
-        none, lever, electricLever, leak,
+        none, lever, electricLever, leak, teleporter
     }
 }

@@ -8,7 +8,7 @@ public class PlayerAnimationsMethods : MonoBehaviour
 
     private void Start()
     {
-        CharacterController2D.instance.animMethodsScript = this;
+        InteractionManager.instance.animMethodsScript = this;
     }
 
     void EndInteraction()
