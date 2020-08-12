@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 6407590227609142826}
   - component: {fileID: 6407590227609142827}
   - component: {fileID: 1746572926}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: VCam Zoom
   m_TagString: CamZoom
   m_Icon: {fileID: 0}
@@ -55,7 +55,7 @@ MonoBehaviour:
   m_Follow: {fileID: 0}
   m_Lens:
     FieldOfView: 40
-    OrthographicSize: 10
+    OrthographicSize: 15
     NearClipPlane: 0.1
     FarClipPlane: 5000
     Dutch: 0

@@ -114,7 +114,7 @@ GameObject:
   - component: {fileID: 7296892664401040504}
   - component: {fileID: 7296892664401040505}
   - component: {fileID: 4444930147499203239}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: VCam Global
   m_TagString: CamGlobal
   m_Icon: {fileID: 0}
@@ -158,7 +158,7 @@ MonoBehaviour:
   m_Follow: {fileID: 0}
   m_Lens:
     FieldOfView: 40
-    OrthographicSize: 18.5
+    OrthographicSize: 35
     NearClipPlane: 0.1
     FarClipPlane: 5000
     Dutch: 0

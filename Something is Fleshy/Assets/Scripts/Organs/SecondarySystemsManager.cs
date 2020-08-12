@@ -63,8 +63,8 @@ public class SecondarySystemsManager : MonoBehaviour
             int selectedPack = Random.Range(0, allSecondarySystems.Count);
             int selectedSecondarySystem = Random.Range(0, allSecondarySystems[selectedPack].Count);
             allSecondarySystems[selectedPack][selectedSecondarySystem].animator.SetBool("OnActivity", true);
-            if(allSecondarySystems[selectedPack][selectedSecondarySystem].memberAnimator)
-                allSecondarySystems[selectedPack][selectedSecondarySystem].memberAnimator.SetBool("Active", true);
+            if (allSecondarySystems[selectedPack][selectedSecondarySystem].memberAnimator)
+                allSecondarySystems[selectedPack][selectedSecondarySystem].memberAnimator.speed = 1f;
             switch (GetRandomType())
             {
                 case LeverScript.RessourcesType.energy:
