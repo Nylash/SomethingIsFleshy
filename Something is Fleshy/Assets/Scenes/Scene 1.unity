@@ -9786,7 +9786,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1442325289, guid: 9719e81b153f0914ebc60d15fdb1de3f, type: 3}
       propertyPath: timeIntervalForCheckForLeak
-      value: 20
+      value: 15
       objectReference: {fileID: 0}
     - target: {fileID: 1442325289, guid: 9719e81b153f0914ebc60d15fdb1de3f, type: 3}
       propertyPath: probabilityLeak
@@ -9818,7 +9818,7 @@ PrefabInstance:
       objectReference: {fileID: 66139343}
     - target: {fileID: 1892749339, guid: 9719e81b153f0914ebc60d15fdb1de3f, type: 3}
       propertyPath: maxTimeBetweenActivities
-      value: 25
+      value: 30
       objectReference: {fileID: 0}
     - target: {fileID: 1892749339, guid: 9719e81b153f0914ebc60d15fdb1de3f, type: 3}
       propertyPath: timeBeforeFirstActivity
@@ -9826,7 +9826,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1892749339, guid: 9719e81b153f0914ebc60d15fdb1de3f, type: 3}
       propertyPath: minTimeBetweenActivities
-      value: 20
+      value: 25
       objectReference: {fileID: 0}
     - target: {fileID: 1892749339, guid: 9719e81b153f0914ebc60d15fdb1de3f, type: 3}
       propertyPath: timeBeforeHealthLoss
