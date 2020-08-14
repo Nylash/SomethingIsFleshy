@@ -5,7 +5,6 @@ public class VCamGlobal : MonoBehaviour
 {
     Transform target;
 
-
     private void Awake()
     {
         target = GameObject.FindGameObjectWithTag("LevelCenter").transform;

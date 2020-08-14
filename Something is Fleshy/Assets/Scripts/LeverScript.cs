@@ -145,7 +145,7 @@ public class LeverScript : MonoBehaviour
                     }
                     else
                     {
-                        //WRONG  RESSOURCE
+                        //WRONG RESSOURCE
                     }
                 }
                 else
