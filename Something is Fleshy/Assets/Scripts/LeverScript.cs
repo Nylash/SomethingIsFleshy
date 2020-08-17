@@ -20,7 +20,6 @@ public class LeverScript : MonoBehaviour
 
     [Header("Variables")]
     [Header("⚠ DON'T TOUCH BELOW ⚠")]
-    [Header("Leaks zones")]
     [SerializeField] List<LeakZone> pipe0LeaksZones = new List<LeakZone>();
     [SerializeField] List<LeakZone> pipe1LeaksZones = new List<LeakZone>();
 #pragma warning restore 0649

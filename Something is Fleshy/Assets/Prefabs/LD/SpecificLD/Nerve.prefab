@@ -73,8 +73,8 @@ SpriteShapeRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -2082688597
-  m_SortingLayer: 8
-  m_SortingOrder: 0
+  m_SortingLayer: 9
+  m_SortingOrder: -1
   m_Color: {r: 1, g: 0, b: 0, a: 1}
   m_MaskInteraction: 0
   m_ShapeTexture: {fileID: 2800000, guid: 1f575491c101e93469ae8da37c7a49cd, type: 3}
@@ -130,6 +130,7 @@ MonoBehaviour:
   m_OptimizeCollider: 1
   m_OptimizeGeometry: 1
   m_EnableTangents: 0
+  m_GeometryCached: 0
 --- !u!60 &4496166353502076308
 PolygonCollider2D:
   m_ObjectHideFlags: 0
@@ -235,7 +236,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 79ec9a3070948ee44909ca58497a357b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_UpdateCollider: 0
 --- !u!95 &8382612726908719064
 Animator:
   serializedVersion: 3
