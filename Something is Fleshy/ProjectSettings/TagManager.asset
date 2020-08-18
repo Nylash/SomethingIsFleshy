@@ -52,11 +52,17 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
-  - name: Background
+  - name: BackgroundLevel
+    uniqueID: 2336373663
+    locked: 0
+  - name: BackgroundHost
     uniqueID: 3457093293
     locked: 0
   - name: Pipe
     uniqueID: 2790816243
+    locked: 0
+  - name: Decorations
+    uniqueID: 469888389
     locked: 0
   - name: Leak
     uniqueID: 2737172865
