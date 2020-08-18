@@ -61,11 +61,11 @@ TagManager:
   - name: Pipe
     uniqueID: 2790816243
     locked: 0
-  - name: Decorations
-    uniqueID: 469888389
-    locked: 0
   - name: Leak
     uniqueID: 2737172865
+    locked: 0
+  - name: OrganDecorations
+    uniqueID: 797508353
     locked: 0
   - name: Organ
     uniqueID: 696649615
@@ -81,6 +81,9 @@ TagManager:
     locked: 0
   - name: Player FX
     uniqueID: 2622226395
+    locked: 0
+  - name: GroundDecorations
+    uniqueID: 469888389
     locked: 0
   - name: Ground
     uniqueID: 2212278699
