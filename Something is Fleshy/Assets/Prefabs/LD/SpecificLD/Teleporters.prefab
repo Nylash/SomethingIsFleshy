@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 7818252893115240640}
   m_Layer: 0
   m_Name: Teleporters
-  m_TagString: Untagged
+  m_TagString: TP
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -121,6 +121,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Portal 2
       objectReference: {fileID: 0}
+    - target: {fileID: 2585006994270965503, guid: 43ff95bd9fc215b498861f8d241b7f77,
+        type: 3}
+      propertyPath: m_TagString
+      value: TP
+      objectReference: {fileID: 0}
     - target: {fileID: 2585006994787070958, guid: 43ff95bd9fc215b498861f8d241b7f77,
         type: 3}
       propertyPath: m_Enabled
@@ -215,6 +220,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Portal 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2585006994270965503, guid: 43ff95bd9fc215b498861f8d241b7f77,
+        type: 3}
+      propertyPath: m_TagString
+      value: TP
       objectReference: {fileID: 0}
     - target: {fileID: 2585006994773999746, guid: 43ff95bd9fc215b498861f8d241b7f77,
         type: 3}
