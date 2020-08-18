@@ -11,6 +11,8 @@ public class HintSecondarySystemManager : MonoBehaviour
     [Tooltip("Curve use to make the hint follow screen's edges.")]
     public AnimationCurve pivotValue;
     [SerializeField] GameObject hintPrefab;
+    [SerializeField] Sprite oxygenSprite;
+    [SerializeField] Sprite energySprite;
 #pragma warning restore 0649
     [Space]
     [Header("⚠ DON'T TOUCH BELOW ⚠")]
@@ -49,9 +51,9 @@ public class HintSecondarySystemManager : MonoBehaviour
                     {
                         item.associatedHint = Instantiate(hintPrefab, transform);
                         if (item.energyNeeded)
-                            item.associatedHint.transform.GetChild(0).GetComponent<Image>().color = GameManager.instance.energyColor;
+                            item.associatedHint.GetComponent<Image>().sprite = energySprite;
                         else
-                            item.associatedHint.transform.GetChild(0).GetComponent<Image>().color = GameManager.instance.oxygenColor;
+                            item.associatedHint.GetComponent<Image>().sprite = oxygenSprite;
                     }
                     float angle = Vector2.SignedAngle(item.associatedHint.transform.up, (Camera.main.WorldToScreenPoint(item.transform.position) - item.associatedHint.transform.position).normalized);
                     item.associatedHint.transform.Rotate(new Vector3(0, 0, angle));

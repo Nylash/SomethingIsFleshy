@@ -2830,6 +2830,8 @@ MonoBehaviour:
     m_RotationOrder: 4
   hintPrefab: {fileID: 5864862026548436991, guid: d4e22ce1ddecec647946a14751edbc94,
     type: 3}
+  oxygenSprite: {fileID: 21300000, guid: 83b8c1f4d2e77c144b94fe7b021dc6bf, type: 3}
+  energySprite: {fileID: 21300000, guid: 67bfe89958202ce4b8a7c9220c519e01, type: 3}
   activeSecondarySystems: []
 --- !u!114 &486090137
 MonoBehaviour:
