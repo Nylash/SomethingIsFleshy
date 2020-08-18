@@ -63,7 +63,7 @@ GameObject:
   - component: {fileID: 8857337013147664493}
   - component: {fileID: 8857337013147664402}
   m_Layer: 0
-  m_Name: Bakcground
+  m_Name: BakcgroundLevel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
