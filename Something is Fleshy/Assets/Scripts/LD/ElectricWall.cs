@@ -22,7 +22,7 @@ public class ElectricWall : MonoBehaviour
     LineRenderer line;
     BoxCollider2D lineCollider;
 
-    private void Start()
+    private void Awake()
     {
         startRenderer = emitter1.GetComponent<SpriteRenderer>();
         endRenderer = emitter2.GetComponent<SpriteRenderer>();

@@ -34,6 +34,8 @@ public class SecondarySystemsManager : MonoBehaviour
     public List<List<SecondarySystem>> allSecondarySystems = new List<List<SecondarySystem>>();
     bool startWhenOnePackIsReady;
 
+    SecondarySystem lastSelected;
+
     private void Awake()
     {
         if (instance == null)
@@ -81,7 +83,13 @@ public class SecondarySystemsManager : MonoBehaviour
             StartCoroutine(LaunchActivity(allSecondarySystems[selectedPack][selectedSecondarySystem]));
             HintSecondarySystemManager.instance.activeSecondarySystems.Add(allSecondarySystems[selectedPack][selectedSecondarySystem]);
             allSecondarySystems[selectedPack][selectedSecondarySystem].associatedPack = allSecondarySystems[selectedPack];
+            allSecondarySystems[selectedPack][selectedSecondarySystem].canBeSelectedAgain = false;
+            if (lastSelected)
+                lastSelected.canBeSelectedAgain = true;
+            lastSelected = allSecondarySystems[selectedPack][selectedSecondarySystem];
             allSecondarySystems.Remove(allSecondarySystems[selectedPack]);
+            if (allSecondarySystems.Count == 0)
+                lastSelected.canBeSelectedAgain = true;
         }
         else
             startWhenOnePackIsReady = true;

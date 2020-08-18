@@ -24,6 +24,7 @@ public class SecondarySystem : MonoBehaviour
 	public Animator memberAnimator;
 	[Header("Variables")]
 	public List<SecondarySystem> associatedPack = new List<SecondarySystem>();
+	public bool canBeSelectedAgain;
 	public GameObject associatedHint;
 	public float currentEnergy;
 	public float currentOxygen;
@@ -31,6 +32,7 @@ public class SecondarySystem : MonoBehaviour
 	public bool oxygenNeeded;
 	public bool filling;
 	public bool canDealDamage;
+	bool checkIfCanBeSelectedAgain;
 	MaterialPropertyBlock energyPropertyBlock;
 	MaterialPropertyBlock oxygenPropertyBlock;
 	SpriteRenderer energyRenderer;
@@ -94,6 +96,14 @@ public class SecondarySystem : MonoBehaviour
 					oxygenRenderer.SetPropertyBlock(oxygenPropertyBlock);
 				}
 				CheckStopActivity();
+                if (checkIfCanBeSelectedAgain)
+                {
+                    if (canBeSelectedAgain)
+                    {
+						checkIfCanBeSelectedAgain = false;
+						SecondarySystemsManager.instance.AddPack(associatedPack);
+					}
+                }
 			}
 		}
 	}
@@ -151,7 +161,10 @@ public class SecondarySystem : MonoBehaviour
 		energyRenderer.SetPropertyBlock(energyPropertyBlock);
 		oxygenPropertyBlock.SetFloat("Height", currentOxygen / oxygenAmoutNeeded);
 		oxygenRenderer.SetPropertyBlock(oxygenPropertyBlock);
-		SecondarySystemsManager.instance.AddPack(associatedPack);
+		if (canBeSelectedAgain)
+			SecondarySystemsManager.instance.AddPack(associatedPack);
+		else
+			checkIfCanBeSelectedAgain = true;
 		HintSecondarySystemManager.instance.activeSecondarySystems.Remove(this);
 		if (associatedHint)
 			Destroy(associatedHint);
