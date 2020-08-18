@@ -49,6 +49,9 @@ MonoBehaviour:
     type: 3}
   bandagePrefab: {fileID: 3451493739730486092, guid: 0bcf3446e180d9d4fb9b48cf8463acc0,
     type: 3}
+  crackSprites:
+  - {fileID: 21300000, guid: ac54fc6ebe88b9b458fc4102bd37270c, type: 3}
+  - {fileID: 21300000, guid: bc35668828c79a54585ec85881b4463e, type: 3}
   associatedPipeLeaksZones: []
   associatedLever: {fileID: 0}
   associatedHint: {fileID: 0}

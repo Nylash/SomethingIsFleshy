@@ -7,6 +7,7 @@ public class Leak : MonoBehaviour
 #pragma warning disable 0649
     [SerializeField] GameObject FXprefab;
     [SerializeField] GameObject bandagePrefab;
+    [SerializeField] List<Sprite> crackSprites = new List<Sprite>();
 #pragma warning restore 0649
     [Header("Variables")]
     [Header("⚠ DON'T TOUCH BELOW ⚠")]
@@ -22,6 +23,8 @@ public class Leak : MonoBehaviour
 
     private void Start()
     {
+        int random = Random.Range(0, crackSprites.Count);
+        GetComponent<SpriteRenderer>().sprite = crackSprites[random];
         FX = Instantiate(FXprefab, transform.position, FXprefab.transform.rotation);
         fxMainModule = FX.GetComponent<ParticleSystem>().main;
         fxEmissionModule = FX.GetComponent<ParticleSystem>().emission;
