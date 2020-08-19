@@ -162,14 +162,16 @@ public class InteractionManager : MonoBehaviour
                 else
                     break;
             case "Leak":
-                if (UI_Manager.instance.UI_leakGaugeCanvas)
-                    UI_Manager.instance.UI_leakGaugeCanvas.enabled = false;
                 if (currentInteractableType == InteractableType.leak)
+                {
+                    if (UI_Manager.instance.UI_leakGaugeCanvas)
+                        UI_Manager.instance.UI_leakGaugeCanvas.enabled = false;
                     goto case "CLEAN CASE";
+                }
                 else
                     break;
             case "TP":
-                if (currentInteractableType == InteractableType.teleporter)
+                if (currentInteractableType == InteractableType.teleporter && !CharacterController2D.instance.animator.GetBool("Teleporting"))
                     goto case "CLEAN CASE";
                 else
                     break;

@@ -2,17 +2,6 @@
 
 public abstract class PrimarySystem : MonoBehaviour
 {
-	#region CONFIGURATION
-#pragma warning disable 0649
-	[Header("PARAMETERS")]
-	[Tooltip("Time before being empty when full and only one secondary system is open. If two secondary systems are open divide this value by 2 and so on..")]
-	public float maxCapacity = 35f;
-	[Tooltip("Use this parameters to set at which capacity this system start.")]
-	[SerializeField] float startCapacity = 20f;
-	[Tooltip("Multiplier ratio for filling over time. By default 1.")]
-	[Min(1f)] [SerializeField] float fillingMultiplier = 1;
-#pragma warning restore 0649
-	#endregion
 	[Header("Variables")]
 	[Header("⚠ DON'T TOUCH BELOW ⚠")]
 	public float currentCapacity;
@@ -21,15 +10,15 @@ public abstract class PrimarySystem : MonoBehaviour
 
 	protected virtual void Awake()
 	{
-		currentCapacity = startCapacity;
+		currentCapacity = GameManager.instance.startCapacityPrimarySystem;
 		fillingMaterial = transform.GetChild(0).GetComponent<SpriteRenderer>().material;
-		fillingMaterial.SetFloat("Height", currentCapacity / maxCapacity);
+		fillingMaterial.SetFloat("Height", currentCapacity / GameManager.instance.maxCapacityPrimarySystem);
 	}
 
 	protected virtual void Update()
 	{
 		ContinuousFilling();
-		fillingMaterial.SetFloat("Height", currentCapacity / maxCapacity);
+		fillingMaterial.SetFloat("Height", currentCapacity / GameManager.instance.maxCapacityPrimarySystem);
 	}
 
 	void ContinuousFilling()
@@ -39,15 +28,15 @@ public abstract class PrimarySystem : MonoBehaviour
 			if (!HeartManager.instance.defeatOrVictory && !GameManager.instance.levelPaused)
 			{
 				if (filling)
-					Filling(Time.deltaTime * fillingMultiplier);
+					Filling(Time.deltaTime * GameManager.instance.fillingMultiplierPrimarySystem);
 			}
 		}
 	}
 
 	public virtual void Filling(float amount)
 	{
-		if (currentCapacity + amount >= maxCapacity)
-			currentCapacity = maxCapacity;
+		if (currentCapacity + amount >= GameManager.instance.maxCapacityPrimarySystem)
+			currentCapacity = GameManager.instance.maxCapacityPrimarySystem;
 		else
 			currentCapacity += amount;
 	}

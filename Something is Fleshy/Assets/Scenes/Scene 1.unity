@@ -98,7 +98,7 @@ LightmapSettings:
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
   m_LightingDataAsset: {fileID: 0}
-  m_UseShadowmask: 1
+  m_UseShadowmask: 0
 --- !u!196 &4
 NavMeshSettings:
   serializedVersion: 2
@@ -9832,6 +9832,14 @@ PrefabInstance:
       propertyPath: timeBeforeHealthLoss
       value: 8
       objectReference: {fileID: 0}
+    - target: {fileID: 1892749339, guid: 9719e81b153f0914ebc60d15fdb1de3f, type: 3}
+      propertyPath: energyAmoutNeeded
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 1892749339, guid: 9719e81b153f0914ebc60d15fdb1de3f, type: 3}
+      propertyPath: oxygenAmoutNeeded
+      value: 10
+      objectReference: {fileID: 0}
     - target: {fileID: 1770001783312019989, guid: 9719e81b153f0914ebc60d15fdb1de3f,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -9886,6 +9894,21 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5516669155998750807, guid: 9719e81b153f0914ebc60d15fdb1de3f,
+        type: 3}
+      propertyPath: maxHealth
+      value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: 5516669155998750807, guid: 9719e81b153f0914ebc60d15fdb1de3f,
+        type: 3}
+      propertyPath: maxCapacityPrimarySystem
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 5516669155998750807, guid: 9719e81b153f0914ebc60d15fdb1de3f,
+        type: 3}
+      propertyPath: startCapacityPrimarySystem
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 8365515437562039805, guid: 9719e81b153f0914ebc60d15fdb1de3f,
         type: 3}

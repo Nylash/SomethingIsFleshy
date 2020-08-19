@@ -4,15 +4,9 @@ using UnityEngine.EventSystems;
 public class HeartManager : MonoBehaviour
 {
     public static HeartManager instance;
-#pragma warning disable 0649
-	[Header("PARAMETERS")]
-	[Tooltip("Time to end level (in seconds).")]
-	[SerializeField] int timeToFinish = 180;
-	[Tooltip("Max health, 1 HP = 1 sec")]
-	public float maxHealth;
-	[Space]
-	[Header("⚠ DON'T TOUCH BELOW ⚠")]
+
 	[Header("Variables")]
+	[Header("⚠ DON'T TOUCH BELOW ⚠")]
 	public float currentHealth;
 	public float currentTimer;
 	public bool defeatOrVictory;
@@ -24,15 +18,15 @@ public class HeartManager : MonoBehaviour
             instance = this;
         else if (instance != this)
             Destroy(gameObject);
-		UI_Manager.instance.UI_timerValue.text = timeToFinish.ToString();
-		currentTimer = timeToFinish;
+		UI_Manager.instance.UI_timerValue.text = GameManager.instance.timeToFinishLevel.ToString();
+		currentTimer = GameManager.instance.timeToFinishLevel;
     }
 
 	private void Start()
 	{
-		currentHealth = maxHealth;
+		currentHealth = GameManager.instance.maxHealth;
 		fillingMaterial = transform.GetChild(0).GetComponent<SpriteRenderer>().material;
-		fillingMaterial.SetFloat("Height", currentHealth / maxHealth);
+		fillingMaterial.SetFloat("Height", currentHealth / GameManager.instance.maxHealth);
 	}
 
 	private void Update()
@@ -57,13 +51,13 @@ public class HeartManager : MonoBehaviour
 			currentHealth = 0;
 			Defeat();
 		}
-		fillingMaterial.SetFloat("Height", currentHealth / maxHealth);
+		fillingMaterial.SetFloat("Height", currentHealth / GameManager.instance.maxHealth);
 	}
 
 	void Defeat()
 	{
-		UI_Manager.instance.UI_defeatFullTimer.text = timeToFinish.ToString() + " seconds";
-		UI_Manager.instance.UI_defeatActualTimer.text = (timeToFinish - (int)currentTimer).ToString() + " seconds";
+		UI_Manager.instance.UI_defeatFullTimer.text = GameManager.instance.timeToFinishLevel.ToString() + " seconds";
+		UI_Manager.instance.UI_defeatActualTimer.text = (GameManager.instance.timeToFinishLevel - (int)currentTimer).ToString() + " seconds";
 		UI_Manager.instance.UI_defeatCanvas.enabled = true;
 		EventSystem.current.SetSelectedGameObject(UI_Manager.instance.UI_defeatButton.gameObject);
 		defeatOrVictory = true;
