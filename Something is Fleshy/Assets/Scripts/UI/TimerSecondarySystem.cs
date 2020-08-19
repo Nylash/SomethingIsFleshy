@@ -16,6 +16,7 @@ public class TimerSecondarySystem : MonoBehaviour
 
     private void Update()
     {
+        transform.position = Camera.main.WorldToScreenPoint(associatedSystem.transform.position);
         if (associatedSystem.filling)
         {
             if (canvas.enabled)
