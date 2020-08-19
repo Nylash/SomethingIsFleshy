@@ -18,8 +18,6 @@ public class HeartManager : MonoBehaviour
             instance = this;
         else if (instance != this)
             Destroy(gameObject);
-		UI_Manager.instance.UI_timerValue.text = GameManager.instance.timeToFinishLevel.ToString();
-		currentTimer = GameManager.instance.timeToFinishLevel;
     }
 
 	private void Start()
@@ -27,6 +25,8 @@ public class HeartManager : MonoBehaviour
 		currentHealth = GameManager.instance.maxHealth;
 		fillingMaterial = transform.GetChild(0).GetComponent<SpriteRenderer>().material;
 		fillingMaterial.SetFloat("Height", currentHealth / GameManager.instance.maxHealth);
+		UI_Manager.instance.UI_timerValue.text = GameManager.instance.timeToFinishLevel.ToString();
+		currentTimer = GameManager.instance.timeToFinishLevel;
 	}
 
 	private void Update()

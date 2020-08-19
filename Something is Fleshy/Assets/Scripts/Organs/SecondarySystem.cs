@@ -36,7 +36,7 @@ public class SecondarySystem : MonoBehaviour
 	SpriteRenderer energyRenderer;
 	SpriteRenderer oxygenRenderer;
 
-	private void Awake()
+	private void Start()
 	{
 		energyPropertyBlock = new MaterialPropertyBlock();
 		energyRenderer = energyGauge.GetComponent<SpriteRenderer>();
