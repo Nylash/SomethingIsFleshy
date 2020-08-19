@@ -51,6 +51,14 @@ MonoBehaviour:
   pipeCloseColor: {r: 0.3773585, g: 0.3755785, b: 0.3755785, a: 1}
   pipeOpenShape: {fileID: 11400000, guid: bb2921a37e575594abf66d4bed2111bf, type: 2}
   pipeCloseShape: {fileID: 11400000, guid: c1787f02087482745ba878ebf0d8c8f6, type: 2}
+  UI_timerSS: {fileID: 4883372696975181904, guid: 8e34697cb58a8e142a51df52b2bf91e7,
+    type: 3}
+  timeToFinishLevel: 180
+  maxHealth: 0
+  maxCapacityPrimarySystem: 35
+  startCapacityPrimarySystem: 20
+  fillingMultiplierPrimarySystem: 1
+  SSexplosionDamage: 20
   nerveDamage: 5
   levelStarted: 0
   levelPaused: 0
@@ -66,10 +74,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 77762ae9dd9da224d930f530cac5d620, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  energyAmoutNeeded: 10
+  oxygenAmoutNeeded: 10
+  timeBeforeSSexplosion: 5
   timeBeforeFirstActivity: 12
   minTimeBetweenActivities: 17
   maxTimeBetweenActivities: 20
-  timeBeforeHealthLoss: 8
   ressourceRandomWeightValue: 10
   packA:
   - {fileID: 0}

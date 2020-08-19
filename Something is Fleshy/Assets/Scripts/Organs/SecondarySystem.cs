@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
+using System.Threading;
 
 public class SecondarySystem : MonoBehaviour
 {
@@ -28,7 +29,7 @@ public class SecondarySystem : MonoBehaviour
 	public bool energyNeeded;
 	public bool oxygenNeeded;
 	public bool filling;
-	public bool canDealDamage;
+	public float timerBeforeExplosion;
 	bool checkIfCanBeSelectedAgain;
 	MaterialPropertyBlock energyPropertyBlock;
 	MaterialPropertyBlock oxygenPropertyBlock;
@@ -68,29 +69,23 @@ public class SecondarySystem : MonoBehaviour
 		{
 			if (!HeartManager.instance.defeatOrVictory && !GameManager.instance.levelPaused)
 			{
-				if (energyGauge.activeSelf)
+				if (energyNeeded)
 				{
-					if (energyNeeded)
-					{
-						if (filling)
-							FillingEnergy();
-						else if(canDealDamage)
-							HeartManager.instance.TakeDamage(Time.deltaTime);
-					}
-					energyPropertyBlock.SetFloat("Height", currentEnergy / SecondarySystemsManager.instance.energyAmoutNeeded);
-					energyRenderer.SetPropertyBlock(energyPropertyBlock);
+					if (filling)
+						FillingEnergy();
+					else
+						timerBeforeExplosion += Time.deltaTime;
+				energyPropertyBlock.SetFloat("Height", currentEnergy / SecondarySystemsManager.instance.energyAmoutNeeded);
+				energyRenderer.SetPropertyBlock(energyPropertyBlock);
 				}
-				else if (oxygenGauge.activeSelf)
+				else if (oxygenNeeded)
 				{
-					if (oxygenNeeded)
-					{
-						if (filling)
-							FillingOxygen();
-						else if(canDealDamage)
-							HeartManager.instance.TakeDamage(Time.deltaTime);
-					}
-					oxygenPropertyBlock.SetFloat("Height", currentOxygen / SecondarySystemsManager.instance.oxygenAmoutNeeded);
-					oxygenRenderer.SetPropertyBlock(oxygenPropertyBlock);
+					if (filling)
+						FillingOxygen();
+					else
+						timerBeforeExplosion += Time.deltaTime;
+				oxygenPropertyBlock.SetFloat("Height", currentOxygen / SecondarySystemsManager.instance.oxygenAmoutNeeded);
+				oxygenRenderer.SetPropertyBlock(oxygenPropertyBlock);
 				}
 				CheckStopActivity();
                 if (checkIfCanBeSelectedAgain)
@@ -139,14 +134,19 @@ public class SecondarySystem : MonoBehaviour
 			if (currentOxygen / SecondarySystemsManager.instance.oxygenAmoutNeeded >= 1)
 				StopActivity();
 		}
+		if(timerBeforeExplosion >= SecondarySystemsManager.instance.timeBeforeSSexplosion)
+        {
+			HeartManager.instance.TakeDamage(GameManager.instance.SSexplosionDamage);
+			StopActivity();
+        }
 	}
 
 	void StopActivity()
 	{
+		timerBeforeExplosion = 0f;
 		filling = false;
 		energyNeeded = false;
 		oxygenNeeded = false;
-		canDealDamage = false;
 		energyGauge.SetActive(false);
 		oxygenGauge.SetActive(false);
 		animator.SetBool("OnActivity", false);

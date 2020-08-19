@@ -19,6 +19,7 @@ public class GameManager : MonoBehaviour
 	public SpriteShape pipeOpenShape;
 	[Tooltip("Pipe's shape when close.")]
 	public SpriteShape pipeCloseShape;
+	public GameObject UI_timerSS;
 	[Space]
 	[Header("PARAMETERS")]
 	[Tooltip("Time to end level (in seconds).")]

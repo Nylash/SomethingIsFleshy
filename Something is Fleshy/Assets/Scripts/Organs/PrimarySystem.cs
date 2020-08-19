@@ -8,7 +8,7 @@ public abstract class PrimarySystem : MonoBehaviour
 	public bool filling;
 	Material fillingMaterial;
 
-	protected virtual void Awake()
+	protected virtual void Start()
 	{
 		currentCapacity = GameManager.instance.startCapacityPrimarySystem;
 		fillingMaterial = transform.GetChild(0).GetComponent<SpriteRenderer>().material;

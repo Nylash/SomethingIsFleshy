@@ -2,9 +2,8 @@
 {
     public static LungsManager instance;
 
-    protected override void Awake()
+    protected void Awake()
     {
-        base.Awake();
         if (instance == null)
             instance = this;
         else if (instance != this)

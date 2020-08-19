@@ -15,17 +15,17 @@ public class SecondarySystemsManager : MonoBehaviour
     public float oxygenAmoutNeeded = 10f;
     [Tooltip("Time before an SS explode if it doesn't get ressource.")]
     public float timeBeforeSSexplosion = 5f;
+    [Space]
     [Tooltip("Time before the first activity.")]
     [SerializeField] float timeBeforeFirstActivity = 10f;
     [Tooltip("Minimal time between two activities.")]
     [SerializeField] float minTimeBetweenActivities = 15f;
     [Tooltip("Maximal time between two activities.")]
     [SerializeField] float maxTimeBetweenActivities = 30f;
-    [Tooltip("Time during which player knows that a secondary system will need a ressource, but without HP loss.")]
-    [SerializeField] float timeBeforeHealthLoss = 5f;
     [Tooltip("Value that increase probability of the other ressource when one is chosen." +
         "By default prob are 50-50, but when one is chosen it became 60-40 (if this value is 10).")]
     [Range(0,50)] [SerializeField] int ressourceRandomWeightValue = 10;
+    [Space]
     [SerializeField] List<SecondarySystem> packA = new List<SecondarySystem>();
     [SerializeField] List<SecondarySystem> packB = new List<SecondarySystem>();
     [SerializeField] List<SecondarySystem> packC = new List<SecondarySystem>();
@@ -86,7 +86,6 @@ public class SecondarySystemsManager : MonoBehaviour
                     allSecondarySystems[selectedPack][selectedSecondarySystem].oxygenNeeded = true;
                     break;
             }
-            StartCoroutine(LaunchActivity(allSecondarySystems[selectedPack][selectedSecondarySystem]));
             HintSecondarySystemManager.instance.activeSecondarySystems.Add(allSecondarySystems[selectedPack][selectedSecondarySystem]);
             allSecondarySystems[selectedPack][selectedSecondarySystem].associatedPack = allSecondarySystems[selectedPack];
             allSecondarySystems[selectedPack][selectedSecondarySystem].canBeSelectedAgain = false;
@@ -96,16 +95,12 @@ public class SecondarySystemsManager : MonoBehaviour
             allSecondarySystems.Remove(allSecondarySystems[selectedPack]);
             if (allSecondarySystems.Count == 0)
                 lastSelected.canBeSelectedAgain = true;
+            TimerSecondarySystem timerObject = Instantiate(GameManager.instance.UI_timerSS, UI_Manager.instance.transform).GetComponent<TimerSecondarySystem>();
+            timerObject.associatedSystem = lastSelected;
         }
         else
             startWhenOnePackIsReady = true;
         Invoke("StartActivity", Random.Range(minTimeBetweenActivities, maxTimeBetweenActivities));
-    }
-
-    IEnumerator LaunchActivity(SecondarySystem selectedSystem)
-    {
-        yield return new WaitForSeconds(timeBeforeHealthLoss);
-        selectedSystem.canDealDamage = true;
     }
 
     LeverScript.RessourcesType GetRandomType()
