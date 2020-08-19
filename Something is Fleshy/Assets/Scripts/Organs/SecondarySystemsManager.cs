@@ -9,6 +9,10 @@ public class SecondarySystemsManager : MonoBehaviour
     #region CONFIGURATION
 #pragma warning disable 0649
     [Header("PARAMETERS")]
+    [Tooltip("Time to full a secondary system in energy.")]
+    public float energyAmoutNeeded = 10f;
+    [Tooltip("Time to full a secondary system in oxygen.")]
+    public float oxygenAmoutNeeded = 10f;
     [Tooltip("Time before the first activity.")]
     [SerializeField] float timeBeforeFirstActivity = 10f;
     [Tooltip("Minimal time between two activities.")]

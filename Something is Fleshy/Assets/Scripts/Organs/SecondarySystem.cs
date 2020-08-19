@@ -5,10 +5,7 @@ public class SecondarySystem : MonoBehaviour
 {
 #pragma warning disable 0649
 	[Header("PARAMETERS")]
-	[Tooltip("Time to full this system in energy.")]
-	[SerializeField] float energyAmoutNeeded = 10f;
-	[Tooltip("Time to full this system in oxygen.")]
-	[SerializeField] float oxygenAmoutNeeded = 10f;
+	
 	[Tooltip("Check this if the member associated to this SS  uses bones.")]
 	[SerializeField] bool memberIsBoned;
 #pragma warning restore 0649
@@ -42,12 +39,12 @@ public class SecondarySystem : MonoBehaviour
 	{
 		energyPropertyBlock = new MaterialPropertyBlock();
 		energyRenderer = energyGauge.GetComponent<SpriteRenderer>();
-		energyPropertyBlock.SetFloat("Height", currentEnergy / energyAmoutNeeded);
+		energyPropertyBlock.SetFloat("Height", currentEnergy / SecondarySystemsManager.instance.energyAmoutNeeded);
 		energyRenderer.SetPropertyBlock(energyPropertyBlock);
 
 		oxygenPropertyBlock = new MaterialPropertyBlock();
 		oxygenRenderer = oxygenGauge.GetComponent<SpriteRenderer>();
-		oxygenPropertyBlock.SetFloat("Height", currentOxygen / oxygenAmoutNeeded);
+		oxygenPropertyBlock.SetFloat("Height", currentOxygen / SecondarySystemsManager.instance.oxygenAmoutNeeded);
 		oxygenRenderer.SetPropertyBlock(oxygenPropertyBlock);
 
 		energyGauge.SetActive(false);
@@ -80,7 +77,7 @@ public class SecondarySystem : MonoBehaviour
 						else if(canDealDamage)
 							HeartManager.instance.TakeDamage(Time.deltaTime);
 					}
-					energyPropertyBlock.SetFloat("Height", currentEnergy / energyAmoutNeeded);
+					energyPropertyBlock.SetFloat("Height", currentEnergy / SecondarySystemsManager.instance.energyAmoutNeeded);
 					energyRenderer.SetPropertyBlock(energyPropertyBlock);
 				}
 				else if (oxygenGauge.activeSelf)
@@ -92,7 +89,7 @@ public class SecondarySystem : MonoBehaviour
 						else if(canDealDamage)
 							HeartManager.instance.TakeDamage(Time.deltaTime);
 					}
-					oxygenPropertyBlock.SetFloat("Height", currentOxygen / oxygenAmoutNeeded);
+					oxygenPropertyBlock.SetFloat("Height", currentOxygen / SecondarySystemsManager.instance.oxygenAmoutNeeded);
 					oxygenRenderer.SetPropertyBlock(oxygenPropertyBlock);
 				}
 				CheckStopActivity();
@@ -112,8 +109,8 @@ public class SecondarySystem : MonoBehaviour
 	{
 		if (StomachManager.instance.Emptying(Time.deltaTime))
 		{
-			if (currentEnergy + Time.deltaTime >= energyAmoutNeeded)
-				currentEnergy = energyAmoutNeeded;
+			if (currentEnergy + Time.deltaTime >= SecondarySystemsManager.instance.energyAmoutNeeded)
+				currentEnergy = SecondarySystemsManager.instance.energyAmoutNeeded;
 			else
 				currentEnergy += Time.deltaTime;
 		}
@@ -123,8 +120,8 @@ public class SecondarySystem : MonoBehaviour
 	{
 		if (LungsManager.instance.Emptying(Time.deltaTime))
 		{
-			if (currentOxygen + Time.deltaTime >= oxygenAmoutNeeded)
-				currentOxygen = oxygenAmoutNeeded;
+			if (currentOxygen + Time.deltaTime >= SecondarySystemsManager.instance.oxygenAmoutNeeded)
+				currentOxygen = SecondarySystemsManager.instance.oxygenAmoutNeeded;
 			else
 				currentOxygen += Time.deltaTime;
 		}
@@ -134,12 +131,12 @@ public class SecondarySystem : MonoBehaviour
 	{
 		if (energyNeeded)
 		{
-			if (currentEnergy / energyAmoutNeeded >= 1)
+			if (currentEnergy / SecondarySystemsManager.instance.energyAmoutNeeded >= 1)
 				StopActivity();
 		}
 		else if (oxygenNeeded)
 		{
-			if (currentOxygen / oxygenAmoutNeeded >= 1)
+			if (currentOxygen / SecondarySystemsManager.instance.oxygenAmoutNeeded >= 1)
 				StopActivity();
 		}
 	}
@@ -157,9 +154,9 @@ public class SecondarySystem : MonoBehaviour
 			memberAnimator.speed = 0;
 		currentEnergy = 0f;
 		currentOxygen = 0f;
-		energyPropertyBlock.SetFloat("Height", currentEnergy / energyAmoutNeeded);
+		energyPropertyBlock.SetFloat("Height", currentEnergy / SecondarySystemsManager.instance.energyAmoutNeeded);
 		energyRenderer.SetPropertyBlock(energyPropertyBlock);
-		oxygenPropertyBlock.SetFloat("Height", currentOxygen / oxygenAmoutNeeded);
+		oxygenPropertyBlock.SetFloat("Height", currentOxygen / SecondarySystemsManager.instance.oxygenAmoutNeeded);
 		oxygenRenderer.SetPropertyBlock(oxygenPropertyBlock);
 		if (canBeSelectedAgain)
 			SecondarySystemsManager.instance.AddPack(associatedPack);

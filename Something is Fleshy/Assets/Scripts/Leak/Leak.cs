@@ -17,9 +17,8 @@ public class Leak : MonoBehaviour
     public int associatedPipe;
     GameObject FX;
     ParticleSystem.MainModule fxMainModule;
-    ParticleSystem.EmissionModule fxEmissionModule;
     ParticleSystem.MainModule fxMainModuleChild;
-    ParticleSystem.EmissionModule fxEmissionModuleChild;
+    LeverScript.RessourcesType currentRessource;
 
     private void Start()
     {
@@ -27,9 +26,7 @@ public class Leak : MonoBehaviour
         GetComponent<SpriteRenderer>().sprite = crackSprites[random];
         FX = Instantiate(FXprefab, transform.position, FXprefab.transform.rotation);
         fxMainModule = FX.GetComponent<ParticleSystem>().main;
-        fxEmissionModule = FX.GetComponent<ParticleSystem>().emission;
         fxMainModuleChild = FX.transform.GetChild(0).GetComponent<ParticleSystem>().main;
-        fxEmissionModuleChild = FX.transform.GetChild(0).GetComponent<ParticleSystem>().emission;
         transform.eulerAngles = new Vector3(0, 0, Random.Range(0f, 360f));
         HintLeakManager.instance.activesLeaks.Add(this);
     }
@@ -46,6 +43,7 @@ public class Leak : MonoBehaviour
                     {
                         fxMainModule.startColor = GameManager.instance.energyColor;
                         fxMainModuleChild.startColor = GameManager.instance.energyColor;
+                        currentRessource = LeverScript.RessourcesType.energy;
                     }  
                     break;
                 case LeverScript.RessourcesType.oxygen:
@@ -54,26 +52,105 @@ public class Leak : MonoBehaviour
                     {
                         fxMainModule.startColor = GameManager.instance.oxygenColor;
                         fxMainModuleChild.startColor = GameManager.instance.oxygenColor;
+                        currentRessource = LeverScript.RessourcesType.oxygen;
                     }
                     break;
                 case LeverScript.RessourcesType.none:
-                    fxEmissionModule.enabled = false;
-                    fxEmissionModuleChild.enabled = false;
+                    switch (currentRessource)
+                    {
+                        case LeverScript.RessourcesType.none:
+                            int rand = Random.Range(0, 2);
+                            switch (rand)
+                            {
+                                case 0:
+                                    StomachManager.instance.Emptying(Time.deltaTime);
+                                    if (fxMainModule.startColor.color != GameManager.instance.energyColor)
+                                    {
+                                        fxMainModule.startColor = GameManager.instance.energyColor;
+                                        fxMainModuleChild.startColor = GameManager.instance.energyColor;
+                                        currentRessource = LeverScript.RessourcesType.energy;
+                                    }
+                                    break;
+                                case 1:
+                                    LungsManager.instance.Emptying(Time.deltaTime);
+                                    if (fxMainModule.startColor.color != GameManager.instance.oxygenColor)
+                                    {
+                                        fxMainModule.startColor = GameManager.instance.oxygenColor;
+                                        fxMainModuleChild.startColor = GameManager.instance.oxygenColor;
+                                        currentRessource = LeverScript.RessourcesType.oxygen;
+                                    }
+                                    break;
+                            }
+                            break;
+                        case LeverScript.RessourcesType.energy:
+                            StomachManager.instance.Emptying(Time.deltaTime);
+                            if (fxMainModule.startColor.color != GameManager.instance.energyColor)
+                            {
+                                fxMainModule.startColor = GameManager.instance.energyColor;
+                                fxMainModuleChild.startColor = GameManager.instance.energyColor;
+                                currentRessource = LeverScript.RessourcesType.energy;
+                            }
+                            break;
+                        case LeverScript.RessourcesType.oxygen:
+                            LungsManager.instance.Emptying(Time.deltaTime);
+                            if (fxMainModule.startColor.color != GameManager.instance.oxygenColor)
+                            {
+                                fxMainModule.startColor = GameManager.instance.oxygenColor;
+                                fxMainModuleChild.startColor = GameManager.instance.oxygenColor;
+                                currentRessource = LeverScript.RessourcesType.oxygen;
+                            }
+                            break;
+                    }
                     break;
-            }
-            if (!fxEmissionModule.enabled && associatedLever.currentRessource != LeverScript.RessourcesType.none)
-            {
-                fxEmissionModule.enabled = true;
-                fxEmissionModuleChild.enabled = true;
-            }    
+            }  
         }
         else
         {
-            if (fxEmissionModule.enabled)
+            switch (currentRessource)
             {
-                fxEmissionModule.enabled = false;
-                fxEmissionModuleChild.enabled = false;
-            }   
+                case LeverScript.RessourcesType.none:
+                    int rand = Random.Range(0, 2);
+                    switch (rand)
+                    {
+                        case 0:
+                            StomachManager.instance.Emptying(Time.deltaTime);
+                            if (fxMainModule.startColor.color != GameManager.instance.energyColor)
+                            {
+                                fxMainModule.startColor = GameManager.instance.energyColor;
+                                fxMainModuleChild.startColor = GameManager.instance.energyColor;
+                                currentRessource = LeverScript.RessourcesType.energy;
+                            }
+                            break;
+                        case 1:
+                            LungsManager.instance.Emptying(Time.deltaTime);
+                            if (fxMainModule.startColor.color != GameManager.instance.oxygenColor)
+                            {
+                                fxMainModule.startColor = GameManager.instance.oxygenColor;
+                                fxMainModuleChild.startColor = GameManager.instance.oxygenColor;
+                                currentRessource = LeverScript.RessourcesType.oxygen;
+                            }
+                            break;
+                    }
+                    break;
+                case LeverScript.RessourcesType.energy:
+                    StomachManager.instance.Emptying(Time.deltaTime);
+                    if (fxMainModule.startColor.color != GameManager.instance.energyColor)
+                    {
+                        fxMainModule.startColor = GameManager.instance.energyColor;
+                        fxMainModuleChild.startColor = GameManager.instance.energyColor;
+                        currentRessource = LeverScript.RessourcesType.energy;
+                    }
+                    break;
+                case LeverScript.RessourcesType.oxygen:
+                    LungsManager.instance.Emptying(Time.deltaTime);
+                    if (fxMainModule.startColor.color != GameManager.instance.oxygenColor)
+                    {
+                        fxMainModule.startColor = GameManager.instance.oxygenColor;
+                        fxMainModuleChild.startColor = GameManager.instance.oxygenColor;
+                        currentRessource = LeverScript.RessourcesType.oxygen;
+                    }
+                    break;
+            }
         }
     }
 
