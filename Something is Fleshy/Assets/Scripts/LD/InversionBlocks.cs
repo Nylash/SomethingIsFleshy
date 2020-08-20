@@ -1,25 +1,32 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 public class InversionBlocks : MonoBehaviour
 {
     #region CONFIGURATION
 #pragma warning disable 0649
     [Header("PARAMETERS")]
+    [ConditionalHide("activateByTime", true)]
     [Tooltip("Time before the first activity.")]
     [SerializeField] float timeBetweenSwitch = 10f;
+    [Space]
     [Tooltip("Check this if you want blocksB to be the first activated.")]
     [SerializeField] bool startWithBlocksB;
-#pragma warning restore 0649
     #endregion
-
     [Header("Variables")]
     [Header("⚠ DON'T TOUCH BELOW ⚠")]
+    [SerializeField] bool activateByLever;
+    [SerializeField] bool activateByTime;
+#pragma warning restore 0649
     public Animator[] blocksA;
     public Animator[] blocksB;
     bool blockAactivated = true;
+    bool isSwitched;
 
     private void Start()
     {
+        if (activateByLever && activateByTime)
+            Debug.LogError("You can't use activatedByLever and activatedByTime " + gameObject.name);
         int nbAblocks = transform.GetChild(0).transform.childCount;
         blocksA = new Animator[nbAblocks];
         for (int i = 0; i < nbAblocks; i++)
@@ -43,10 +50,11 @@ public class InversionBlocks : MonoBehaviour
             foreach (Animator item in blocksA)
                 item.SetTrigger("Depop");
         }
-        InvokeRepeating("InverseBlocks", timeBetweenSwitch, timeBetweenSwitch);
+        if(activateByTime)
+            InvokeRepeating("InverseBlocks", timeBetweenSwitch, timeBetweenSwitch);
     }
 
-    void InverseBlocks()
+    public void InverseBlocks()
     {
         if (blockAactivated)
         {
@@ -64,5 +72,16 @@ public class InversionBlocks : MonoBehaviour
             foreach (Animator item in blocksB)
                 item.SetTrigger("Depop");
         }
+        if (activateByLever)
+            AnimHandler();
+    }
+
+    void AnimHandler()
+    {
+        isSwitched = !isSwitched;
+        if (isSwitched)
+            transform.GetChild(2).transform.eulerAngles = new Vector3(0, 0, -85);
+        else
+            transform.GetChild(2).transform.eulerAngles = new Vector3(0, 0, 0);
     }
 }

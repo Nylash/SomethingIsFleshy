@@ -86,6 +86,9 @@ public class InteractionManager : MonoBehaviour
                                 CharacterController2D.instance.animator.SetBool("Teleporting", true);
                             }
                             break;
+                        case InteractableType.inversionBlockLever:
+                            interactableObject.GetComponent<InversionBlocks>().InverseBlocks();
+                            break;
                     }
                     if (CharacterController2D.instance.AnimationNotCurrentlyBlocking())
                     {
@@ -140,6 +143,9 @@ public class InteractionManager : MonoBehaviour
             case "Leak":
                 currentInteractableType = InteractableType.leak;
                 goto case "GENERAL CASE";
+            case "InversionBlock":
+                currentInteractableType = InteractableType.inversionBlockLever;
+                goto case "GENERAL CASE";
             case "GENERAL CASE":
                 canInteract = true;
                 interactableObject = collision.gameObject;
@@ -175,6 +181,11 @@ public class InteractionManager : MonoBehaviour
                     goto case "CLEAN CASE";
                 else
                     break;
+            case "InversionBlock":
+                if (currentInteractableType == InteractableType.inversionBlockLever)
+                    goto case "CLEAN CASE";
+                else
+                    break;
             case "CLEAN CASE":
                 canInteract = false;
                 interactableObject = null;
@@ -185,6 +196,6 @@ public class InteractionManager : MonoBehaviour
 
     public enum InteractableType
     {
-        none, lever, electricLever, leak, teleporter
+        none, lever, electricLever, leak, teleporter, inversionBlockLever
     }
 }

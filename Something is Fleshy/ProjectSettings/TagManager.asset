@@ -15,6 +15,7 @@ TagManager:
   - CamGlobal
   - Nerve
   - Leak
+  - InversionBlock
   layers:
   - Default
   - TransparentFX
