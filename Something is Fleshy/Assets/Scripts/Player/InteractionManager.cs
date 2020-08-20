@@ -172,6 +172,7 @@ public class InteractionManager : MonoBehaviour
                 {
                     if (UI_Manager.instance.UI_leakGaugeCanvas)
                         UI_Manager.instance.UI_leakGaugeCanvas.enabled = false;
+                    InteractionHoldCanceled();
                     goto case "CLEAN CASE";
                 }
                 else
