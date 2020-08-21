@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class CharacterController2D : MonoBehaviour
 {
@@ -73,6 +74,8 @@ public class CharacterController2D : MonoBehaviour
 	int framesCounterJumpBuffering;
 	//Anim variables
 	bool isOnNerve;
+	//Pause variables
+	float stockGravity;
 	//Debug variables
 	Color debugColor;
 
@@ -110,8 +113,11 @@ public class CharacterController2D : MonoBehaviour
 				if (showMovementDebug)
 					Debug.DrawLine(transform.position, transform.position - new Vector3(0, -.1f, 0), debugColor, 10);
 			}
-			else
+            else
+            {
 				rb.velocity = Vector2.zero;
+			}
+				
 		}
 	}
 
@@ -222,7 +228,7 @@ public class CharacterController2D : MonoBehaviour
 		debugColor = fallColor;
 	}
 
-	public void Move(float horizontalMove)
+	void Move(float horizontalMove)
 	{
 		if (isGrounded)
 		{

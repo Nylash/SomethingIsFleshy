@@ -7,7 +7,7 @@ public class LeaksManager : MonoBehaviour
 
     [Header("PARAMETERS")]
 #pragma warning disable 0649
-    [SerializeField] float timeBeforeFirstCheckForLeak;
+    public float timeBeforeFirstCheckForLeak;
     [SerializeField] float timeIntervalForCheckForLeak;
     [Range(0, 100)] [SerializeField] int probabilityLeak;
     [SerializeField] GameObject leakPrefab;
@@ -23,8 +23,6 @@ public class LeaksManager : MonoBehaviour
     int leakProbWeight;
     int runStateWeight;
 
-    ActionsMap actionsMap;
-
     private void Awake()
     {
         if (instance == null)
@@ -32,14 +30,8 @@ public class LeaksManager : MonoBehaviour
         else if (instance != this)
             Destroy(gameObject);
 
-        actionsMap = new ActionsMap();
-        actionsMap.Gameplay.Debug.started += ctx => StartLeak();
-
         InvokeRepeating("CheckLeak", timeBeforeFirstCheckForLeak, timeIntervalForCheckForLeak);
-    }
-
-    private void OnEnable() => actionsMap.Gameplay.Enable();
-    private void OnDisable() => actionsMap.Gameplay.Disable();
+    }    
 
     void CheckLeak()
     {
@@ -108,5 +100,22 @@ public class LeaksManager : MonoBehaviour
             leversWithLeaksZones[lever].allLeaksZones[pipe] = null;
             allLeaks.Add(leak);
         }
+    }
+
+    public void StartSpecificLeak(LeakZone leakZone, List<LeakZone> pipeLeakZones, LeverScript associatedLever, int associatedPipe)
+    {
+        GameObject leak = Instantiate(leakPrefab, leakZone.GetRandomLeakPosition(), Quaternion.identity);
+        Leak leakScript = leak.GetComponent<Leak>();
+        leakScript.associatedPipeLeaksZones = pipeLeakZones;
+        leakScript.associatedLever = associatedLever;
+        leakScript.associatedPipe = associatedPipe;
+        associatedLever.allLeaksZones[associatedPipe] = null;
+        allLeaks.Add(leak);
+    }
+
+    public void TutorialCompleted()
+    {
+        CancelInvoke("CheckLeak");
+        InvokeRepeating("CheckLeak", timeBeforeFirstCheckForLeak, timeIntervalForCheckForLeak);
     }
 }

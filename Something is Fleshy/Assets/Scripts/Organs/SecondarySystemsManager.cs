@@ -17,7 +17,7 @@ public class SecondarySystemsManager : MonoBehaviour
     public float timeBeforeSSexplosion = 5f;
     [Space]
     [Tooltip("Time before the first activity.")]
-    [SerializeField] float timeBeforeFirstActivity = 10f;
+    public float timeBeforeFirstActivity = 10f;
     [Tooltip("Minimal time between two activities.")]
     [SerializeField] float minTimeBetweenActivities = 15f;
     [Tooltip("Maximal time between two activities.")]
@@ -139,6 +139,30 @@ public class SecondarySystemsManager : MonoBehaviour
     public void StopActivityCall()
     {
         CancelInvoke("StartActivity");
-        StopCoroutine("LaunchActivity");
+    }
+
+    public void LaunchSpecificSS(SecondarySystem specificSS, List<SecondarySystem> pack)
+    {
+        specificSS.animator.SetBool("OnActivity", true);
+        if (specificSS.memberAnimator)
+            specificSS.memberAnimator.speed = 1f;
+        specificSS.currentEnergy = 0f;
+        specificSS.energyGauge.SetActive(true);
+        specificSS.energyNeeded = true;
+        HintSecondarySystemManager.instance.activeSecondarySystems.Add(specificSS);
+        specificSS.associatedPack = pack;
+        specificSS.canBeSelectedAgain = false;
+        if (lastSelected)
+            lastSelected.canBeSelectedAgain = true;
+        lastSelected = specificSS;
+        allSecondarySystems.Remove(pack);
+        TimerSecondarySystem timerObject = Instantiate(GameManager.instance.UI_timerSS, UI_Manager.instance.transform).GetComponent<TimerSecondarySystem>();
+        timerObject.associatedSystem = lastSelected;
+    }
+
+    public void TutorialCompleted()
+    {
+        CancelInvoke("StartActivity");
+        Invoke("StartActivity", timeBeforeFirstActivity);
     }
 }

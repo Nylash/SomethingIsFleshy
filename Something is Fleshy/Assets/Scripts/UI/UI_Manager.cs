@@ -20,6 +20,7 @@ public class UI_Manager : MonoBehaviour
     public Canvas UI_pauseCanvas;
     public Canvas UI_leakGaugeCanvas;
     public Image UI_leakGaugeIn;
+    public Canvas UI_timerCanvas;
     [Header("Components")]
     ActionsMap actionsMap;
     [Header("Variables")]

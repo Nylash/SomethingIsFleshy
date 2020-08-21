@@ -2782,6 +2782,7 @@ MonoBehaviour:
   UI_pauseCanvas: {fileID: 3608291357755998521}
   UI_leakGaugeCanvas: {fileID: 2332087408015859099}
   UI_leakGaugeIn: {fileID: 4877316684912322773}
+  UI_timerCanvas: {fileID: 6583510077338124026}
   lastSelected: {fileID: 0}
 --- !u!114 &1609424591
 MonoBehaviour:

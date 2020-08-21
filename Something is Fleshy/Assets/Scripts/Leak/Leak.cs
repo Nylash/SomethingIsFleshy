@@ -33,21 +33,21 @@ public class Leak : MonoBehaviour
 
     private void Update()
     {
-        if(associatedLever.currentPipe == associatedPipe)
+        if (associatedLever.currentPipe == associatedPipe)
         {
             switch (associatedLever.currentRessource)
             {
                 case LeverScript.RessourcesType.energy:
-                    StomachManager.instance.Emptying(Time.deltaTime);
-                    if(fxMainModule.startColor.color != GameManager.instance.energyColor)
+                    EmptyingStomach();
+                    if (fxMainModule.startColor.color != GameManager.instance.energyColor)
                     {
                         fxMainModule.startColor = GameManager.instance.energyColor;
                         fxMainModuleChild.startColor = GameManager.instance.energyColor;
                         currentRessource = LeverScript.RessourcesType.energy;
-                    }  
+                    }
                     break;
                 case LeverScript.RessourcesType.oxygen:
-                    LungsManager.instance.Emptying(Time.deltaTime);
+                    EmptyingLungs();
                     if (fxMainModule.startColor.color != GameManager.instance.oxygenColor)
                     {
                         fxMainModule.startColor = GameManager.instance.oxygenColor;
@@ -63,7 +63,7 @@ public class Leak : MonoBehaviour
                             switch (rand)
                             {
                                 case 0:
-                                    StomachManager.instance.Emptying(Time.deltaTime);
+                                    EmptyingStomach();
                                     if (fxMainModule.startColor.color != GameManager.instance.energyColor)
                                     {
                                         fxMainModule.startColor = GameManager.instance.energyColor;
@@ -72,7 +72,7 @@ public class Leak : MonoBehaviour
                                     }
                                     break;
                                 case 1:
-                                    LungsManager.instance.Emptying(Time.deltaTime);
+                                    EmptyingLungs();
                                     if (fxMainModule.startColor.color != GameManager.instance.oxygenColor)
                                     {
                                         fxMainModule.startColor = GameManager.instance.oxygenColor;
@@ -83,7 +83,7 @@ public class Leak : MonoBehaviour
                             }
                             break;
                         case LeverScript.RessourcesType.energy:
-                            StomachManager.instance.Emptying(Time.deltaTime);
+                            EmptyingStomach();
                             if (fxMainModule.startColor.color != GameManager.instance.energyColor)
                             {
                                 fxMainModule.startColor = GameManager.instance.energyColor;
@@ -92,7 +92,7 @@ public class Leak : MonoBehaviour
                             }
                             break;
                         case LeverScript.RessourcesType.oxygen:
-                            LungsManager.instance.Emptying(Time.deltaTime);
+                            EmptyingLungs();
                             if (fxMainModule.startColor.color != GameManager.instance.oxygenColor)
                             {
                                 fxMainModule.startColor = GameManager.instance.oxygenColor;
@@ -102,7 +102,7 @@ public class Leak : MonoBehaviour
                             break;
                     }
                     break;
-            }  
+            }
         }
         else
         {
@@ -113,7 +113,7 @@ public class Leak : MonoBehaviour
                     switch (rand)
                     {
                         case 0:
-                            StomachManager.instance.Emptying(Time.deltaTime);
+                            EmptyingStomach();
                             if (fxMainModule.startColor.color != GameManager.instance.energyColor)
                             {
                                 fxMainModule.startColor = GameManager.instance.energyColor;
@@ -122,7 +122,7 @@ public class Leak : MonoBehaviour
                             }
                             break;
                         case 1:
-                            LungsManager.instance.Emptying(Time.deltaTime);
+                            EmptyingLungs();
                             if (fxMainModule.startColor.color != GameManager.instance.oxygenColor)
                             {
                                 fxMainModule.startColor = GameManager.instance.oxygenColor;
@@ -133,7 +133,7 @@ public class Leak : MonoBehaviour
                     }
                     break;
                 case LeverScript.RessourcesType.energy:
-                    StomachManager.instance.Emptying(Time.deltaTime);
+                    EmptyingStomach();
                     if (fxMainModule.startColor.color != GameManager.instance.energyColor)
                     {
                         fxMainModule.startColor = GameManager.instance.energyColor;
@@ -142,7 +142,7 @@ public class Leak : MonoBehaviour
                     }
                     break;
                 case LeverScript.RessourcesType.oxygen:
-                    LungsManager.instance.Emptying(Time.deltaTime);
+                    EmptyingLungs();
                     if (fxMainModule.startColor.color != GameManager.instance.oxygenColor)
                     {
                         fxMainModule.startColor = GameManager.instance.oxygenColor;
@@ -150,6 +150,28 @@ public class Leak : MonoBehaviour
                         currentRessource = LeverScript.RessourcesType.oxygen;
                     }
                     break;
+            }
+        }
+    }
+
+    void EmptyingLungs()
+    {
+        if (GameManager.instance.levelStarted)
+        {
+            if (!HeartManager.instance.defeatOrVictory && !GameManager.instance.levelPaused)
+            {
+                LungsManager.instance.Emptying(Time.deltaTime);
+            }
+        }
+    }
+
+    void EmptyingStomach()
+    {
+        if (GameManager.instance.levelStarted)
+        {
+            if (!HeartManager.instance.defeatOrVictory && !GameManager.instance.levelPaused)
+            {
+                StomachManager.instance.Emptying(Time.deltaTime);
             }
         }
     }

@@ -23,7 +23,7 @@ public class GameManager : MonoBehaviour
 	[Space]
 	[Header("PARAMETERS")]
 	[Tooltip("Time to end level (in seconds).")]
-	public int timeToFinishLevel = 180;
+	public float timeToFinishLevel = 180;
 	[Tooltip("Max health, 1 HP = 1 sec")]
 	public float maxHealth;
 	[Space]
