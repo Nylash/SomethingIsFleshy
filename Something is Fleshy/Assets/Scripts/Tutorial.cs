@@ -32,6 +32,9 @@ public class Tutorial : MonoBehaviour
     [SerializeField] Canvas cameraCanvas;
     [SerializeField] Canvas leakCanvas;
     [SerializeField] Canvas completionCanvas;
+    [Space]
+    [SerializeField] GameObject camSS;
+    [SerializeField] GameObject camLeak;
 #pragma warning restore 0649
     #endregion
     [Header("Variables")]
@@ -39,6 +42,7 @@ public class Tutorial : MonoBehaviour
     public TutorialStep currentStep;
     ActionsMap actionsMap;
     bool cameraTutoDone;
+    public GameObject stockedCam;
 
     private void OnEnable() => actionsMap.Gameplay.Enable();
     private void OnDisable() => actionsMap.Gameplay.Disable();
@@ -55,8 +59,6 @@ public class Tutorial : MonoBehaviour
 
         GameManager.instance.levelPaused = true;
         presentationCanvas.enabled = true;
-        print("Hello ! You are Celli, and your job is to help your host by providing oxygen and energy to his muscles." +
-            "To do this you need to use the pipe system present in the host. If you fail to supply a muscle the heart will be damaged, if the heart take too much damage the host dies.");
     }
 
     private void Update()
@@ -69,7 +71,6 @@ public class Tutorial : MonoBehaviour
             cameraCanvas.enabled = true;
             GameManager.instance.levelPaused = true;
             CharacterController2D.instance.animator.SetBool("Running", false);
-            print("At anytime you can switch between a global and a zoomed camera. On zoomed camera some hints appear to help you, they point toward muscles in need and leak (we will talk about leaks soon).");
         }
         switch (currentStep)
         {
@@ -80,7 +81,6 @@ public class Tutorial : MonoBehaviour
                     GameManager.instance.levelPaused = true;
                     CharacterController2D.instance.animator.SetBool("Running", false);
                     primarySystemCongratulationsCanvas.enabled = true;
-                    print("Good job ! The lungs and the stomach are now full and ready to distribute ressources to muscles in need.");
                 }
                 break;
             case TutorialStep.psFilledUp:
@@ -91,14 +91,12 @@ public class Tutorial : MonoBehaviour
                         GameManager.instance.levelPaused = true;
                         CharacterController2D.instance.animator.SetBool("Running", false);
                         secondarySystemFailureCanvas.enabled = true;
-                        print("You don't suceed to help this muscle so it damaged the heart, but don't worry, for this time I will heal the damage and you will try again.");
                     }
                     else
                     {
                         GameManager.instance.levelPaused = true;
                         CharacterController2D.instance.animator.SetBool("Running", false);
                         secondarySystemCongratulationsCanvas.enabled = true;
-                        print("Well done ! You have succesfully supply this muscle !");
                     }
                 }
                 break;
@@ -109,7 +107,6 @@ public class Tutorial : MonoBehaviour
                     GameManager.instance.levelPaused = true;
                     CharacterController2D.instance.animator.SetBool("Running", false);
                     completionCanvas.enabled = true;
-                    print("Perfect, you now know all the basis to help your host, let's try to help this one a little bit more and after you could try with other host. Don't worry, this one is easy ;)");
                 }
                 break;
         }
@@ -119,8 +116,12 @@ public class Tutorial : MonoBehaviour
     {
         if (cameraCanvas.enabled)
         {
-            cameraCanvas.enabled = false;
-            GameManager.instance.levelPaused = false;
+            if (cameraCanvas.GetComponent<UI_ChildSelector>().UpdateChilds())
+            {
+                cameraCanvas.enabled = false;
+                GameManager.instance.levelPaused = false;
+                return;
+            }
             return;
         }
         switch (currentStep)
@@ -128,89 +129,115 @@ public class Tutorial : MonoBehaviour
             case TutorialStep.start:
                 if (presentationCanvas.enabled)
                 {
-                    presentationCanvas.enabled = false;
-                    currentStep++;
-                    if (!cameraTutoDone)
+                    if (presentationCanvas.GetComponent<UI_ChildSelector>().UpdateChilds())
                     {
-                        CameraManager.instance.VCamGlobal.SetActive(false);
-                        CameraManager.instance.VCamZoom.SetActive(true);
+                        presentationCanvas.enabled = false;
+                        currentStep++;
+                        if (!cameraTutoDone)
+                        {
+                            CameraManager.instance.VCamGlobal.SetActive(false);
+                            CameraManager.instance.VCamZoom.SetActive(true);
+                        }
+                        primarySystemCanvas.enabled = true;
                     }
-                    primarySystemCanvas.enabled = true;
-                    print("For starting, you need to fill up the lungs and the stomach. You can't do it simultaneously, currently the lungs are filling up, you can use this lever at anytime to switch to the stomach."
-                        +" Try to fill up both of this organs. E/A to interact");
                 }
                 break;
             case TutorialStep.presentationMade:
                 if (primarySystemCanvas.enabled)
                 {
-                    primarySystemCanvas.enabled = false;
-                    if (!cameraTutoDone)
+                    if (primarySystemCanvas.GetComponent<UI_ChildSelector>().UpdateChilds())
                     {
-                        CameraManager.instance.VCamGlobal.SetActive(true);
-                        CameraManager.instance.VCamZoom.SetActive(false);
+                        primarySystemCanvas.enabled = false;
+                        if (!cameraTutoDone)
+                        {
+                            CameraManager.instance.VCamGlobal.SetActive(true);
+                            CameraManager.instance.VCamZoom.SetActive(false);
+                        }
+                        GameManager.instance.levelPaused = false;
                     }
-                    GameManager.instance.levelPaused = false;
                 }
                 else if (primarySystemCongratulationsCanvas.enabled)
                 {
-                    primarySystemCongratulationsCanvas.enabled = false;
-                    secondarySystemCanvas.enabled = true;
-                    currentStep++;
-                    //Switch camera to ss
-                    print("This muscle need a ressource, the color inside indicate which ressource is needed, blue for oxygen and yellow for energy. Here this muscle need energy, so you will have to use severals levers to activate the right pipes to bring it to it." +
-                        "Some to activate the goods pipes to come to it and another to select the right ressource (this one is generally situated near the lungs or the stomach)"
-                        + "Timer blabla dépend du system qu'on fait bobo coeur");
-                    SecondarySystemsManager.instance.LaunchSpecificSS(tutoSS, associatedPack);
+                    if (primarySystemCanvas.GetComponent<UI_ChildSelector>().UpdateChilds())
+                    {
+                        primarySystemCongratulationsCanvas.enabled = false;
+                        secondarySystemCanvas.enabled = true;
+                        currentStep++;
+                        stockedCam = (CameraManager.instance.VCamGlobal.activeSelf ? CameraManager.instance.VCamGlobal : CameraManager.instance.VCamZoom);
+                        stockedCam.SetActive(false);
+                        camSS.SetActive(true);
+                        SecondarySystemsManager.instance.LaunchSpecificSS(tutoSS, associatedPack);
+                    }
                 }
                 break;
             case TutorialStep.psFilledUp:
                 if (secondarySystemCanvas.enabled)
                 {
-                    secondarySystemCanvas.enabled = false;
-                    GameManager.instance.levelPaused = false;
-                    //turn off ss camera
-                    if (!cameraTutoDone)
+                    if (secondarySystemCanvas.GetComponent<UI_ChildSelector>().UpdateChilds())
                     {
-                        CameraManager.instance.VCamGlobal.SetActive(true);
-                        CameraManager.instance.VCamZoom.SetActive(false);
+                        secondarySystemCanvas.enabled = false;
+                        GameManager.instance.levelPaused = false;
+                        camSS.SetActive(false);
+                        if (!cameraTutoDone)
+                        {
+                            CameraManager.instance.VCamGlobal.SetActive(true);
+                            CameraManager.instance.VCamZoom.SetActive(false);
+                        }
+                        else
+                            stockedCam.SetActive(true);
                     }
                 }
                 else if (secondarySystemCongratulationsCanvas.enabled)
                 {
-                    currentStep++;
-                    secondarySystemCongratulationsCanvas.enabled = false;
-                    //switch camera to leak
-                    leakCanvas.enabled = true;
-                    print("Oh no ! Looks like one pipe gots a leak, you should repair it quickly, otherwise your ressources' stock might be running low. You can repair it by holding interaction button near to it.");
-                    LeaksManager.instance.StartSpecificLeak(tutoLeakZone, leakZonesOfThisPipe, associatedLever, associatedPipe);
+                    if (secondarySystemCongratulationsCanvas.GetComponent<UI_ChildSelector>().UpdateChilds())
+                    {
+                        currentStep++;
+                        secondarySystemCongratulationsCanvas.enabled = false;
+                        stockedCam = (CameraManager.instance.VCamGlobal.activeSelf ? CameraManager.instance.VCamGlobal : CameraManager.instance.VCamZoom);
+                        stockedCam.SetActive(false);
+                        camLeak.SetActive(true);
+                        leakCanvas.enabled = true;
+                        LeaksManager.instance.StartSpecificLeak(tutoLeakZone, leakZonesOfThisPipe, associatedLever, associatedPipe);
+                    }
                 }
                 else if (secondarySystemFailureCanvas.enabled)
                 {
-                    HeartManager.instance.currentHealth = GameManager.instance.maxHealth;
-                    SecondarySystemsManager.instance.LaunchSpecificSS(tutoSS, associatedPack);
-                    GameManager.instance.levelPaused = false;
-                    secondarySystemFailureCanvas.enabled = false;
+                    if (secondarySystemFailureCanvas.GetComponent<UI_ChildSelector>().UpdateChilds())
+                    {
+                        HeartManager.instance.currentHealth = GameManager.instance.maxHealth;
+                        HeartManager.instance.TakeDamage(0);//Use to update gauge
+                        SecondarySystemsManager.instance.LaunchSpecificSS(tutoSS, associatedPack);
+                        GameManager.instance.levelPaused = false;
+                        secondarySystemFailureCanvas.enabled = false;
+                    }
                 }
                 break;
             case TutorialStep.ssFilledUp:
                 if (leakCanvas.enabled)
                 {
-                    GameManager.instance.levelPaused = false;
-                    leakCanvas.enabled = false;
-                    //turn off leak camera
-                    if (!cameraTutoDone)
+                    if (leakCanvas.GetComponent<UI_ChildSelector>().UpdateChilds())
                     {
-                        CameraManager.instance.VCamGlobal.SetActive(true);
-                        CameraManager.instance.VCamZoom.SetActive(false);
+                        GameManager.instance.levelPaused = false;
+                        leakCanvas.enabled = false;
+                        camLeak.SetActive(false);
+                        stockedCam.SetActive(true);
+                        if (!cameraTutoDone)
+                        {
+                            CameraManager.instance.VCamGlobal.SetActive(true);
+                            CameraManager.instance.VCamZoom.SetActive(false);
+                        }
                     }
                 }
                 break;
             case TutorialStep.leakPatched:
                 if (completionCanvas.enabled)
                 {
-                    TutorialCompleted();
-                    GameManager.instance.levelPaused = false;
-                    completionCanvas.enabled = false;
+                    if (completionCanvas.GetComponent<UI_ChildSelector>().UpdateChilds())
+                    {
+                        TutorialCompleted();
+                        GameManager.instance.levelPaused = false;
+                        completionCanvas.enabled = false;
+                    }
                 }
                 break;
         }

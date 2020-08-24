@@ -68,7 +68,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 462479813
-  m_SortingLayer: 6
+  m_SortingLayer: 13
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: ac9569aec3dbfce45aba1c56dd7072f8, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -152,7 +152,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 462479813
-  m_SortingLayer: 6
+  m_SortingLayer: 13
   m_SortingOrder: 1
   m_Sprite: {fileID: 21300000, guid: 02e8f3e3fe0cb4b43947def0907a3eda, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -189,7 +189,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1.5, y: 1.5}
+  m_Size: {x: 2.25, y: 1.5}
   m_EdgeRadius: 0
 --- !u!114 &3478768265959703450
 MonoBehaviour:
@@ -203,7 +203,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 98fd477b0da1ad44ebed4fbe7a3152a6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  associatedPrimarySystem: {fileID: 0}
-  associatedSecondarySystem: {fileID: 0}
-  associatedRessource: 0
-  isOpen: 0
+  pipes:
+  - {fileID: 0}
+  - {fileID: 0}
+  associatedObjects:
+  - {fileID: 0}
+  - {fileID: 0}
+  initialPipes: 0
+  doubleEntry: 0
+  endObject: {fileID: 0}
+  pipe0LeaksZones: []
+  pipe1LeaksZones: []
+  currentRessource: 0
+  currentPipe: 0
