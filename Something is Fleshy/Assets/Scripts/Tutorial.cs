@@ -116,7 +116,7 @@ public class Tutorial : MonoBehaviour
     {
         if (cameraCanvas.enabled)
         {
-            if (cameraCanvas.GetComponent<UI_ChildSelector>().UpdateChilds())
+            if (cameraCanvas.GetComponent<UI_ChildSelector>().NoMoreChilds())
             {
                 cameraCanvas.enabled = false;
                 GameManager.instance.levelPaused = false;
@@ -129,7 +129,7 @@ public class Tutorial : MonoBehaviour
             case TutorialStep.start:
                 if (presentationCanvas.enabled)
                 {
-                    if (presentationCanvas.GetComponent<UI_ChildSelector>().UpdateChilds())
+                    if (presentationCanvas.GetComponent<UI_ChildSelector>().NoMoreChilds())
                     {
                         presentationCanvas.enabled = false;
                         currentStep++;
@@ -145,7 +145,7 @@ public class Tutorial : MonoBehaviour
             case TutorialStep.presentationMade:
                 if (primarySystemCanvas.enabled)
                 {
-                    if (primarySystemCanvas.GetComponent<UI_ChildSelector>().UpdateChilds())
+                    if (primarySystemCanvas.GetComponent<UI_ChildSelector>().NoMoreChilds())
                     {
                         primarySystemCanvas.enabled = false;
                         if (!cameraTutoDone)
@@ -158,7 +158,7 @@ public class Tutorial : MonoBehaviour
                 }
                 else if (primarySystemCongratulationsCanvas.enabled)
                 {
-                    if (primarySystemCanvas.GetComponent<UI_ChildSelector>().UpdateChilds())
+                    if (primarySystemCanvas.GetComponent<UI_ChildSelector>().NoMoreChilds())
                     {
                         primarySystemCongratulationsCanvas.enabled = false;
                         secondarySystemCanvas.enabled = true;
@@ -173,7 +173,7 @@ public class Tutorial : MonoBehaviour
             case TutorialStep.psFilledUp:
                 if (secondarySystemCanvas.enabled)
                 {
-                    if (secondarySystemCanvas.GetComponent<UI_ChildSelector>().UpdateChilds())
+                    if (secondarySystemCanvas.GetComponent<UI_ChildSelector>().NoMoreChilds())
                     {
                         secondarySystemCanvas.enabled = false;
                         GameManager.instance.levelPaused = false;
@@ -189,7 +189,7 @@ public class Tutorial : MonoBehaviour
                 }
                 else if (secondarySystemCongratulationsCanvas.enabled)
                 {
-                    if (secondarySystemCongratulationsCanvas.GetComponent<UI_ChildSelector>().UpdateChilds())
+                    if (secondarySystemCongratulationsCanvas.GetComponent<UI_ChildSelector>().NoMoreChilds())
                     {
                         currentStep++;
                         secondarySystemCongratulationsCanvas.enabled = false;
@@ -202,7 +202,7 @@ public class Tutorial : MonoBehaviour
                 }
                 else if (secondarySystemFailureCanvas.enabled)
                 {
-                    if (secondarySystemFailureCanvas.GetComponent<UI_ChildSelector>().UpdateChilds())
+                    if (secondarySystemFailureCanvas.GetComponent<UI_ChildSelector>().NoMoreChilds())
                     {
                         HeartManager.instance.currentHealth = GameManager.instance.maxHealth;
                         HeartManager.instance.TakeDamage(0);//Use to update gauge
@@ -215,7 +215,7 @@ public class Tutorial : MonoBehaviour
             case TutorialStep.ssFilledUp:
                 if (leakCanvas.enabled)
                 {
-                    if (leakCanvas.GetComponent<UI_ChildSelector>().UpdateChilds())
+                    if (leakCanvas.GetComponent<UI_ChildSelector>().NoMoreChilds())
                     {
                         GameManager.instance.levelPaused = false;
                         leakCanvas.enabled = false;
@@ -232,7 +232,7 @@ public class Tutorial : MonoBehaviour
             case TutorialStep.leakPatched:
                 if (completionCanvas.enabled)
                 {
-                    if (completionCanvas.GetComponent<UI_ChildSelector>().UpdateChilds())
+                    if (completionCanvas.GetComponent<UI_ChildSelector>().NoMoreChilds())
                     {
                         TutorialCompleted();
                         GameManager.instance.levelPaused = false;

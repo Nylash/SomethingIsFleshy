@@ -10,7 +10,7 @@ public class UI_ChildSelector : MonoBehaviour
     [Header("⚠ DON'T TOUCH BELOW ⚠")]
     public int currentIndex;
 
-    public bool UpdateChilds()
+    public bool NoMoreChilds()
     {
         if(currentIndex < childs.Length - 1)
         {

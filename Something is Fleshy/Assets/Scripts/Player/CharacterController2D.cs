@@ -1,6 +1,5 @@
 ﻿using System.Collections;
 using UnityEngine;
-using UnityEngine.InputSystem;
 
 public class CharacterController2D : MonoBehaviour
 {
@@ -105,6 +104,8 @@ public class CharacterController2D : MonoBehaviour
 		{
 			if (!HeartManager.instance.defeatOrVictory && !GameManager.instance.levelPaused && AnimationNotCurrentlyBlocking())
 			{
+				if (rb.bodyType != RigidbodyType2D.Dynamic)
+					rb.bodyType = RigidbodyType2D.Dynamic;
 				GroundDetection();
 				CoyoteTimeSystem();
 				JumpBufferingSystem();
@@ -113,9 +114,16 @@ public class CharacterController2D : MonoBehaviour
 				if (showMovementDebug)
 					Debug.DrawLine(transform.position, transform.position - new Vector3(0, -.1f, 0), debugColor, 10);
 			}
+            else if(!AnimationNotCurrentlyBlocking())
+            {
+				if (rb.bodyType != RigidbodyType2D.Dynamic)
+					rb.bodyType = RigidbodyType2D.Dynamic;
+				rb.velocity = Vector2.zero;
+			}
             else
             {
-				rb.velocity = Vector2.zero;
+				if (rb.bodyType != RigidbodyType2D.Static)
+					rb.bodyType = RigidbodyType2D.Static;
 			}
 				
 		}
