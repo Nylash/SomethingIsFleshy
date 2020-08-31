@@ -6,7 +6,7 @@ public class SoundsManager : MonoBehaviour
     [System.Serializable]
     public class Sound
     {
-        public string name;
+        public SoundName name;
         public List<AudioClip> clips = new List<AudioClip>();
         [Range(0, 1)] public float volume = 1;
         [Range(-3, 3)] public float pitch = 1;
@@ -14,7 +14,7 @@ public class SoundsManager : MonoBehaviour
 
     public List<Sound> sounds = new List<Sound>();
 
-    public void PlaySoundLoop(string soundName, AudioSource source)
+    public void PlaySoundLoop(SoundName soundName, AudioSource source)
     {
         int index = GetIndex(soundName);
         if (index == sounds.Count)
@@ -28,7 +28,7 @@ public class SoundsManager : MonoBehaviour
         source.loop = true;
     }
 
-    public void PlaySoundOneShot(string soundName, AudioSource source)
+    public void PlaySoundOneShot(SoundName soundName, AudioSource source)
     {
         int index = GetIndex(soundName);
         if (index == sounds.Count)
@@ -40,7 +40,7 @@ public class SoundsManager : MonoBehaviour
         source.PlayOneShot(sounds[index].clips[Random.Range(0, sounds[index].clips.Count)], sounds[index].volume);
     }
 
-    int GetIndex(string name)
+    int GetIndex(SoundName name)
     {
         foreach (Sound item in sounds)
         {
@@ -48,5 +48,10 @@ public class SoundsManager : MonoBehaviour
                 return sounds.IndexOf(item);
         }
         return sounds.Count;
+    }
+
+    public enum SoundName
+    {
+        TO_DEFINE, stomachEmpty, lungsEmpty, stomachFull, lungsFull
     }
 }

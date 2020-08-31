@@ -1,7 +1,6 @@
-﻿using UnityEngine.UI;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.InputSystem;
+using TMPro;
 
 public class Tutorial : MonoBehaviour
 {
@@ -33,8 +32,16 @@ public class Tutorial : MonoBehaviour
     [SerializeField] Canvas leakCanvas;
     [SerializeField] Canvas completionCanvas;
     [Space]
+    [SerializeField] Canvas objectiveCanvas;
+    [SerializeField] TextMeshProUGUI textObj;
+    [SerializeField] TextMeshProUGUI textTop;
+    [SerializeField] TextMeshProUGUI textBot;
+    [SerializeField] TextMeshProUGUI textUnique;
+    [Space]
     [SerializeField] GameObject camSS;
     [SerializeField] GameObject camLeak;
+    [Space]
+    [SerializeField] GameObject[] leversUnusedAtStart;
 #pragma warning restore 0649
     #endregion
     [Header("Variables")]
@@ -75,16 +82,21 @@ public class Tutorial : MonoBehaviour
         switch (currentStep)
         {
             case TutorialStep.presentationMade:
-                if(LungsManager.instance.currentCapacity/GameManager.instance.maxCapacityPrimarySystem >.9f 
+                textTop.text = "Lungs : " + ((int)(LungsManager.instance.currentCapacity / GameManager.instance.maxCapacityPrimarySystem * 100)).ToString() + "%";
+                textBot.text = "Stomach : " + ((int)(StomachManager.instance.currentCapacity / GameManager.instance.maxCapacityPrimarySystem * 100)).ToString() + "%";
+                if (LungsManager.instance.currentCapacity/GameManager.instance.maxCapacityPrimarySystem >.9f 
                     && StomachManager.instance.currentCapacity / GameManager.instance.maxCapacityPrimarySystem > .9f && !GameManager.instance.levelPaused)
                 {
                     GameManager.instance.levelPaused = true;
                     CharacterController2D.instance.animator.SetBool("Running", false);
                     primarySystemCongratulationsCanvas.enabled = true;
+                    objectiveCanvas.enabled = false;
                 }
                 break;
             case TutorialStep.psFilledUp:
-                if(!tutoSS.energyNeeded && !GameManager.instance.levelPaused)
+                textTop.text = "Time : " + ((int)(SecondarySystemsManager.instance.timeBeforeSSexplosion - tutoSS.timerBeforeExplosion)).ToString() + " sec";
+                textBot.text = "Energy : " + ((int)(tutoSS.currentEnergy / SecondarySystemsManager.instance.energyAmoutNeeded * 100)).ToString() + "%";
+                if (!tutoSS.energyNeeded && !GameManager.instance.levelPaused)
                 {
                     if(HeartManager.instance.currentHealth != GameManager.instance.maxHealth)
                     {
@@ -97,6 +109,7 @@ public class Tutorial : MonoBehaviour
                         GameManager.instance.levelPaused = true;
                         CharacterController2D.instance.animator.SetBool("Running", false);
                         secondarySystemCongratulationsCanvas.enabled = true;
+                        objectiveCanvas.enabled = false;
                     }
                 }
                 break;
@@ -107,6 +120,7 @@ public class Tutorial : MonoBehaviour
                     GameManager.instance.levelPaused = true;
                     CharacterController2D.instance.animator.SetBool("Running", false);
                     completionCanvas.enabled = true;
+                    objectiveCanvas.enabled = false;
                 }
                 break;
         }
@@ -133,11 +147,6 @@ public class Tutorial : MonoBehaviour
                     {
                         presentationCanvas.enabled = false;
                         currentStep++;
-                        if (!cameraTutoDone)
-                        {
-                            CameraManager.instance.VCamGlobal.SetActive(false);
-                            CameraManager.instance.VCamZoom.SetActive(true);
-                        }
                         primarySystemCanvas.enabled = true;
                     }
                 }
@@ -148,12 +157,11 @@ public class Tutorial : MonoBehaviour
                     if (primarySystemCanvas.GetComponent<UI_ChildSelector>().NoMoreChilds())
                     {
                         primarySystemCanvas.enabled = false;
-                        if (!cameraTutoDone)
-                        {
-                            CameraManager.instance.VCamGlobal.SetActive(true);
-                            CameraManager.instance.VCamZoom.SetActive(false);
-                        }
                         GameManager.instance.levelPaused = false;
+                        textObj.text = "Fill both";
+                        textTop.text = "Lungs : 0%";
+                        textBot.text = "Stomach : 0%";
+                        objectiveCanvas.enabled = true;
                     }
                 }
                 else if (primarySystemCongratulationsCanvas.enabled)
@@ -167,6 +175,15 @@ public class Tutorial : MonoBehaviour
                         stockedCam.SetActive(false);
                         camSS.SetActive(true);
                         SecondarySystemsManager.instance.LaunchSpecificSS(tutoSS, associatedPack);
+                        Color color = new Color(1, 1, 1, 1);
+                        foreach (GameObject item in leversUnusedAtStart)
+                        {
+                            item.GetComponent<BoxCollider2D>().enabled = true;
+                            item.GetComponent<SpriteRenderer>().color = color;
+                            item.GetComponent<SpriteRenderer>().sortingLayerName = "Lever";
+                            item.transform.GetChild(0).GetComponent<SpriteRenderer>().color = color;
+                            item.transform.GetChild(0).GetComponent<SpriteRenderer>().sortingLayerName = "Lever";
+                        }
                     }
                 }
                 break;
@@ -185,6 +202,10 @@ public class Tutorial : MonoBehaviour
                         }
                         else
                             stockedCam.SetActive(true);
+                        textObj.text = "Supply muscle";
+                        textTop.text = "Time : " + ((int)SecondarySystemsManager.instance.timeBeforeSSexplosion).ToString() + " sec";
+                        textBot.text = "Energy : 0%";
+                        objectiveCanvas.enabled = true;
                     }
                 }
                 else if (secondarySystemCongratulationsCanvas.enabled)
@@ -198,6 +219,11 @@ public class Tutorial : MonoBehaviour
                         camLeak.SetActive(true);
                         leakCanvas.enabled = true;
                         LeaksManager.instance.StartSpecificLeak(tutoLeakZone, leakZonesOfThisPipe, associatedLever, associatedPipe);
+                        textObj.text = "Patch leack";
+                        textUnique.text = "Patch current leak";
+                        textTop.text = "";
+                        textBot.text = "";
+                        objectiveCanvas.enabled = true;
                     }
                 }
                 else if (secondarySystemFailureCanvas.enabled)
@@ -209,6 +235,8 @@ public class Tutorial : MonoBehaviour
                         SecondarySystemsManager.instance.LaunchSpecificSS(tutoSS, associatedPack);
                         GameManager.instance.levelPaused = false;
                         secondarySystemFailureCanvas.enabled = false;
+                        textTop.text = "Time : " + ((int)SecondarySystemsManager.instance.timeBeforeSSexplosion).ToString() + " sec";
+                        textBot.text = "Energy : 0%";
                     }
                 }
                 break;
