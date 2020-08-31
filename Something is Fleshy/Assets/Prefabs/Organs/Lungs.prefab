@@ -92,6 +92,7 @@ GameObject:
   - component: {fileID: 5073433986323243499}
   - component: {fileID: 5073433986323243500}
   - component: {fileID: 5073433986323243501}
+  - component: {fileID: 7869892344750792250}
   m_Layer: 0
   m_Name: Lungs
   m_TagString: Untagged
@@ -177,11 +178,27 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e15d5a7102558884dab3ed3ce0b087b6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxCapacity: 20
-  startCapacity: 2
-  fillingMultiplier: 1
   currentCapacity: 0
   filling: 0
+--- !u!95 &7869892344750792250
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5073433986323243502}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 0fa87b3917182df4dac598816f913710, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &6243254861160685919
 GameObject:
   m_ObjectHideFlags: 0
