@@ -4,10 +4,18 @@ using System.Collections.Generic;
 
 public class LeverScript : MonoBehaviour
 {
+    [System.Serializable]
+    public struct Pipe
+    {
+        public GameObject pipe;
+        public SpriteShapeRenderer shapeRenderer;
+        public SpriteShapeController shapeController;
+    }
+
     [Header("PARAMETERS")]
 #pragma warning disable 0649
     [Tooltip("Pipes associated to this lever.")]
-    [SerializeField] GameObject[] pipes = new GameObject[2];
+    [SerializeField] Pipe[] pipes = new Pipe[2];
     [Tooltip("Objects associated to this lever's pipes. Be sure to make the index coherent.")]
     [SerializeField] GameObject[] associatedObjects = new GameObject[2];
     [Tooltip("Check it if those pipes are at the start of the network. (do nothing on double entry)")]
@@ -26,11 +34,14 @@ public class LeverScript : MonoBehaviour
     public RessourcesType currentRessource;
     public List<LeakZone>[] allLeaksZones = new List<LeakZone>[2];
     public int currentPipe;
+    public LeverScript previousLever;
     RessourcesType lastFrameRessource;
     LeverScript currentAssociatedLever;
     PrimarySystem currentAssociatedPrimarySystem;
     SecondarySystem currentAssociatedSecondarySystem;
 
+    //Lerp pipe height variable
+    public bool isFillingSS;
     //Use when a double entry has a secondary system as end object
     bool checkNeedDoubleEntryDone;
     //Only used for animation purpose
@@ -54,13 +65,19 @@ public class LeverScript : MonoBehaviour
             else
                 Debug.LogError("There is no correct object associated at the end of this lever : " + gameObject.name + " current end object : " + endObject);
         }
+        for (int i = 0; i < pipes.Length; i++)
+        {
+            pipes[i].shapeRenderer = pipes[i].pipe.GetComponent<SpriteShapeRenderer>();
+            pipes[i].shapeController = pipes[i].pipe.GetComponent<SpriteShapeController>();
+        }
+
         UpdatePipe();
 
-        foreach (LeakZone item in pipes[0].GetComponentsInChildren<LeakZone>())
+        foreach (LeakZone item in pipes[0].pipe.GetComponentsInChildren<LeakZone>())
         {
             pipe0LeaksZones.Add(item);
         }
-        foreach (LeakZone item in pipes[1].GetComponentsInChildren<LeakZone>())
+        foreach (LeakZone item in pipes[1].pipe.GetComponentsInChildren<LeakZone>())
         {
             pipe1LeaksZones.Add(item);
         }
@@ -71,6 +88,21 @@ public class LeverScript : MonoBehaviour
             allLeaksZones[1] = pipe1LeaksZones;
         if (allLeaksZones[0] != null || allLeaksZones[1] != null)
             LeaksManager.instance.leversWithLeaksZones.Add(this);
+
+        foreach (GameObject item in associatedObjects)
+        {
+            if (item.GetComponent<LeverScript>())
+                item.GetComponent<LeverScript>().previousLever = this;
+            if (item.GetComponent<SecondarySystem>())
+                item.GetComponent<SecondarySystem>().associatedLever = this;
+        }
+        if (endObject)
+        {
+            if (endObject.GetComponent<LeverScript>())
+                endObject.GetComponent<LeverScript>().previousLever = this;
+            if (endObject.GetComponent<SecondarySystem>())
+                endObject.GetComponent<SecondarySystem>().associatedLever = this;
+        }
     }
 
     private void Update()
@@ -89,6 +121,13 @@ public class LeverScript : MonoBehaviour
                     if (currentAssociatedSecondarySystem.energyNeeded && currentRessource == RessourcesType.energy && !currentAssociatedSecondarySystem.filling)
                         UpdatePipe();
                 }
+
+                if (isFillingSS)
+                {
+                    if (pipes[currentPipe].shapeRenderer.color != GameManager.instance.emptyPipeOpenColor)
+                        LerpPipeHeight();
+                }
+
                 if (doubleEntry && currentAssociatedSecondarySystem)
                 {
                     if ((currentAssociatedSecondarySystem.energyNeeded || currentAssociatedSecondarySystem.oxygenNeeded) && !currentAssociatedSecondarySystem.filling)
@@ -167,7 +206,10 @@ public class LeverScript : MonoBehaviour
             if (currentAssociatedSecondarySystem.energyNeeded)
             {
                 if (currentRessource == RessourcesType.energy)
+                {
                     currentAssociatedSecondarySystem.filling = true;
+                    IsSecondarySystemFilling(true);
+                }
                 else
                 {
                     //WRONG RESSOURCE
@@ -176,7 +218,10 @@ public class LeverScript : MonoBehaviour
             else if (currentAssociatedSecondarySystem.oxygenNeeded)
             {
                 if (currentRessource == RessourcesType.oxygen)
+                {
                     currentAssociatedSecondarySystem.filling = true;
+                    IsSecondarySystemFilling(true);
+                }
                 else
                 {
                     //WRONG RESSOURCE
@@ -248,20 +293,27 @@ public class LeverScript : MonoBehaviour
             if (currentAssociatedSecondarySystem.energyNeeded)
             {
                 if (currentRessource == RessourcesType.energy)
+                {
                     currentAssociatedSecondarySystem.filling = true;
+                    IsSecondarySystemFilling(true);
+                }
                 else
                 {
                     currentAssociatedSecondarySystem.filling = false;
+                    IsSecondarySystemFilling(false);
                     //WRONG RESSOURCE
                 }
             }
             else if (currentAssociatedSecondarySystem.oxygenNeeded)
             {
                 if (currentRessource == RessourcesType.oxygen)
-                    currentAssociatedSecondarySystem.filling = true;
+                {
+                    
+                }
                 else
                 {
-                    currentAssociatedSecondarySystem.filling = true;
+                    currentAssociatedSecondarySystem.filling = false;
+                    IsSecondarySystemFilling(false);
                     //WRONG RESSOURCE
                 }
             }
@@ -273,25 +325,46 @@ public class LeverScript : MonoBehaviour
 
     void UpdatePipesDisplay()
     {
-        pipes[currentPipe].GetComponent<SpriteShapeRenderer>().color = GetOpenColor(currentRessource);
-        pipes[currentPipe].GetComponent<SpriteShapeRenderer>().sortingOrder = 0;
-        if (pipes[currentPipe].GetComponent<SpriteShapeRenderer>().color == GameManager.instance.emptyPipeOpenColor)
-            pipes[currentPipe].GetComponent<SpriteShapeController>().spriteShape = GameManager.instance.pipeCloseShape;
+        SecondarySystemsManager.instance.timerLerp = 0.5f;
+        pipes[currentPipe].shapeRenderer.color = GetOpenColor(currentRessource);
+        pipes[currentPipe].shapeRenderer.sortingOrder = 0;
+        for (int i = 0; i < pipes[currentPipe].shapeController.spline.GetPointCount(); i++)
+            pipes[currentPipe].shapeController.spline.SetHeight(i, 1);
+        if (pipes[currentPipe].shapeRenderer.color == GameManager.instance.emptyPipeOpenColor)
+            pipes[currentPipe].shapeController.spriteShape = GameManager.instance.pipeCloseShape;
         else
-            pipes[currentPipe].GetComponent<SpriteShapeController>().spriteShape = GameManager.instance.pipeOpenShape;
+            pipes[currentPipe].shapeController.spriteShape = GameManager.instance.pipeOpenShape;
         switch (currentPipe)
         {
             case 0:
-                pipes[1].GetComponent<SpriteShapeRenderer>().color = GameManager.instance.pipeCloseColor;
-                pipes[1].GetComponent<SpriteShapeRenderer>().sortingOrder = -1;
-                pipes[1].GetComponent<SpriteShapeController>().spriteShape = GameManager.instance.pipeCloseShape;
+                pipes[1].shapeRenderer.color = GameManager.instance.pipeCloseColor;
+                pipes[1].shapeRenderer.sortingOrder = -1;
+                pipes[1].shapeController.spriteShape = GameManager.instance.pipeCloseShape;
+                for (int i = 0; i < pipes[1].shapeController.spline.GetPointCount(); i++)
+                    pipes[1].shapeController.spline.SetHeight(i, 1);
                 break;
             case 1:
-                pipes[0].GetComponent<SpriteShapeRenderer>().color = GameManager.instance.pipeCloseColor;
-                pipes[0].GetComponent<SpriteShapeRenderer>().sortingOrder = -1;
-                pipes[0].GetComponent<SpriteShapeController>().spriteShape = GameManager.instance.pipeCloseShape;
+                pipes[0].shapeRenderer.color = GameManager.instance.pipeCloseColor;
+                pipes[0].shapeRenderer.sortingOrder = -1;
+                pipes[0].shapeController.spriteShape = GameManager.instance.pipeCloseShape;
+                for (int i = 0; i < pipes[0].shapeController.spline.GetPointCount(); i++)
+                    pipes[0].shapeController.spline.SetHeight(i, 1);
                 break;
         }
+    }
+
+    void LerpPipeHeight()
+    {
+        for (int i = 0; i < pipes[currentPipe].shapeController.spline.GetPointCount(); i++)
+            pipes[currentPipe].shapeController.spline.SetHeight(i, Mathf.Lerp(.9f, 1.1f, SecondarySystemsManager.instance.timerLerp));
+    }
+
+    public void IsSecondarySystemFilling(bool isFilling)
+    {
+        isFillingSS = isFilling;
+        if (previousLever)
+            previousLever.IsSecondarySystemFilling(isFilling);
+        UpdatePipesDisplay();
     }
 
     void CleanPreviousAssociatedObjects()
@@ -310,6 +383,7 @@ public class LeverScript : MonoBehaviour
         {
             currentAssociatedSecondarySystem.filling = false;
             currentAssociatedSecondarySystem = null;
+            IsSecondarySystemFilling(false);
         }
     }
 

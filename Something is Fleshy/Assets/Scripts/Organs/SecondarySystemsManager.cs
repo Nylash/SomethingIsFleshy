@@ -39,6 +39,9 @@ public class SecondarySystemsManager : MonoBehaviour
     public int randomRessourceWeight;
     public List<List<SecondarySystem>> allSecondarySystems = new List<List<SecondarySystem>>();
     bool startWhenOnePackIsReady;
+    //Lerp pipes height variables
+    public float timerLerp;
+    bool isIncreasingHeight;
 
     SecondarySystem lastSelected;
 
@@ -62,6 +65,22 @@ public class SecondarySystemsManager : MonoBehaviour
             Debug.LogError("You need to assign some Secondary Systems to atleast one pack (GameManager).");
 
         Invoke("StartActivity", timeBeforeFirstActivity);
+    }
+
+    private void Update()
+    {
+        if (isIncreasingHeight)
+        {
+            timerLerp += Time.deltaTime;
+            if (timerLerp > 1f)
+                isIncreasingHeight = false;
+        }
+        else
+        {
+            timerLerp -= Time.deltaTime;
+            if (timerLerp < 0f)
+                isIncreasingHeight = true;
+        }
     }
 
     void StartActivity()

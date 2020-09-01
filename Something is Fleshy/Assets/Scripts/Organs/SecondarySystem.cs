@@ -11,6 +11,7 @@ public class SecondarySystem : MonoBehaviour
 	[SerializeField] bool memberIsBoned;
 #pragma warning restore 0649
 	[Space]
+	[Header("References")]
 	[Header("⚠ DON'T TOUCH BELOW ⚠")]
 	//[ConditionalHide("showVariables", true)]
 	[Tooltip("Associated energy filling renderer.")]
@@ -21,6 +22,7 @@ public class SecondarySystem : MonoBehaviour
 	public Animator animator;
 	public Animator memberAnimator;
 	[Header("Variables")]
+	public LeverScript associatedLever;
 	public List<SecondarySystem> associatedPack = new List<SecondarySystem>();
 	public bool canBeSelectedAgain;
 	public GameObject associatedHint;
@@ -145,6 +147,7 @@ public class SecondarySystem : MonoBehaviour
 	{
 		timerBeforeExplosion = 0f;
 		filling = false;
+		associatedLever.IsSecondarySystemFilling(false);
 		energyNeeded = false;
 		oxygenNeeded = false;
 		energyGauge.SetActive(false);

@@ -98,7 +98,7 @@ LightmapSettings:
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
   m_LightingDataAsset: {fileID: 0}
-  m_UseShadowmask: 1
+  m_UseShadowmask: 0
 --- !u!196 &4
 NavMeshSettings:
   serializedVersion: 2
@@ -2878,6 +2878,16 @@ PrefabInstance:
       propertyPath: associatedObjects.Array.data[1]
       value: 
       objectReference: {fileID: 2013847356}
+    - target: {fileID: 3478768265959703450, guid: 8655963e876619142b62dcdc8876e46f,
+        type: 3}
+      propertyPath: pipes.Array.data[0].pipe
+      value: 
+      objectReference: {fileID: 378727526}
+    - target: {fileID: 3478768265959703450, guid: 8655963e876619142b62dcdc8876e46f,
+        type: 3}
+      propertyPath: pipes.Array.data[1].pipe
+      value: 
+      objectReference: {fileID: 255782901}
     - target: {fileID: 3478768265959703451, guid: 8655963e876619142b62dcdc8876e46f,
         type: 3}
       propertyPath: m_Name
@@ -3048,6 +3058,16 @@ PrefabInstance:
       propertyPath: associatedObjects.Array.data[1]
       value: 
       objectReference: {fileID: 1196420530}
+    - target: {fileID: 3478768265959703450, guid: 8655963e876619142b62dcdc8876e46f,
+        type: 3}
+      propertyPath: pipes.Array.data[0].pipe
+      value: 
+      objectReference: {fileID: 387637113}
+    - target: {fileID: 3478768265959703450, guid: 8655963e876619142b62dcdc8876e46f,
+        type: 3}
+      propertyPath: pipes.Array.data[1].pipe
+      value: 
+      objectReference: {fileID: 1785550322}
     - target: {fileID: 3478768265959703451, guid: 8655963e876619142b62dcdc8876e46f,
         type: 3}
       propertyPath: m_Name
@@ -9952,6 +9972,16 @@ PrefabInstance:
       propertyPath: associatedObjects.Array.data[1]
       value: 
       objectReference: {fileID: 1738510964}
+    - target: {fileID: 3478768265959703450, guid: 8655963e876619142b62dcdc8876e46f,
+        type: 3}
+      propertyPath: pipes.Array.data[0].pipe
+      value: 
+      objectReference: {fileID: 513954994}
+    - target: {fileID: 3478768265959703450, guid: 8655963e876619142b62dcdc8876e46f,
+        type: 3}
+      propertyPath: pipes.Array.data[1].pipe
+      value: 
+      objectReference: {fileID: 760739083}
     - target: {fileID: 3478768265959703451, guid: 8655963e876619142b62dcdc8876e46f,
         type: 3}
       propertyPath: m_Name
@@ -11156,6 +11186,16 @@ PrefabInstance:
       propertyPath: associatedObjects.Array.data[1]
       value: 
       objectReference: {fileID: 1580670415}
+    - target: {fileID: 3478768265959703450, guid: 8655963e876619142b62dcdc8876e46f,
+        type: 3}
+      propertyPath: pipes.Array.data[0].pipe
+      value: 
+      objectReference: {fileID: 485980558}
+    - target: {fileID: 3478768265959703450, guid: 8655963e876619142b62dcdc8876e46f,
+        type: 3}
+      propertyPath: pipes.Array.data[1].pipe
+      value: 
+      objectReference: {fileID: 842415107}
     - target: {fileID: 3478768265959703451, guid: 8655963e876619142b62dcdc8876e46f,
         type: 3}
       propertyPath: m_Name
@@ -23544,6 +23584,16 @@ PrefabInstance:
       propertyPath: associatedObjects.Array.data[1]
       value: 
       objectReference: {fileID: 684307469}
+    - target: {fileID: 3478768265959703450, guid: 8655963e876619142b62dcdc8876e46f,
+        type: 3}
+      propertyPath: pipes.Array.data[0].pipe
+      value: 
+      objectReference: {fileID: 2008768793}
+    - target: {fileID: 3478768265959703450, guid: 8655963e876619142b62dcdc8876e46f,
+        type: 3}
+      propertyPath: pipes.Array.data[1].pipe
+      value: 
+      objectReference: {fileID: 1532603337}
     - target: {fileID: 3478768265959703451, guid: 8655963e876619142b62dcdc8876e46f,
         type: 3}
       propertyPath: m_Name
@@ -34306,6 +34356,16 @@ PrefabInstance:
       propertyPath: associatedObjects.Array.data[1]
       value: 
       objectReference: {fileID: 2121426081}
+    - target: {fileID: 3478768265959703450, guid: 8655963e876619142b62dcdc8876e46f,
+        type: 3}
+      propertyPath: pipes.Array.data[1].pipe
+      value: 
+      objectReference: {fileID: 992858588}
+    - target: {fileID: 3478768265959703450, guid: 8655963e876619142b62dcdc8876e46f,
+        type: 3}
+      propertyPath: pipes.Array.data[0].pipe
+      value: 
+      objectReference: {fileID: 763142799}
     - target: {fileID: 3478768265959703451, guid: 8655963e876619142b62dcdc8876e46f,
         type: 3}
       propertyPath: m_Name
@@ -54464,6 +54524,16 @@ PrefabInstance:
       propertyPath: endObject
       value: 
       objectReference: {fileID: 504848583}
+    - target: {fileID: 3478768265959703450, guid: 8655963e876619142b62dcdc8876e46f,
+        type: 3}
+      propertyPath: pipes.Array.data[0].pipe
+      value: 
+      objectReference: {fileID: 378885723}
+    - target: {fileID: 3478768265959703450, guid: 8655963e876619142b62dcdc8876e46f,
+        type: 3}
+      propertyPath: pipes.Array.data[1].pipe
+      value: 
+      objectReference: {fileID: 136071372}
     - target: {fileID: 3478768265959703451, guid: 8655963e876619142b62dcdc8876e46f,
         type: 3}
       propertyPath: m_Name
