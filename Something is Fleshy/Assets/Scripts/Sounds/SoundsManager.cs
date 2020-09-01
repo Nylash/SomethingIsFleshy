@@ -3,6 +3,9 @@ using UnityEngine;
 
 public class SoundsManager : MonoBehaviour
 {
+    public static SoundsManager instance;
+
+    
     [System.Serializable]
     public class Sound
     {
@@ -12,7 +15,24 @@ public class SoundsManager : MonoBehaviour
         [Range(-3, 3)] public float pitch = 1;
     }
 
+    [ArrayElementTitle("name")]
     public List<Sound> sounds = new List<Sound>();
+    ActionsMap actionsMap;
+
+    private void OnEnable() => actionsMap.Gameplay.Enable();
+    private void OnDisable() => actionsMap.Gameplay.Disable();
+
+    private void Awake()
+    {
+        if (instance == null)
+            instance = this;
+        else if (instance != this)
+            Destroy(gameObject);
+
+        actionsMap = new ActionsMap();
+
+        actionsMap.Gameplay.Debug.performed += ctx => DebugSound();
+    }
 
     public void PlaySoundLoop(SoundName soundName, AudioSource source)
     {
@@ -52,6 +72,11 @@ public class SoundsManager : MonoBehaviour
 
     public enum SoundName
     {
-        TO_DEFINE, stomachEmpty, lungsEmpty, stomachFull, lungsFull
+        TO_DEFINE, StomachEmpty, LungsEmpty, StomachFull, LungsFull, LeverInteraction, HeartDamage, HeartLow, Walk, Jump
+    }
+
+    void DebugSound()
+    {
+        GetComponent<AudioSource>().Play();
     }
 }

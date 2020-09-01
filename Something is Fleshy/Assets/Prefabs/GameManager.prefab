@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 5516669155998750807}
   - component: {fileID: 1892749339}
   - component: {fileID: 1442325289}
+  - component: {fileID: 343164629535681210}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -111,3 +112,26 @@ MonoBehaviour:
   timeToRepair: 1.5
   leversWithLeaksZones: []
   allLeaks: []
+--- !u!114 &343164629535681210
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8365515437562039805}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 378fe36e60e04d044985053b7a528302, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sounds:
+  - name: 8
+    clips:
+    - {fileID: 8300000, guid: e5bd69086de22bd4fb041172bd4cd1dc, type: 3}
+    volume: 0.08
+    pitch: 1
+  - name: 9
+    clips:
+    - {fileID: 8300000, guid: 19d32f38fb3071d46845b9e29b1cf259, type: 3}
+    volume: 0.05
+    pitch: 1

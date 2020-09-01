@@ -2,6 +2,11 @@
 
 public class PlayerAnimationsMethods : MonoBehaviour
 {
+#pragma warning disable 0649
+    [Header("REFERENCES")]
+    [SerializeField] AudioSource walkSource;
+    [SerializeField] AudioSource jumpSource;
+#pragma warning restore 0649
     [Header("Variables")]
     [Header("⚠ DON'T TOUCH BELOW ⚠")]
     public Vector3 tpPosition;
@@ -29,5 +34,15 @@ public class PlayerAnimationsMethods : MonoBehaviour
     void EndShocked()
     {
         CharacterController2D.instance.animator.SetBool("Shocked", false);
+    }
+
+    void WalkSound()
+    {
+        SoundsManager.instance.PlaySoundOneShot(SoundsManager.SoundName.Walk, walkSource);
+    }
+
+    void JumpSound()
+    {
+        SoundsManager.instance.PlaySoundOneShot(SoundsManager.SoundName.Jump, jumpSource);
     }
 }
