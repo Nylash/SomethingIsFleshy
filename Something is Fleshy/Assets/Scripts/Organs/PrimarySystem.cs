@@ -7,30 +7,42 @@ public abstract class PrimarySystem : MonoBehaviour
 	public float currentCapacity;
 	public bool filling;
 	Material fillingMaterial;
+	Animator anim;
 
 	protected virtual void Start()
 	{
 		currentCapacity = GameManager.instance.startCapacityPrimarySystem;
 		fillingMaterial = transform.GetChild(0).GetComponent<SpriteRenderer>().material;
 		fillingMaterial.SetFloat("Height", currentCapacity / GameManager.instance.maxCapacityPrimarySystem);
+		anim = GetComponent<Animator>();
 	}
 
 	protected virtual void Update()
-	{
-		ContinuousFilling();
-		fillingMaterial.SetFloat("Height", currentCapacity / GameManager.instance.maxCapacityPrimarySystem);
-	}
-
-	void ContinuousFilling()
 	{
 		if (GameManager.instance.levelStarted)
 		{
 			if (!HeartManager.instance.defeatOrVictory && !GameManager.instance.levelPaused)
 			{
-				if (filling)
-					Filling(Time.deltaTime * GameManager.instance.fillingMultiplierPrimarySystem);
+				ContinuousFilling();
+				fillingMaterial.SetFloat("Height", currentCapacity / GameManager.instance.maxCapacityPrimarySystem);
+				if (currentCapacity / GameManager.instance.maxCapacityPrimarySystem < .05f)
+				{
+					if (!anim.GetBool("LowRessource"))
+						anim.SetBool("LowRessource", true);
+				}
+				else
+				{
+					if (anim.GetBool("LowRessource"))
+						anim.SetBool("LowRessource", false);
+				}
 			}
 		}
+	}
+
+	void ContinuousFilling()
+	{
+		if (filling)
+			Filling(Time.deltaTime * GameManager.instance.fillingMultiplierPrimarySystem);
 	}
 
 	public virtual void Filling(float amount)
