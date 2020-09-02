@@ -98,7 +98,7 @@ LightmapSettings:
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
   m_LightingDataAsset: {fileID: 0}
-  m_UseShadowmask: 0
+  m_UseShadowmask: 1
 --- !u!196 &4
 NavMeshSettings:
   serializedVersion: 2
@@ -9831,7 +9831,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1442325289, guid: 9719e81b153f0914ebc60d15fdb1de3f, type: 3}
       propertyPath: timeBeforeFirstCheckForLeak
-      value: 30
+      value: 20
       objectReference: {fileID: 0}
     - target: {fileID: 1442325289, guid: 9719e81b153f0914ebc60d15fdb1de3f, type: 3}
       propertyPath: timeIntervalForCheckForLeak
@@ -9867,15 +9867,15 @@ PrefabInstance:
       objectReference: {fileID: 66139343}
     - target: {fileID: 1892749339, guid: 9719e81b153f0914ebc60d15fdb1de3f, type: 3}
       propertyPath: maxTimeBetweenActivities
-      value: 30
+      value: 25
       objectReference: {fileID: 0}
     - target: {fileID: 1892749339, guid: 9719e81b153f0914ebc60d15fdb1de3f, type: 3}
       propertyPath: timeBeforeFirstActivity
-      value: 12
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 1892749339, guid: 9719e81b153f0914ebc60d15fdb1de3f, type: 3}
       propertyPath: minTimeBetweenActivities
-      value: 25
+      value: 20
       objectReference: {fileID: 0}
     - target: {fileID: 1892749339, guid: 9719e81b153f0914ebc60d15fdb1de3f, type: 3}
       propertyPath: timeBeforeHealthLoss
@@ -9883,11 +9883,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1892749339, guid: 9719e81b153f0914ebc60d15fdb1de3f, type: 3}
       propertyPath: energyAmoutNeeded
-      value: 10
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 1892749339, guid: 9719e81b153f0914ebc60d15fdb1de3f, type: 3}
       propertyPath: oxygenAmoutNeeded
-      value: 10
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 1892749339, guid: 9719e81b153f0914ebc60d15fdb1de3f, type: 3}
       propertyPath: timeBeforeSSexplosion
@@ -9961,7 +9961,7 @@ PrefabInstance:
     - target: {fileID: 5516669155998750807, guid: 9719e81b153f0914ebc60d15fdb1de3f,
         type: 3}
       propertyPath: startCapacityPrimarySystem
-      value: 2
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 8365515437562039805, guid: 9719e81b153f0914ebc60d15fdb1de3f,
         type: 3}
@@ -25506,7 +25506,7 @@ PrefabInstance:
         type: 3}
       propertyPath: pipes.Array.data[1].pipe
       value: 
-      objectReference: {fileID: 61452368}
+      objectReference: {fileID: 1142892149}
     - target: {fileID: 3478768265959703451, guid: 8655963e876619142b62dcdc8876e46f,
         type: 3}
       propertyPath: m_Name

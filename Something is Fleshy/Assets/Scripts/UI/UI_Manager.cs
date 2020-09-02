@@ -14,17 +14,13 @@ public class UI_Manager : MonoBehaviour
     public Canvas UI_defeatCanvas;
     public TextMeshProUGUI UI_defeatFullTimer;
     public TextMeshProUGUI UI_defeatActualTimer;
-    public Button UI_defeatButton;
     public Canvas UI_victoryCanvas;
-    public Button UI_victoryButton;
     public Canvas UI_pauseCanvas;
     public Canvas UI_leakGaugeCanvas;
     public Image UI_leakGaugeIn;
     public Canvas UI_timerCanvas;
     [Header("Components")]
     ActionsMap actionsMap;
-    [Header("Variables")]
-    public GameObject lastSelected;
 
     private void OnEnable() => actionsMap.Gameplay.Enable();
     private void OnDisable() => actionsMap.Gameplay.Disable();
@@ -41,35 +37,32 @@ public class UI_Manager : MonoBehaviour
         actionsMap.Gameplay.Pause.started += ctx => Pause();
     }
 
-    private void Update()
+    public void Pause()
     {
-        if (HeartManager.instance.defeatOrVictory)
+        if (!HeartManager.instance.defeatOrVictory)
         {
-            if (EventSystem.current.currentSelectedGameObject)
+            UI_pauseCanvas.enabled = !UI_pauseCanvas.enabled;
+            if (UI_pauseCanvas.enabled)
             {
-                if(EventSystem.current.currentSelectedGameObject != lastSelected)
-                {
-                    if (lastSelected)
-                        lastSelected.GetComponentInChildren<TextMeshProUGUI>().color = Color.black;
-                    lastSelected = EventSystem.current.currentSelectedGameObject;
-                    lastSelected.GetComponentInChildren<TextMeshProUGUI>().color = Color.white;
-                    //lastSelected.GetComponent<Animator>().SetTrigger("Selected");
-                }
+                Time.timeScale = 0;
+            }
+            else
+            {
+                EventSystem.current.SetSelectedGameObject(null);
+                Time.timeScale = 1;
             }
         }
     }
 
-    void Pause()
-    {
-        UI_pauseCanvas.enabled = !UI_pauseCanvas.enabled;
-        if (UI_pauseCanvas.enabled)
-            Time.timeScale = 0;
-        else
-            Time.timeScale = 1;
-    }
-
     public void ReloadLevel()
     {
+        Time.timeScale = 1;
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+    }
+
+    public void LoadMainMenu()
+    {
+        Time.timeScale = 1;
+        SceneManager.LoadScene("MainMenu");
     }
 }

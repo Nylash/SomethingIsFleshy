@@ -29,3 +29,5 @@ MonoBehaviour:
     m_Color: {r: 0.7264151, g: 0.5580447, b: 0.46942863, a: 1}
   - m_Name: Background
     m_Color: {r: 1, g: 0.8349056, b: 0.8728584, a: 1}
+  - m_Name: CanvasBack
+    m_Color: {r: 0.26666668, g: 0, b: 0.17254902, a: 0.9019608}

@@ -59,7 +59,6 @@ public class HeartManager : MonoBehaviour
 		UI_Manager.instance.UI_defeatFullTimer.text = GameManager.instance.timeToFinishLevel.ToString() + " seconds";
 		UI_Manager.instance.UI_defeatActualTimer.text = (GameManager.instance.timeToFinishLevel - (int)currentTimer).ToString() + " seconds";
 		UI_Manager.instance.UI_defeatCanvas.enabled = true;
-		EventSystem.current.SetSelectedGameObject(UI_Manager.instance.UI_defeatButton.gameObject);
 		defeatOrVictory = true;
 		SecondarySystemsManager.instance.StopActivityCall();
 	}
@@ -67,7 +66,6 @@ public class HeartManager : MonoBehaviour
 	void Victory()
 	{
 		UI_Manager.instance.UI_victoryCanvas.enabled = true;
-		EventSystem.current.SetSelectedGameObject(UI_Manager.instance.UI_victoryButton.gameObject);
 		defeatOrVictory = true;
 		SecondarySystemsManager.instance.StopActivityCall();
 	}

@@ -315,7 +315,7 @@ public class @ActionsMap : IInputActionCollection, IDisposable
             ""actions"": [
                 {
                     ""name"": ""Move"",
-                    ""type"": ""Value"",
+                    ""type"": ""PassThrough"",
                     ""id"": ""35146524-64e7-42cf-9fac-6eac9e6c7ac8"",
                     ""expectedControlType"": ""Vector2"",
                     ""processors"": """",
@@ -323,7 +323,7 @@ public class @ActionsMap : IInputActionCollection, IDisposable
                 },
                 {
                     ""name"": ""Submit"",
-                    ""type"": ""Button"",
+                    ""type"": ""PassThrough"",
                     ""id"": ""d35f0f31-f508-4e91-bbf0-420ab534987c"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",

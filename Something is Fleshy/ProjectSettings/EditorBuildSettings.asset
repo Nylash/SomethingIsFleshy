@@ -4,5 +4,26 @@
 EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
-  m_Scenes: []
+  m_Scenes:
+  - enabled: 1
+    path: Assets/Scenes/Menu/SplashScene.unity
+    guid: 6dc09a9b2ea83f74098e3fa464d8d491
+  - enabled: 1
+    path: Assets/Scenes/Menu/MainMenu.unity
+    guid: 09b50276c2e616440be0ffa8a7689275
+  - enabled: 1
+    path: Assets/Scenes/Tutorial.unity
+    guid: 907f95d453626d74ca7edba5b69c169d
+  - enabled: 1
+    path: Assets/Scenes/Levels/Human.unity
+    guid: 07805d52850cf864390389fb4165a718
+  - enabled: 1
+    path: Assets/Scenes/Levels/Cow.unity
+    guid: 782bbab69bc76024c9afd44b380d9aab
+  - enabled: 1
+    path: Assets/Scenes/Levels/Ant.unity
+    guid: e506800387d518340a6505e0b413deb9
+  - enabled: 1
+    path: Assets/Scenes/Levels/Alien.unity
+    guid: 5ca2b7531112c32428ed58a8ed04ca8c
   m_configObjects: {}
