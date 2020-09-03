@@ -4606,6 +4606,7 @@ GameObject:
   - component: {fileID: 5882329430542306288}
   - component: {fileID: 7754216841718999710}
   - component: {fileID: 3583956857965021584}
+  - component: {fileID: 6612847599696560296}
   m_Layer: 5
   m_Name: StartCanvas
   m_TagString: Untagged
@@ -4708,6 +4709,25 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!95 &6612847599696560296
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8590056059232761973}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 7aca5aad6131df04289bb092c70a5406, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &8901158802678173752
 GameObject:
   m_ObjectHideFlags: 0

@@ -48,7 +48,7 @@ public class PlayerAnimationsMethods : MonoBehaviour
         {
             securityJumpSFX = true;
             SoundsManager.instance.PlaySoundOneShot(SoundsManager.SoundName.Jump, jumpSource);
-            Invoke("DisableSecurityJumpSFX", .3f);
+            Invoke("DisableSecurityJumpSFX", .5f);
         }
     }
 

@@ -69,11 +69,14 @@ public class UI_Manager : MonoBehaviour
     {
         yield return new WaitForSeconds(1);
         UI_startText.text = "Starts in 2";
+        UI_startCanvas.GetComponent<Animator>().SetTrigger("AnimSize");
         yield return new WaitForSeconds(1);
         UI_startText.text = "Starts in 1";
+        UI_startCanvas.GetComponent<Animator>().SetTrigger("AnimSize");
         CameraManager.instance.SwitchCamera();
         yield return new WaitForSeconds(1);
         UI_startText.text = "Go !";
+        UI_startCanvas.GetComponent<Animator>().SetTrigger("AnimSize");
         yield return new WaitForSeconds(1);
         StartGame();
     }
