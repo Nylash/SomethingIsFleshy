@@ -10,6 +10,7 @@ public class PlayerAnimationsMethods : MonoBehaviour
     [Header("Variables")]
     [Header("⚠ DON'T TOUCH BELOW ⚠")]
     public Vector3 tpPosition;
+    bool securityJumpSFX;
 
     private void Start()
     {
@@ -43,6 +44,16 @@ public class PlayerAnimationsMethods : MonoBehaviour
 
     void JumpSound()
     {
-        SoundsManager.instance.PlaySoundOneShot(SoundsManager.SoundName.Jump, jumpSource);
+        if (!securityJumpSFX)
+        {
+            securityJumpSFX = true;
+            SoundsManager.instance.PlaySoundOneShot(SoundsManager.SoundName.Jump, jumpSource);
+            Invoke("DisableSecurityJumpSFX", .3f);
+        }
+    }
+
+    void DisableSecurityJumpSFX()
+    {
+        securityJumpSFX = false;
     }
 }

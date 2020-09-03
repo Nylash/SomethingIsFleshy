@@ -63,7 +63,10 @@ public class SecondarySystemsManager : MonoBehaviour
 
         if (allSecondarySystems.Count == 0)
             Debug.LogError("You need to assign some Secondary Systems to atleast one pack (GameManager).");
+    }
 
+    public void StartGame()
+    {
         Invoke("StartActivity", timeBeforeFirstActivity);
     }
 

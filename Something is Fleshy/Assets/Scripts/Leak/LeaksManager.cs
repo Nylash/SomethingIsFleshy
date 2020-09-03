@@ -29,9 +29,12 @@ public class LeaksManager : MonoBehaviour
             instance = this;
         else if (instance != this)
             Destroy(gameObject);
-
-        InvokeRepeating("CheckLeak", timeBeforeFirstCheckForLeak, timeIntervalForCheckForLeak);
     }    
+
+    public void StartGame()
+    {
+        InvokeRepeating("CheckLeak", timeBeforeFirstCheckForLeak, timeIntervalForCheckForLeak);
+    }
 
     void CheckLeak()
     {

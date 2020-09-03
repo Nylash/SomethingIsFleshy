@@ -3,6 +3,7 @@ using TMPro;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using System.Collections;
 
 public class UI_Manager : MonoBehaviour
 {
@@ -10,6 +11,8 @@ public class UI_Manager : MonoBehaviour
 
     [Header("UI Objects")]
     [Header("⚠ DON'T TOUCH BELOW ⚠")]
+    public Canvas UI_startCanvas;
+    public TextMeshProUGUI UI_startText;
     public TextMeshProUGUI UI_timerValue;
     public Canvas UI_defeatCanvas;
     public TextMeshProUGUI UI_defeatFullTimer;
@@ -37,6 +40,14 @@ public class UI_Manager : MonoBehaviour
         actionsMap.Gameplay.Pause.started += ctx => Pause();
     }
 
+    private void Start()
+    {
+        if (SceneManager.GetActiveScene().name != "Tutorial")
+            StartCoroutine(AnimStart());
+        else
+            StartGame();
+    }
+
     public void Pause()
     {
         if (!HeartManager.instance.defeatOrVictory)
@@ -54,6 +65,19 @@ public class UI_Manager : MonoBehaviour
         }
     }
 
+    IEnumerator AnimStart()
+    {
+        yield return new WaitForSeconds(1);
+        UI_startText.text = "Starts in 2";
+        yield return new WaitForSeconds(1);
+        UI_startText.text = "Starts in 1";
+        CameraManager.instance.SwitchCamera();
+        yield return new WaitForSeconds(1);
+        UI_startText.text = "Go !";
+        yield return new WaitForSeconds(1);
+        StartGame();
+    }
+
     public void ReloadLevel()
     {
         Time.timeScale = 1;
@@ -64,5 +88,18 @@ public class UI_Manager : MonoBehaviour
     {
         Time.timeScale = 1;
         SceneManager.LoadScene("MainMenu");
+    }
+
+    void Dezoom()
+    {
+        CameraManager.instance.SwitchCamera();
+    }
+
+    void StartGame()
+    {
+        UI_startCanvas.enabled = false;
+        GameManager.instance.levelStarted = true;
+        SecondarySystemsManager.instance.StartGame();
+        LeaksManager.instance.StartGame();
     }
 }

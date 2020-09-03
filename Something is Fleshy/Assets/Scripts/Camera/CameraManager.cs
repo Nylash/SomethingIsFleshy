@@ -39,7 +39,7 @@ public class CameraManager : MonoBehaviour
         VCamGlobal = GameObject.FindGameObjectWithTag("CamGlobal");
         VCamZoomNoise = VCamZoom.GetComponent<CinemachineVirtualCamera>().GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>();
         VCamGlobalNoise = VCamGlobal.GetComponent<CinemachineVirtualCamera>().GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>();
-        VCamZoom.SetActive(false);
+        VCamGlobal.SetActive(false);
 
         actionsMap = new ActionsMap();
         actionsMap.Gameplay.SwitchCamera.started += ctx => SwitchCamera();

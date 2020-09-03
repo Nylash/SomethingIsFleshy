@@ -51,9 +51,4 @@ public class GameManager : MonoBehaviour
         else if (instance != this)
             Destroy(gameObject);
     }
-
-	private void Start()
-	{
-		levelStarted = true;
-	}
 }

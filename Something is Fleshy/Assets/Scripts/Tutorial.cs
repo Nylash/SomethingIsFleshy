@@ -66,6 +66,7 @@ public class Tutorial : MonoBehaviour
 
         GameManager.instance.levelPaused = true;
         presentationCanvas.enabled = true;
+        CameraManager.instance.SwitchCamera();
     }
 
     private void Update()
