@@ -124,8 +124,9 @@ public class CharacterController2D : MonoBehaviour
             {
 				if (rb.bodyType != RigidbodyType2D.Static)
 					rb.bodyType = RigidbodyType2D.Static;
-			}
-				
+				if (animator.GetBool("Running"))
+					animator.SetBool("Running", false);
+            }				
 		}
 	}
 
