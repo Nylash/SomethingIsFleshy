@@ -21,7 +21,7 @@ public abstract class PrimarySystem : MonoBehaviour
 	{
 		if (GameManager.instance.levelStarted)
 		{
-			if (!HeartManager.instance.defeatOrVictory && !GameManager.instance.levelPaused)
+			if (!ScoreManager.instance.levelEnded && !GameManager.instance.levelPaused)
 			{
 				ContinuousFilling();
 				fillingMaterial.SetFloat("Height", currentCapacity / GameManager.instance.maxCapacityPrimarySystem);

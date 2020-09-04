@@ -18,22 +18,19 @@ public class TimerSecondarySystem : MonoBehaviour
     {
         if (GameManager.instance.levelStarted)
         {
-            if (!HeartManager.instance.defeatOrVictory && !GameManager.instance.levelPaused)
+            if (!ScoreManager.instance.levelEnded && !GameManager.instance.levelPaused)
             {
                 transform.position = Camera.main.WorldToScreenPoint(associatedSystem.transform.position);
-                if (associatedSystem.filling)
-                {
-                    if (canvas.enabled)
-                        canvas.enabled = false;
-                }
-                else
-                {
-                    if (!canvas.enabled)
-                        canvas.enabled = true;
-                    timer.fillAmount = associatedSystem.timerBeforeExplosion / SecondarySystemsManager.instance.timeBeforeSSexplosion;
-                }
+                if (!canvas.enabled)
+                    canvas.enabled = true;
+                timer.fillAmount = associatedSystem.timerBeforeExpiration / SecondarySystemsManager.instance.timeBeforeExpirationSecondarySystem;
                 if (!associatedSystem.energyNeeded && !associatedSystem.oxygenNeeded)
                     Destroy(gameObject);
+            }
+            else
+            {
+                if (canvas.enabled)
+                    canvas.enabled = false;
             }
         }
     }

@@ -37,7 +37,7 @@ public class InteractionManager : MonoBehaviour
     {
         if (GameManager.instance.levelStarted)
         {
-            if (!HeartManager.instance.defeatOrVictory && !GameManager.instance.levelPaused)
+            if (!ScoreManager.instance.levelEnded && !GameManager.instance.levelPaused)
             {
                 if (CharacterController2D.instance.animator.GetBool("Holding"))
                 {
@@ -59,7 +59,7 @@ public class InteractionManager : MonoBehaviour
     {
         if (GameManager.instance.levelStarted)
         {
-            if (!HeartManager.instance.defeatOrVictory && !GameManager.instance.levelPaused && CharacterController2D.instance.AnimationNotCurrentlyBlocking())
+            if (!ScoreManager.instance.levelEnded && !GameManager.instance.levelPaused && CharacterController2D.instance.AnimationNotCurrentlyBlocking())
             {
                 if (canInteract)
                 {
@@ -111,7 +111,7 @@ public class InteractionManager : MonoBehaviour
     {
         if (GameManager.instance.levelStarted)
         {
-            if (!HeartManager.instance.defeatOrVictory && !GameManager.instance.levelPaused)
+            if (!ScoreManager.instance.levelEnded && !GameManager.instance.levelPaused)
             {
                 if (canInteract && CharacterController2D.instance.animator.GetBool("Holding"))
                 {

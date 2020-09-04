@@ -19,13 +19,16 @@ public class GameManager : MonoBehaviour
 	public SpriteShape pipeOpenShape;
 	[Tooltip("Pipe's shape when close.")]
 	public SpriteShape pipeCloseShape;
+	[Tooltip("Prefab to track time before expiration of the secondary system")]
 	public GameObject UI_timerSS;
+	public Sprite goldMedal;
+	public Sprite silverMedal;
+	public Sprite bronzeMedal;
+	public Sprite failMedal;
 	[Space]
 	[Header("PARAMETERS")]
-	[Tooltip("Time to end level (in seconds).")]
-	public float timeToFinishLevel = 180;
-	[Tooltip("Max health, 1 HP = 1 sec")]
-	public float maxHealth;
+	[Tooltip("Level duration (in seconds).")]
+	public float levelDuration = 180;
 	[Space]
 	[Tooltip("Time before being empty when full and only one secondary system is open. If two secondary systems are open divide this value by 2 and so on..")]
 	public float maxCapacityPrimarySystem = 35f;
@@ -34,10 +37,19 @@ public class GameManager : MonoBehaviour
 	[Tooltip("Multiplier ratio for filling over time. By default 1.")]
 	[Min(1f)] public float fillingMultiplierPrimarySystem = 1;
 	[Space]
-	[Tooltip("Damage done when a SS explode.")]
-	public float SSexplosionDamage = 20f;
-	[Tooltip("How many damage is deal to the heart when the player hit a nerve.")]
-	public float nerveDamage = 5f;
+	[Tooltip("Curve used to determine points earned when a secondary system is filled, depending on the time taken.")]
+	public AnimationCurve pointsWinSecondarySystemFilled;
+	[Tooltip("Points loss when a secondary system expires.")]
+	public int pointsLossSecondarySystemExpiration = 20;
+	[Tooltip("Points loss when a nerve is hit.")]
+	public int pointsLossNerveHit = 5;
+	[Space]
+	[Tooltip("Points required to get gold medal.")]
+	public int pointsForGold = 300;
+	[Tooltip("Points required to get silver medal.")]
+	public int pointsForSilver = 200;
+	[Tooltip("Points required to get bronze medal.")]
+	public int pointsForBronze = 120;
 	#endregion
 	[Header("Variables")]
 	[Header("⚠ DON'T TOUCH BELOW ⚠")]

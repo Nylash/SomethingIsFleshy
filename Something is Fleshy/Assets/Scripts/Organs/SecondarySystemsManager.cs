@@ -13,8 +13,8 @@ public class SecondarySystemsManager : MonoBehaviour
     public float energyAmoutNeeded = 10f;
     [Tooltip("Time to full a secondary system in oxygen.")]
     public float oxygenAmoutNeeded = 10f;
-    [Tooltip("Time before an SS explode if it doesn't get ressource.")]
-    public float timeBeforeSSexplosion = 5f;
+    [Tooltip("Time before an secondary system expires.")]
+    public float timeBeforeExpirationSecondarySystem = 5f;
     [Space]
     [Tooltip("Time before the first activity.")]
     public float timeBeforeFirstActivity = 10f;

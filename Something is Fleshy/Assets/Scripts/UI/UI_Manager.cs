@@ -11,13 +11,17 @@ public class UI_Manager : MonoBehaviour
 
     [Header("UI Objects")]
     [Header("⚠ DON'T TOUCH BELOW ⚠")]
+    public Canvas UI_scoreCanvas;
+    public TextMeshProUGUI UI_scoreValue;
     public Canvas UI_startCanvas;
     public TextMeshProUGUI UI_startText;
     public TextMeshProUGUI UI_timerValue;
-    public Canvas UI_defeatCanvas;
-    public TextMeshProUGUI UI_defeatFullTimer;
-    public TextMeshProUGUI UI_defeatActualTimer;
-    public Canvas UI_victoryCanvas;
+    public Canvas UI_endCanvas;
+    public TextMeshProUGUI UI_endScore;
+    public Image UI_medal;
+    public TextMeshProUGUI UI_goldScore;
+    public TextMeshProUGUI UI_silverScore;
+    public TextMeshProUGUI UI_bronzeScore;
     public Canvas UI_pauseCanvas;
     public Canvas UI_leakGaugeCanvas;
     public Image UI_leakGaugeIn;
@@ -50,7 +54,7 @@ public class UI_Manager : MonoBehaviour
 
     public void Pause()
     {
-        if (!HeartManager.instance.defeatOrVictory)
+        if (!ScoreManager.instance.levelEnded)
         {
             UI_pauseCanvas.enabled = !UI_pauseCanvas.enabled;
             if (UI_pauseCanvas.enabled)

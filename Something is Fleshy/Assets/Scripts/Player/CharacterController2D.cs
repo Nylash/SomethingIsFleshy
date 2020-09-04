@@ -102,7 +102,7 @@ public class CharacterController2D : MonoBehaviour
 	{
 		if (GameManager.instance.levelStarted)
 		{
-			if (!HeartManager.instance.defeatOrVictory && !GameManager.instance.levelPaused && AnimationNotCurrentlyBlocking())
+			if (!ScoreManager.instance.levelEnded && !GameManager.instance.levelPaused && AnimationNotCurrentlyBlocking())
 			{
 				if (rb.bodyType != RigidbodyType2D.Dynamic)
 					rb.bodyType = RigidbodyType2D.Dynamic;
@@ -188,7 +188,7 @@ public class CharacterController2D : MonoBehaviour
 	{
 		if (GameManager.instance.levelStarted)
 		{
-			if (!HeartManager.instance.defeatOrVictory && !GameManager.instance.levelPaused && AnimationNotCurrentlyBlocking())
+			if (!ScoreManager.instance.levelEnded && !GameManager.instance.levelPaused && AnimationNotCurrentlyBlocking())
 			{
 				if (isGrounded)
 				{
@@ -348,7 +348,7 @@ public class CharacterController2D : MonoBehaviour
 			case "Nerve" :
 				if (!isOnNerve)
 				{
-					HeartManager.instance.TakeDamage(GameManager.instance.nerveDamage);
+					ScoreManager.instance.LosePoints(GameManager.instance.pointsLossNerveHit);
 					collision.gameObject.GetComponent<Animator>().SetTrigger("Hit");
 					isOnNerve = true;
 					StartCoroutine(OnNerveAnimation());

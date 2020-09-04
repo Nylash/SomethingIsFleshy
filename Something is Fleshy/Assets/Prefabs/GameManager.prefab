@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 1892749339}
   - component: {fileID: 1442325289}
   - component: {fileID: 343164629535681210}
+  - component: {fileID: 2873604965991707631}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -54,13 +55,42 @@ MonoBehaviour:
   pipeCloseShape: {fileID: 11400000, guid: c1787f02087482745ba878ebf0d8c8f6, type: 2}
   UI_timerSS: {fileID: 4883372696975181904, guid: 8e34697cb58a8e142a51df52b2bf91e7,
     type: 3}
-  timeToFinishLevel: 180
-  maxHealth: 0
+  goldMedal: {fileID: 21300000, guid: d822feadb3541ad44b6564a2d096ffe8, type: 3}
+  silverMedal: {fileID: 21300000, guid: 7bc7cdd96634758499a5048c17689554, type: 3}
+  bronzeMedal: {fileID: 21300000, guid: bb20e0440b45a0e41b97b0df4bb933a1, type: 3}
+  levelDuration: 180
   maxCapacityPrimarySystem: 35
   startCapacityPrimarySystem: 20
   fillingMultiplierPrimarySystem: 1
-  SSexplosionDamage: 20
-  nerveDamage: 5
+  pointsWinSecondarySystemFilled:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 60
+      inSlope: -50
+      outSlope: -50
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 10
+      inSlope: -50
+      outSlope: -50
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  pointsLossSecondarySystemExpiration: 20
+  pointsLossNerveHit: 5
+  pointsForGold: 300
+  pointsForSilver: 200
+  pointsForBronze: 120
   levelStarted: 0
   levelPaused: 0
 --- !u!114 &1892749339
@@ -77,7 +107,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   energyAmoutNeeded: 10
   oxygenAmoutNeeded: 10
-  timeBeforeSSexplosion: 5
+  timeBeforeExpirationSecondarySystem: 5
   timeBeforeFirstActivity: 12
   minTimeBetweenActivities: 17
   maxTimeBetweenActivities: 20
@@ -91,6 +121,7 @@ MonoBehaviour:
   packC: []
   packD: []
   randomRessourceWeight: 0
+  timerLerp: 0
 --- !u!114 &1442325289
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -135,3 +166,18 @@ MonoBehaviour:
     - {fileID: 8300000, guid: 19d32f38fb3071d46845b9e29b1cf259, type: 3}
     volume: 0.05
     pitch: 1
+--- !u!114 &2873604965991707631
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8365515437562039805}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e11b2e829e8c6a4eaea86ea1e453360, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  currentTimer: 0
+  levelEnded: 0
+  currentScore: 0

@@ -158,7 +158,7 @@ public class Leak : MonoBehaviour
     {
         if (GameManager.instance.levelStarted)
         {
-            if (!HeartManager.instance.defeatOrVictory && !GameManager.instance.levelPaused)
+            if (!ScoreManager.instance.levelEnded && !GameManager.instance.levelPaused)
             {
                 LungsManager.instance.Emptying(Time.deltaTime);
             }
@@ -169,7 +169,7 @@ public class Leak : MonoBehaviour
     {
         if (GameManager.instance.levelStarted)
         {
-            if (!HeartManager.instance.defeatOrVictory && !GameManager.instance.levelPaused)
+            if (!ScoreManager.instance.levelEnded && !GameManager.instance.levelPaused)
             {
                 StomachManager.instance.Emptying(Time.deltaTime);
             }

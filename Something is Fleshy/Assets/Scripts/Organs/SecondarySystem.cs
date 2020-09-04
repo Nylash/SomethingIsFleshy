@@ -31,7 +31,7 @@ public class SecondarySystem : MonoBehaviour
 	public bool energyNeeded;
 	public bool oxygenNeeded;
 	public bool filling;
-	public float timerBeforeExplosion;
+	public float timerBeforeExpiration;
 	bool checkIfCanBeSelectedAgain;
 	MaterialPropertyBlock energyPropertyBlock;
 	MaterialPropertyBlock oxygenPropertyBlock;
@@ -69,14 +69,13 @@ public class SecondarySystem : MonoBehaviour
 	{
 		if (GameManager.instance.levelStarted)
 		{
-			if (!HeartManager.instance.defeatOrVictory && !GameManager.instance.levelPaused)
+			if (!ScoreManager.instance.levelEnded && !GameManager.instance.levelPaused)
 			{
 				if (energyNeeded)
 				{
 					if (filling)
 						FillingEnergy();
-					else
-						timerBeforeExplosion += Time.deltaTime;
+					timerBeforeExpiration += Time.deltaTime;
 				energyPropertyBlock.SetFloat("Height", currentEnergy / SecondarySystemsManager.instance.energyAmoutNeeded);
 				energyRenderer.SetPropertyBlock(energyPropertyBlock);
 				}
@@ -84,8 +83,7 @@ public class SecondarySystem : MonoBehaviour
 				{
 					if (filling)
 						FillingOxygen();
-					else
-						timerBeforeExplosion += Time.deltaTime;
+					timerBeforeExpiration += Time.deltaTime;
 				oxygenPropertyBlock.SetFloat("Height", currentOxygen / SecondarySystemsManager.instance.oxygenAmoutNeeded);
 				oxygenRenderer.SetPropertyBlock(oxygenPropertyBlock);
 				}
@@ -129,23 +127,28 @@ public class SecondarySystem : MonoBehaviour
 		if (energyNeeded)
 		{
 			if (currentEnergy / SecondarySystemsManager.instance.energyAmoutNeeded >= 1)
-				StopActivity();
+				StopActivity(true);
 		}
 		else if (oxygenNeeded)
 		{
 			if (currentOxygen / SecondarySystemsManager.instance.oxygenAmoutNeeded >= 1)
-				StopActivity();
+				StopActivity(true);
 		}
-		if(timerBeforeExplosion >= SecondarySystemsManager.instance.timeBeforeSSexplosion)
-        {
-			HeartManager.instance.TakeDamage(GameManager.instance.SSexplosionDamage);
-			StopActivity();
-        }
+		if(timerBeforeExpiration >= SecondarySystemsManager.instance.timeBeforeExpirationSecondarySystem)
+			StopActivity(false);
 	}
 
-	void StopActivity()
+	void StopActivity(bool suceed)
 	{
-		timerBeforeExplosion = 0f;
+        if (suceed)
+        {
+			ScoreManager.instance.WinPoints((int)GameManager.instance.pointsWinSecondarySystemFilled.Evaluate(timerBeforeExpiration/SecondarySystemsManager.instance.timeBeforeExpirationSecondarySystem));
+		}
+        else
+        {
+			ScoreManager.instance.LosePoints(GameManager.instance.pointsLossSecondarySystemExpiration);
+        }
+		timerBeforeExpiration = 0f;
 		filling = false;
 		associatedLever.IsSecondarySystemFilling(false);
 		energyNeeded = false;

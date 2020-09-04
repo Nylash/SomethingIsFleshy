@@ -63,6 +63,7 @@ public class Tutorial : MonoBehaviour
     private void Start()
     {
         UI_Manager.instance.UI_timerCanvas.enabled = false;
+        UI_Manager.instance.UI_scoreCanvas.enabled = false;
 
         GameManager.instance.levelPaused = true;
         presentationCanvas.enabled = true;
@@ -95,11 +96,11 @@ public class Tutorial : MonoBehaviour
                 }
                 break;
             case TutorialStep.psFilledUp:
-                textTop.text = "Time : " + ((int)(SecondarySystemsManager.instance.timeBeforeSSexplosion - tutoSS.timerBeforeExplosion)).ToString() + " sec";
+                textTop.text = "Time : " + ((int)(SecondarySystemsManager.instance.timeBeforeExpirationSecondarySystem - tutoSS.timerBeforeExpiration)).ToString() + " sec";
                 textBot.text = "Energy : " + ((int)(tutoSS.currentEnergy / SecondarySystemsManager.instance.energyAmoutNeeded * 100)).ToString() + "%";
                 if (!tutoSS.energyNeeded && !GameManager.instance.levelPaused)
                 {
-                    if(HeartManager.instance.currentHealth != GameManager.instance.maxHealth)
+                    if(ScoreManager.instance.currentScore < 0)
                     {
                         GameManager.instance.levelPaused = true;
                         CharacterController2D.instance.animator.SetBool("Running", false);
@@ -204,7 +205,7 @@ public class Tutorial : MonoBehaviour
                         else
                             stockedCam.SetActive(true);
                         textObj.text = "Supply muscle";
-                        textTop.text = "Time : " + ((int)SecondarySystemsManager.instance.timeBeforeSSexplosion).ToString() + " sec";
+                        textTop.text = "Time : " + ((int)SecondarySystemsManager.instance.timeBeforeExpirationSecondarySystem).ToString() + " sec";
                         textBot.text = "Energy : 0%";
                         objectiveCanvas.enabled = true;
                     }
@@ -231,12 +232,11 @@ public class Tutorial : MonoBehaviour
                 {
                     if (secondarySystemFailureCanvas.GetComponent<UI_ChildSelector>().NoMoreChilds())
                     {
-                        HeartManager.instance.currentHealth = GameManager.instance.maxHealth;
-                        HeartManager.instance.TakeDamage(0);//Use to update gauge
+                        ScoreManager.instance.currentScore = 0;
                         SecondarySystemsManager.instance.LaunchSpecificSS(tutoSS, associatedPack);
                         GameManager.instance.levelPaused = false;
                         secondarySystemFailureCanvas.enabled = false;
-                        textTop.text = "Time : " + ((int)SecondarySystemsManager.instance.timeBeforeSSexplosion).ToString() + " sec";
+                        textTop.text = "Time : " + ((int)SecondarySystemsManager.instance.timeBeforeExpirationSecondarySystem).ToString() + " sec";
                         textBot.text = "Energy : 0%";
                     }
                 }
@@ -274,13 +274,14 @@ public class Tutorial : MonoBehaviour
 
     void TutorialCompleted()
     {
-        GameManager.instance.timeToFinishLevel = timeToFinishAfterCompletion;
-        HeartManager.instance.currentTimer = timeToFinishAfterCompletion;
+        GameManager.instance.levelDuration = timeToFinishAfterCompletion;
+        ScoreManager.instance.currentTimer = timeToFinishAfterCompletion;
         SecondarySystemsManager.instance.timeBeforeFirstActivity = timeBeforeFirstActivityAfterCompletion;
         LeaksManager.instance.timeBeforeFirstCheckForLeak = timeBeforeFirstLeakCheckAfterCompletion;
         SecondarySystemsManager.instance.TutorialCompleted();
         LeaksManager.instance.TutorialCompleted();
         UI_Manager.instance.UI_timerCanvas.enabled = true;
+        UI_Manager.instance.UI_scoreCanvas.enabled = true;
     }
 
     public enum TutorialStep
