@@ -37,8 +37,11 @@ public class HintSecondarySystemManager : MonoBehaviour
                 bool onScreen = screenPoint.x > 0 && screenPoint.x < 1 && screenPoint.y > 0 && screenPoint.y < 1;
                 if (onScreen)
                 {
-                    if(item.associatedHint && item.associatedHint.activeSelf)
-                        item.associatedHint.SetActive(false);
+                    if (item.associatedHint)
+                    {
+                        if (item.associatedHint.activeSelf)
+                            item.associatedHint.SetActive(false);
+                    }
                 }
                 else
                 {

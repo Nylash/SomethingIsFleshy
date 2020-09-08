@@ -16,6 +16,11 @@ public class SecondarySystemsManager : MonoBehaviour
     [Tooltip("Time before an secondary system expires.")]
     public float timeBeforeExpirationSecondarySystem = 5f;
     [Space]
+    [Tooltip("Maximum of secondary systems that can be active simultaneously.")]
+    [SerializeField] int maxSimultaneousSecondarySystems;
+    [Tooltip("Thereshold of simultaneous seconcady systems when only timer can activate more.")]
+    public int criticalSimultaneousSecondarySystems;
+    [Space]
     [Tooltip("Time before the first activity.")]
     public float timeBeforeFirstActivity = 10f;
     [Tooltip("Minimal time between two activities.")]
@@ -26,24 +31,44 @@ public class SecondarySystemsManager : MonoBehaviour
         "By default prob are 50-50, but when one is chosen it became 60-40 (if this value is 10).")]
     [Range(0,50)] [SerializeField] int ressourceRandomWeightValue = 10;
     [Space]
-    [SerializeField] List<SecondarySystem> packA = new List<SecondarySystem>();
-    [SerializeField] List<SecondarySystem> packB = new List<SecondarySystem>();
-    [SerializeField] List<SecondarySystem> packC = new List<SecondarySystem>();
-    [SerializeField] List<SecondarySystem> packD = new List<SecondarySystem>();
-#pragma warning restore 0649
+    [SerializeField] Pack packA;
+    [SerializeField] Pack packB;
+    [SerializeField] Pack packC;
+    [SerializeField] Pack packD;
+    #pragma warning restore 0649
     #endregion
 
     [Header("Variables")]
     [Header("⚠ DON'T TOUCH BELOW ⚠")]
     //If this value if positive it increase energy prob, if it is negative it increase oxygen prob
     public int randomRessourceWeight;
-    public List<List<SecondarySystem>> allSecondarySystems = new List<List<SecondarySystem>>();
-    bool startWhenOnePackIsReady;
+    public List<Pack> allSecondarySystems = new List<Pack>();
+    public int activesSecondarySystems;
+    public Pack lastPack;
     //Lerp pipes height variables
     public float timerLerp;
     bool isIncreasingHeight;
 
-    SecondarySystem lastSelected;
+    [System.Serializable]
+    public class Pack
+    {
+        public List<SecondarySystem> secondarySystems = new List<SecondarySystem>();
+        [HideInInspector]
+        public SecondarySystem currentSecondarySystem;
+        public int drawIndex;
+        public bool packWithOneSecondarySystem;
+
+        public SecondarySystem SelectSecondarySystem()
+        {
+            drawIndex++;
+            currentSecondarySystem = secondarySystems[Random.Range(0, secondarySystems.Count)];
+            secondarySystems.Remove(currentSecondarySystem);
+            currentSecondarySystem.drawIndex = drawIndex;
+            if (packWithOneSecondarySystem)
+                drawIndex++;
+            return currentSecondarySystem;
+        }
+    }
 
     private void Awake()
     {
@@ -52,14 +77,30 @@ public class SecondarySystemsManager : MonoBehaviour
         else if (instance != this)
             Destroy(gameObject);  
 
-        if(packA.Count > 0)
+        if(packA.secondarySystems.Count > 0)
+        {
             allSecondarySystems.Add(packA);
-        if (packB.Count > 0)
+            if (packA.secondarySystems.Count == 1)
+                packA.packWithOneSecondarySystem = true;
+        }
+        if (packB.secondarySystems.Count > 0)
+        {
             allSecondarySystems.Add(packB);
-        if (packC.Count > 0)
+            if (packB.secondarySystems.Count == 1)
+                packB.packWithOneSecondarySystem = true;
+        }
+        if (packC.secondarySystems.Count > 0)
+        {
             allSecondarySystems.Add(packC);
-        if (packD.Count > 0)
+            if (packC.secondarySystems.Count == 1)
+                packC.packWithOneSecondarySystem = true;
+        }
+        if (packD.secondarySystems.Count > 0)
+        {
             allSecondarySystems.Add(packD);
+            if (packD.secondarySystems.Count == 1)
+                packD.packWithOneSecondarySystem = true;
+        }
 
         if (allSecondarySystems.Count == 0)
             Debug.LogError("You need to assign some Secondary Systems to atleast one pack (GameManager).");
@@ -67,7 +108,7 @@ public class SecondarySystemsManager : MonoBehaviour
 
     public void StartGame()
     {
-        Invoke("StartActivity", timeBeforeFirstActivity);
+        Invoke("StartActivityByTimer", timeBeforeFirstActivity);
     }
 
     private void Update()
@@ -86,43 +127,54 @@ public class SecondarySystemsManager : MonoBehaviour
         }
     }
 
+    void StartActivityByTimer()
+    {
+        if (activesSecondarySystems < maxSimultaneousSecondarySystems)
+            StartActivity();
+        Invoke("StartActivityByTimer", Random.Range(minTimeBetweenActivities, maxTimeBetweenActivities));
+    }
+
+    public void StartActivityByEnd()
+    {
+        if (activesSecondarySystems < criticalSimultaneousSecondarySystems)
+            StartActivity();
+    }
+
     void StartActivity()
     {
         if (allSecondarySystems.Count > 0)
         {
             int selectedPack = Random.Range(0, allSecondarySystems.Count);
-            int selectedSecondarySystem = Random.Range(0, allSecondarySystems[selectedPack].Count);
-            allSecondarySystems[selectedPack][selectedSecondarySystem].animator.SetBool("OnActivity", true);
-            if (allSecondarySystems[selectedPack][selectedSecondarySystem].memberAnimator)
-                allSecondarySystems[selectedPack][selectedSecondarySystem].memberAnimator.speed = 1f;
+            if (lastPack != null)
+            {
+                if (lastPack.secondarySystems.Count > 0)
+                    allSecondarySystems.Add(lastPack);
+            }
+            SecondarySystem selectedSecondarySystem = allSecondarySystems[selectedPack].SelectSecondarySystem();
+            selectedSecondarySystem.associatedPack = allSecondarySystems[selectedPack];
+            lastPack = allSecondarySystems[selectedPack];
+            allSecondarySystems.RemoveAt(selectedPack);
+            selectedSecondarySystem.animator.SetBool("OnActivity", true);
+            if (selectedSecondarySystem.memberAnimator)
+                selectedSecondarySystem.memberAnimator.speed = 1f;
             switch (GetRandomType())
             {
                 case LeverScript.RessourcesType.energy:
-                    allSecondarySystems[selectedPack][selectedSecondarySystem].currentEnergy = 0f;
-                    allSecondarySystems[selectedPack][selectedSecondarySystem].energyGauge.SetActive(true);
-                    allSecondarySystems[selectedPack][selectedSecondarySystem].energyNeeded = true;
+                    selectedSecondarySystem.currentEnergy = 0f;
+                    selectedSecondarySystem.energyGauge.SetActive(true);
+                    selectedSecondarySystem.energyNeeded = true;
                     break;
                 case LeverScript.RessourcesType.oxygen:
-                    allSecondarySystems[selectedPack][selectedSecondarySystem].currentOxygen = 0f;
-                    allSecondarySystems[selectedPack][selectedSecondarySystem].oxygenGauge.SetActive(true);
-                    allSecondarySystems[selectedPack][selectedSecondarySystem].oxygenNeeded = true;
+                    selectedSecondarySystem.currentOxygen = 0f;
+                    selectedSecondarySystem.oxygenGauge.SetActive(true);
+                    selectedSecondarySystem.oxygenNeeded = true;
                     break;
             }
-            HintSecondarySystemManager.instance.activeSecondarySystems.Add(allSecondarySystems[selectedPack][selectedSecondarySystem]);
-            allSecondarySystems[selectedPack][selectedSecondarySystem].associatedPack = allSecondarySystems[selectedPack];
-            allSecondarySystems[selectedPack][selectedSecondarySystem].canBeSelectedAgain = false;
-            if (lastSelected)
-                lastSelected.canBeSelectedAgain = true;
-            lastSelected = allSecondarySystems[selectedPack][selectedSecondarySystem];
-            allSecondarySystems.Remove(allSecondarySystems[selectedPack]);
-            if (allSecondarySystems.Count == 0)
-                lastSelected.canBeSelectedAgain = true;
+            activesSecondarySystems++;
+            HintSecondarySystemManager.instance.activeSecondarySystems.Add(selectedSecondarySystem);
             TimerSecondarySystem timerObject = Instantiate(GameManager.instance.UI_timerSS, UI_Manager.instance.transform).GetComponent<TimerSecondarySystem>();
-            timerObject.associatedSystem = lastSelected;
+            timerObject.associatedSystem = selectedSecondarySystem;
         }
-        else
-            startWhenOnePackIsReady = true;
-        Invoke("StartActivity", Random.Range(minTimeBetweenActivities, maxTimeBetweenActivities));
     }
 
     LeverScript.RessourcesType GetRandomType()
@@ -147,44 +199,36 @@ public class SecondarySystemsManager : MonoBehaviour
         }
     }
 
-    public void AddPack(List<SecondarySystem> pack)
-    {
-        allSecondarySystems.Add(pack);
-        if(allSecondarySystems.Count == 1 && startWhenOnePackIsReady)
-        {
-            startWhenOnePackIsReady = false;
-            CancelInvoke("StartActivity");
-            Invoke("StartActivity", 1);
-        }
-    }
-
     public void StopActivityCall()
     {
-        CancelInvoke("StartActivity");
+        CancelInvoke("StartActivityByTimer");
     }
 
-    public void LaunchSpecificSS(SecondarySystem specificSS, List<SecondarySystem> pack)
+    public void LaunchSpecificSS(SecondarySystem specificSecondarySystem, Pack associatedPack)
     {
-        specificSS.animator.SetBool("OnActivity", true);
-        if (specificSS.memberAnimator)
-            specificSS.memberAnimator.speed = 1f;
-        specificSS.currentEnergy = 0f;
-        specificSS.energyGauge.SetActive(true);
-        specificSS.energyNeeded = true;
-        HintSecondarySystemManager.instance.activeSecondarySystems.Add(specificSS);
-        specificSS.associatedPack = pack;
-        specificSS.canBeSelectedAgain = false;
-        if (lastSelected)
-            lastSelected.canBeSelectedAgain = true;
-        lastSelected = specificSS;
-        allSecondarySystems.Remove(pack);
+        if (lastPack != null)
+        {
+            if (lastPack.secondarySystems.Count > 0)
+                allSecondarySystems.Add(lastPack);
+        }
+        specificSecondarySystem.associatedPack = associatedPack;
+        lastPack = associatedPack;
+        allSecondarySystems.Remove(associatedPack);
+        specificSecondarySystem.animator.SetBool("OnActivity", true);
+        if (specificSecondarySystem.memberAnimator)
+            specificSecondarySystem.memberAnimator.speed = 1f;
+        specificSecondarySystem.currentEnergy = 0f;
+        specificSecondarySystem.energyGauge.SetActive(true);
+        specificSecondarySystem.energyNeeded = true;
+        activesSecondarySystems++;
+        HintSecondarySystemManager.instance.activeSecondarySystems.Add(specificSecondarySystem);
         TimerSecondarySystem timerObject = Instantiate(GameManager.instance.UI_timerSS, UI_Manager.instance.transform).GetComponent<TimerSecondarySystem>();
-        timerObject.associatedSystem = lastSelected;
+        timerObject.associatedSystem = specificSecondarySystem;
     }
 
     public void TutorialCompleted()
     {
-        CancelInvoke("StartActivity");
-        Invoke("StartActivity", timeBeforeFirstActivity);
+        CancelInvoke("StartActivityByTimer");
+        Invoke("StartActivityByTimer", timeBeforeFirstActivity);
     }
 }

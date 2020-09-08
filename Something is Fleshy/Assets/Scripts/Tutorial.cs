@@ -12,7 +12,7 @@ public class Tutorial : MonoBehaviour
     [SerializeField] float timeBeforeFirstLeakCheckAfterCompletion;
     [Space]
     [SerializeField] SecondarySystem tutoSS;
-    [SerializeField] List<SecondarySystem> associatedPack = new List<SecondarySystem>();
+    [SerializeField] SecondarySystemsManager.Pack associatedPack;
     [Space]
     [SerializeField] Transform triggerPointCameraTuto;
     [SerializeField] float radiusTriggerCameraTuto;

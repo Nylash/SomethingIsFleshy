@@ -23,8 +23,7 @@ public class SecondarySystem : MonoBehaviour
 	public Animator memberAnimator;
 	[Header("Variables")]
 	public LeverScript associatedLever;
-	public List<SecondarySystem> associatedPack = new List<SecondarySystem>();
-	public bool canBeSelectedAgain;
+	public SecondarySystemsManager.Pack associatedPack;
 	public GameObject associatedHint;
 	public float currentEnergy;
 	public float currentOxygen;
@@ -32,7 +31,8 @@ public class SecondarySystem : MonoBehaviour
 	public bool oxygenNeeded;
 	public bool filling;
 	public float timerBeforeExpiration;
-	bool checkIfCanBeSelectedAgain;
+	public int drawIndex;
+	bool canBeDraw;
 	MaterialPropertyBlock energyPropertyBlock;
 	MaterialPropertyBlock oxygenPropertyBlock;
 	SpriteRenderer energyRenderer;
@@ -88,12 +88,17 @@ public class SecondarySystem : MonoBehaviour
 				oxygenRenderer.SetPropertyBlock(oxygenPropertyBlock);
 				}
 				CheckStopActivity();
-                if (checkIfCanBeSelectedAgain)
+                if (canBeDraw)
                 {
-                    if (canBeSelectedAgain)
+					if (drawIndex != associatedPack.drawIndex)
                     {
-						checkIfCanBeSelectedAgain = false;
-						SecondarySystemsManager.instance.AddPack(associatedPack);
+						canBeDraw = false;
+						associatedPack.secondarySystems.Add(this);
+                        if (!SecondarySystemsManager.instance.allSecondarySystems.Contains(associatedPack))
+                        {
+							if (SecondarySystemsManager.instance.lastPack != associatedPack)
+								SecondarySystemsManager.instance.allSecondarySystems.Add(associatedPack);
+                        }
 					}
                 }
 			}
@@ -164,10 +169,10 @@ public class SecondarySystem : MonoBehaviour
 		energyRenderer.SetPropertyBlock(energyPropertyBlock);
 		oxygenPropertyBlock.SetFloat("Height", currentOxygen / SecondarySystemsManager.instance.oxygenAmoutNeeded);
 		oxygenRenderer.SetPropertyBlock(oxygenPropertyBlock);
-		if (canBeSelectedAgain)
-			SecondarySystemsManager.instance.AddPack(associatedPack);
-		else
-			checkIfCanBeSelectedAgain = true;
+		associatedPack.currentSecondarySystem = null;
+		canBeDraw = true;
+		SecondarySystemsManager.instance.StartActivityByEnd();
+		SecondarySystemsManager.instance.activesSecondarySystems--;
 		HintSecondarySystemManager.instance.activeSecondarySystems.Remove(this);
 		if (associatedHint)
 			Destroy(associatedHint);
