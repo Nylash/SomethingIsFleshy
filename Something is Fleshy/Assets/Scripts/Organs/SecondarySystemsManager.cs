@@ -55,7 +55,9 @@ public class SecondarySystemsManager : MonoBehaviour
         public List<SecondarySystem> secondarySystems = new List<SecondarySystem>();
         [HideInInspector]
         public SecondarySystem currentSecondarySystem;
+        [HideInInspector]
         public int drawIndex;
+        [HideInInspector]
         public bool packWithOneSecondarySystem;
 
         public SecondarySystem SelectSecondarySystem()

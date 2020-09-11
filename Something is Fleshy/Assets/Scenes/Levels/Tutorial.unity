@@ -6801,9 +6801,9 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: To do this you need to use the pipe system present in the host. If you
-    fail to supply a muscle the heart will be damaged, if the heart take too much
-    damage the host dies.
+  m_text: To do this you need to use the pipe system present in the host. The more
+    muscles you help the more points you earn, it's symbolize the help you had bring
+    to your host.
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 43a792635d0efa0428577ef95ca0e5a5, type: 2}
   m_sharedMaterial: {fileID: 4521260838727346984, guid: 43a792635d0efa0428577ef95ca0e5a5,
@@ -6873,10 +6873,10 @@ MonoBehaviour:
   m_margin: {x: 0, y: 0, z: 0, w: 0}
   m_textInfo:
     textComponent: {fileID: 349276226}
-    characterCount: 170
+    characterCount: 167
     spriteCount: 0
-    spaceCount: 35
-    wordCount: 36
+    spaceCount: 33
+    wordCount: 34
     linkCount: 0
     lineCount: 4
     pageCount: 1
@@ -15999,6 +15999,14 @@ PrefabInstance:
       value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 1892749339, guid: 9719e81b153f0914ebc60d15fdb1de3f, type: 3}
+      propertyPath: packA.secondarySystems.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1892749339, guid: 9719e81b153f0914ebc60d15fdb1de3f, type: 3}
+      propertyPath: packB.secondarySystems.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1892749339, guid: 9719e81b153f0914ebc60d15fdb1de3f, type: 3}
       propertyPath: packA.Array.data[0]
       value: 
       objectReference: {fileID: 1879286758}
@@ -16041,6 +16049,26 @@ PrefabInstance:
     - target: {fileID: 1892749339, guid: 9719e81b153f0914ebc60d15fdb1de3f, type: 3}
       propertyPath: timeBeforeSSexplosion
       value: 30
+      objectReference: {fileID: 0}
+    - target: {fileID: 1892749339, guid: 9719e81b153f0914ebc60d15fdb1de3f, type: 3}
+      propertyPath: packA.secondarySystems.Array.data[0]
+      value: 
+      objectReference: {fileID: 1840789354}
+    - target: {fileID: 1892749339, guid: 9719e81b153f0914ebc60d15fdb1de3f, type: 3}
+      propertyPath: packA.secondarySystems.Array.data[1]
+      value: 
+      objectReference: {fileID: 66139343}
+    - target: {fileID: 1892749339, guid: 9719e81b153f0914ebc60d15fdb1de3f, type: 3}
+      propertyPath: packB.secondarySystems.Array.data[0]
+      value: 
+      objectReference: {fileID: 439463593}
+    - target: {fileID: 1892749339, guid: 9719e81b153f0914ebc60d15fdb1de3f, type: 3}
+      propertyPath: packB.secondarySystems.Array.data[1]
+      value: 
+      objectReference: {fileID: 1879286758}
+    - target: {fileID: 1892749339, guid: 9719e81b153f0914ebc60d15fdb1de3f, type: 3}
+      propertyPath: timeBeforeExpirationSecondarySystem
+      value: 15
       objectReference: {fileID: 0}
     - target: {fileID: 1770001783312019989, guid: 9719e81b153f0914ebc60d15fdb1de3f,
         type: 3}
@@ -16958,8 +16986,10 @@ MonoBehaviour:
   timeBeforeFirstLeakCheckAfterCompletion: 15
   tutoSS: {fileID: 1879286758}
   associatedPack:
-  - {fileID: 1879286758}
-  - {fileID: 439463593}
+    secondarySystems: []
+    currentSecondarySystem: {fileID: 0}
+    drawIndex: 0
+    packWithOneSecondarySystem: 0
   triggerPointCameraTuto: {fileID: 532302062}
   radiusTriggerCameraTuto: 3
   tutoLeakZone: {fileID: 210939271}
@@ -31063,8 +31093,8 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: You don't suceed to help this muscle so it damaged the heart, but don't
-    worry, for this time I will heal the damage and you will try again.
+  m_text: You don't suceed to help this muscle in time but don't worry, for this
+    time you will not loose points and you will try again.
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 43a792635d0efa0428577ef95ca0e5a5, type: 2}
   m_sharedMaterial: {fileID: 4521260838727346984, guid: 43a792635d0efa0428577ef95ca0e5a5,
@@ -31134,12 +31164,12 @@ MonoBehaviour:
   m_margin: {x: 0, y: 0, z: 0, w: 0}
   m_textInfo:
     textComponent: {fileID: 1770162371}
-    characterCount: 139
+    characterCount: 125
     spriteCount: 0
-    spaceCount: 27
-    wordCount: 28
+    spaceCount: 24
+    wordCount: 25
     linkCount: 0
-    lineCount: 4
+    lineCount: 3
     pageCount: 1
     materialCount: 1
   m_isUsingLegacyAnimationComponent: 0
@@ -40740,8 +40770,8 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_text: You got a limited time to bring the right ressource to the muscle. If you
-    overpass this time the heart will take damage and the muscle will need no more
-    ressource for the moment.
+    overpass this time the you will loose points. Quicker you supply a muscle more
+    you earn points.
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 43a792635d0efa0428577ef95ca0e5a5, type: 2}
   m_sharedMaterial: {fileID: 4521260838727346984, guid: 43a792635d0efa0428577ef95ca0e5a5,

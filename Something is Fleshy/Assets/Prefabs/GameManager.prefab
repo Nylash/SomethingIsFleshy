@@ -58,6 +58,7 @@ MonoBehaviour:
   goldMedal: {fileID: 21300000, guid: d822feadb3541ad44b6564a2d096ffe8, type: 3}
   silverMedal: {fileID: 21300000, guid: 7bc7cdd96634758499a5048c17689554, type: 3}
   bronzeMedal: {fileID: 21300000, guid: bb20e0440b45a0e41b97b0df4bb933a1, type: 3}
+  failMedal: {fileID: 0}
   levelDuration: 180
   maxCapacityPrimarySystem: 35
   startCapacityPrimarySystem: 20
@@ -77,12 +78,12 @@ MonoBehaviour:
     - serializedVersion: 3
       time: 1
       value: 10
-      inSlope: -50
-      outSlope: -50
-      tangentMode: 34
+      inSlope: -151.53856
+      outSlope: -89.44973
+      tangentMode: 1
       weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0
+      inWeight: 0.016920447
+      outWeight: 0.33333334
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
@@ -108,19 +109,40 @@ MonoBehaviour:
   energyAmoutNeeded: 10
   oxygenAmoutNeeded: 10
   timeBeforeExpirationSecondarySystem: 5
+  maxSimultaneousSecondarySystems: 0
+  criticalSimultaneousSecondarySystems: 0
   timeBeforeFirstActivity: 12
   minTimeBetweenActivities: 17
   maxTimeBetweenActivities: 20
   ressourceRandomWeightValue: 10
   packA:
-  - {fileID: 0}
-  - {fileID: 0}
+    secondarySystems: []
+    currentSecondarySystem: {fileID: 0}
+    drawIndex: 0
+    packWithOneSecondarySystem: 0
   packB:
-  - {fileID: 0}
-  - {fileID: 0}
-  packC: []
-  packD: []
+    secondarySystems: []
+    currentSecondarySystem: {fileID: 0}
+    drawIndex: 0
+    packWithOneSecondarySystem: 0
+  packC:
+    secondarySystems: []
+    currentSecondarySystem: {fileID: 0}
+    drawIndex: 0
+    packWithOneSecondarySystem: 0
+  packD:
+    secondarySystems: []
+    currentSecondarySystem: {fileID: 0}
+    drawIndex: 0
+    packWithOneSecondarySystem: 0
   randomRessourceWeight: 0
+  allSecondarySystems: []
+  activesSecondarySystems: 0
+  lastPack:
+    secondarySystems: []
+    currentSecondarySystem: {fileID: 0}
+    drawIndex: 0
+    packWithOneSecondarySystem: 0
   timerLerp: 0
 --- !u!114 &1442325289
 MonoBehaviour:
