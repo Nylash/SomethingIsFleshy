@@ -43,6 +43,7 @@ public class CameraManager : MonoBehaviour
 
         actionsMap = new ActionsMap();
         actionsMap.Gameplay.SwitchCamera.started += ctx => SwitchCamera();
+        actionsMap.Gameplay.Debug.started += ctx => ShakeScreen();
     }
 
     public void SwitchCamera()
@@ -67,8 +68,14 @@ public class CameraManager : MonoBehaviour
 
     public void ShakeScreen()
     {
-        if (shakeCoroutine == null)
-            shakeCoroutine = StartCoroutine(DoShakeScreen());
+        if (GameManager.instance.levelStarted)
+        {
+            if (!ScoreManager.instance.levelEnded && !GameManager.instance.levelPaused)
+            {
+                if (shakeCoroutine == null)
+                    shakeCoroutine = StartCoroutine(DoShakeScreen());
+            }
+        }
     }
 
     IEnumerator DoShakeScreen()

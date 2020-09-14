@@ -68,6 +68,7 @@ public class ScoreManager : MonoBehaviour
 		if (currentScore < 0)
 			currentScore = 0;
 		UI_Manager.instance.UI_scoreValue.text = currentScore.ToString();
+		CameraManager.instance.ShakeScreen();
 	}
 
 	public void WinPoints(int amount)
