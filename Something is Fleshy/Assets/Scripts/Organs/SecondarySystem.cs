@@ -71,23 +71,26 @@ public class SecondarySystem : MonoBehaviour
 		{
 			if (!ScoreManager.instance.levelEnded && !GameManager.instance.levelPaused)
 			{
-				if (energyNeeded)
-				{
-					if (filling)
-						FillingEnergy();
-					timerBeforeExpiration += Time.deltaTime;
-				energyPropertyBlock.SetFloat("Height", currentEnergy / SecondarySystemsManager.instance.energyAmoutNeeded);
-				energyRenderer.SetPropertyBlock(energyPropertyBlock);
+				if(energyNeeded || oxygenNeeded)
+                {
+					if (energyNeeded)
+					{
+						if (filling)
+							FillingEnergy();
+						timerBeforeExpiration += Time.deltaTime;
+						energyPropertyBlock.SetFloat("Height", currentEnergy / SecondarySystemsManager.instance.energyAmoutNeeded);
+						energyRenderer.SetPropertyBlock(energyPropertyBlock);
+					}
+					else if (oxygenNeeded)
+					{
+						if (filling)
+							FillingOxygen();
+						timerBeforeExpiration += Time.deltaTime;
+						oxygenPropertyBlock.SetFloat("Height", currentOxygen / SecondarySystemsManager.instance.oxygenAmoutNeeded);
+						oxygenRenderer.SetPropertyBlock(oxygenPropertyBlock);
+					}
+					CheckStopActivity();
 				}
-				else if (oxygenNeeded)
-				{
-					if (filling)
-						FillingOxygen();
-					timerBeforeExpiration += Time.deltaTime;
-				oxygenPropertyBlock.SetFloat("Height", currentOxygen / SecondarySystemsManager.instance.oxygenAmoutNeeded);
-				oxygenRenderer.SetPropertyBlock(oxygenPropertyBlock);
-				}
-				CheckStopActivity();
                 if (canBeDraw)
                 {
 					if (drawIndex != associatedPack.drawIndex)
@@ -145,19 +148,21 @@ public class SecondarySystem : MonoBehaviour
 
 	void StopActivity(bool suceed)
 	{
-        if (suceed)
-        {
-			ScoreManager.instance.WinPoints((int)GameManager.instance.pointsWinSecondarySystemFilled.Evaluate(timerBeforeExpiration/SecondarySystemsManager.instance.timeBeforeExpirationSecondarySystem));
-		}
-        else
-        {
-			ScoreManager.instance.LosePoints(GameManager.instance.pointsLossSecondarySystemExpiration);
-        }
-		timerBeforeExpiration = 0f;
 		filling = false;
 		associatedLever.IsSecondarySystemFilling(false);
 		energyNeeded = false;
 		oxygenNeeded = false;
+		if (suceed)
+		{
+			ScoreManager.instance.WinPoints((int)GameManager.instance.pointsWinSecondarySystemFilled.Evaluate(timerBeforeExpiration / SecondarySystemsManager.instance.timeBeforeExpirationSecondarySystem));
+			print("win by time " + timerBeforeExpiration / SecondarySystemsManager.instance.timeBeforeExpirationSecondarySystem);
+		}
+		else
+		{
+			print(gameObject.name);
+			ScoreManager.instance.LosePoints(GameManager.instance.pointsLossSecondarySystemExpiration);
+		}
+		timerBeforeExpiration = 0f;
 		energyGauge.SetActive(false);
 		oxygenGauge.SetActive(false);
 		animator.SetBool("OnActivity", false);

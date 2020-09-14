@@ -10,6 +10,8 @@ public class ScoreManager : MonoBehaviour
 	public float currentTimer;
 	public bool levelEnded;
 	public int currentScore = 0;
+	public int secondarySystemsExpired;
+	public int secondarySystemsFilled;
 
 	private void Awake()
 	{
@@ -61,12 +63,16 @@ public class ScoreManager : MonoBehaviour
 
 	public void LosePoints(int amount)
     {
+		secondarySystemsExpired++;
 		currentScore -= amount;
+		if (currentScore < 0)
+			currentScore = 0;
 		UI_Manager.instance.UI_scoreValue.text = currentScore.ToString();
 	}
 
 	public void WinPoints(int amount)
     {
+		secondarySystemsFilled++;
 		currentScore += amount;
 		UI_Manager.instance.UI_scoreValue.text = currentScore.ToString();
 	}

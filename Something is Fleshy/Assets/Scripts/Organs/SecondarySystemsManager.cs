@@ -177,6 +177,8 @@ public class SecondarySystemsManager : MonoBehaviour
             TimerSecondarySystem timerObject = Instantiate(GameManager.instance.UI_timerSS, UI_Manager.instance.transform).GetComponent<TimerSecondarySystem>();
             timerObject.associatedSystem = selectedSecondarySystem;
         }
+        else
+            print("bouya");
     }
 
     LeverScript.RessourcesType GetRandomType()
