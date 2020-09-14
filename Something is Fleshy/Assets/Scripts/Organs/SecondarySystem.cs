@@ -90,7 +90,19 @@ public class SecondarySystem : MonoBehaviour
 						oxygenRenderer.SetPropertyBlock(oxygenPropertyBlock);
 					}
 					if (associatedHint)
+                    {
 						associatedTimerHint.fillAmount = timerBeforeExpiration / SecondarySystemsManager.instance.timeBeforeExpirationSecondarySystem;
+                        if (energyNeeded)
+                        {
+							if (timerBeforeExpiration + SecondarySystemsManager.instance.energyAmoutNeeded > SecondarySystemsManager.instance.timeBeforeExpirationSecondarySystem && associatedTimerHint.color != Color.red)
+								associatedTimerHint.color = Color.red;
+                        }
+                        else
+                        {
+							if (timerBeforeExpiration + SecondarySystemsManager.instance.oxygenAmoutNeeded > SecondarySystemsManager.instance.timeBeforeExpirationSecondarySystem && associatedTimerHint.color != Color.red)
+								associatedTimerHint.color = Color.red;
+						}
+					}
 					CheckStopActivity();
 				}
                 if (canBeDraw)
