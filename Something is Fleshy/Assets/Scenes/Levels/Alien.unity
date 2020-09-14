@@ -18368,6 +18368,18 @@ PrefabInstance:
       value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 1892749339, guid: 9719e81b153f0914ebc60d15fdb1de3f, type: 3}
+      propertyPath: packA.secondarySystems.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1892749339, guid: 9719e81b153f0914ebc60d15fdb1de3f, type: 3}
+      propertyPath: packB.secondarySystems.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1892749339, guid: 9719e81b153f0914ebc60d15fdb1de3f, type: 3}
+      propertyPath: packC.secondarySystems.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1892749339, guid: 9719e81b153f0914ebc60d15fdb1de3f, type: 3}
       propertyPath: packA.Array.data[0]
       value: 
       objectReference: {fileID: 1580670417}
@@ -18393,11 +18405,11 @@ PrefabInstance:
       objectReference: {fileID: 591831465}
     - target: {fileID: 1892749339, guid: 9719e81b153f0914ebc60d15fdb1de3f, type: 3}
       propertyPath: minTimeBetweenActivities
-      value: 20
+      value: 18
       objectReference: {fileID: 0}
     - target: {fileID: 1892749339, guid: 9719e81b153f0914ebc60d15fdb1de3f, type: 3}
       propertyPath: maxTimeBetweenActivities
-      value: 25
+      value: 20
       objectReference: {fileID: 0}
     - target: {fileID: 1892749339, guid: 9719e81b153f0914ebc60d15fdb1de3f, type: 3}
       propertyPath: timeBeforeFirstActivity
@@ -18418,6 +18430,42 @@ PrefabInstance:
     - target: {fileID: 1892749339, guid: 9719e81b153f0914ebc60d15fdb1de3f, type: 3}
       propertyPath: timeBeforeSSexplosion
       value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 1892749339, guid: 9719e81b153f0914ebc60d15fdb1de3f, type: 3}
+      propertyPath: packA.secondarySystems.Array.data[0]
+      value: 
+      objectReference: {fileID: 73313397}
+    - target: {fileID: 1892749339, guid: 9719e81b153f0914ebc60d15fdb1de3f, type: 3}
+      propertyPath: packA.secondarySystems.Array.data[1]
+      value: 
+      objectReference: {fileID: 2013847358}
+    - target: {fileID: 1892749339, guid: 9719e81b153f0914ebc60d15fdb1de3f, type: 3}
+      propertyPath: packB.secondarySystems.Array.data[0]
+      value: 
+      objectReference: {fileID: 479637000}
+    - target: {fileID: 1892749339, guid: 9719e81b153f0914ebc60d15fdb1de3f, type: 3}
+      propertyPath: packB.secondarySystems.Array.data[1]
+      value: 
+      objectReference: {fileID: 591831465}
+    - target: {fileID: 1892749339, guid: 9719e81b153f0914ebc60d15fdb1de3f, type: 3}
+      propertyPath: packC.secondarySystems.Array.data[0]
+      value: 
+      objectReference: {fileID: 1684541584}
+    - target: {fileID: 1892749339, guid: 9719e81b153f0914ebc60d15fdb1de3f, type: 3}
+      propertyPath: packC.secondarySystems.Array.data[1]
+      value: 
+      objectReference: {fileID: 1580670417}
+    - target: {fileID: 1892749339, guid: 9719e81b153f0914ebc60d15fdb1de3f, type: 3}
+      propertyPath: timeBeforeExpirationSecondarySystem
+      value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: 1892749339, guid: 9719e81b153f0914ebc60d15fdb1de3f, type: 3}
+      propertyPath: criticalSimultaneousSecondarySystems
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1892749339, guid: 9719e81b153f0914ebc60d15fdb1de3f, type: 3}
+      propertyPath: maxSimultaneousSecondarySystems
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 1770001783312019989, guid: 9719e81b153f0914ebc60d15fdb1de3f,
         type: 3}
@@ -18493,6 +18541,21 @@ PrefabInstance:
         type: 3}
       propertyPath: SSexplosionDamage
       value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 5516669155998750807, guid: 9719e81b153f0914ebc60d15fdb1de3f,
+        type: 3}
+      propertyPath: pointsForGold
+      value: 350
+      objectReference: {fileID: 0}
+    - target: {fileID: 5516669155998750807, guid: 9719e81b153f0914ebc60d15fdb1de3f,
+        type: 3}
+      propertyPath: pointsForSilver
+      value: 250
+      objectReference: {fileID: 0}
+    - target: {fileID: 5516669155998750807, guid: 9719e81b153f0914ebc60d15fdb1de3f,
+        type: 3}
+      propertyPath: pointsForBronze
+      value: 180
       objectReference: {fileID: 0}
     - target: {fileID: 8365515437562039805, guid: 9719e81b153f0914ebc60d15fdb1de3f,
         type: 3}
@@ -28893,6 +28956,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1108360286}
     m_Modifications:
+    - target: {fileID: 1785541728, guid: 111b09151528f54428e904146be76fa4, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6629100206749871380, guid: 111b09151528f54428e904146be76fa4,
         type: 3}
       propertyPath: maxCapacity
@@ -41990,6 +42057,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1108360286}
     m_Modifications:
+    - target: {fileID: 336561149, guid: cf75b22b3c98d5046b2b34b5e349ab31, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5073433986323243499, guid: cf75b22b3c98d5046b2b34b5e349ab31,
         type: 3}
       propertyPath: m_LocalPosition.x
