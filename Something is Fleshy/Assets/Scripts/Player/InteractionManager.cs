@@ -7,6 +7,7 @@ public class InteractionManager : MonoBehaviour
 
     [Header("Components")]
     [Header("⚠ DON'T TOUCH BELOW ⚠")]
+    public AudioSource interactionSource;
     ActionsMap actionsMap;
 
     [Header("Variables")]
@@ -68,9 +69,11 @@ public class InteractionManager : MonoBehaviour
                     {
                         case InteractableType.lever:
                             interactableObject.GetComponent<LeverScript>().Switch();
+                            SoundsManager.instance.PlaySoundOneShot(SoundsManager.SoundName.LeverInteraction, interactionSource);
                             break;
                         case InteractableType.electricLever:
                             interactableObject.GetComponent<ElectricSwitch>().Switch();
+                            SoundsManager.instance.PlaySoundOneShot(SoundsManager.SoundName.LeverInteraction, interactionSource);
                             break;
                         case InteractableType.leak:
                             holdTimer = 0f;
@@ -88,6 +91,7 @@ public class InteractionManager : MonoBehaviour
                             break;
                         case InteractableType.inversionBlockLever:
                             interactableObject.GetComponent<InversionBlocks>().InverseBlocks();
+                            SoundsManager.instance.PlaySoundOneShot(SoundsManager.SoundName.LeverInteraction, interactionSource);
                             break;
                     }
                     if (CharacterController2D.instance.AnimationNotCurrentlyBlocking())

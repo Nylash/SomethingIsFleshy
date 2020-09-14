@@ -8,6 +8,7 @@ public abstract class PrimarySystem : MonoBehaviour
 	public bool filling;
 	Material fillingMaterial;
 	Animator anim;
+	protected AudioSource audioSource;
 
 	protected virtual void Start()
 	{
@@ -15,6 +16,7 @@ public abstract class PrimarySystem : MonoBehaviour
 		fillingMaterial = transform.GetChild(0).GetComponent<SpriteRenderer>().material;
 		fillingMaterial.SetFloat("Height", currentCapacity / GameManager.instance.maxCapacityPrimarySystem);
 		anim = GetComponent<Animator>();
+		audioSource = GetComponent<AudioSource>();
 	}
 
 	protected virtual void Update()
@@ -28,7 +30,10 @@ public abstract class PrimarySystem : MonoBehaviour
 				if (currentCapacity / GameManager.instance.maxCapacityPrimarySystem < .05f)
 				{
 					if (!anim.GetBool("LowRessource"))
+                    {
 						anim.SetBool("LowRessource", true);
+						StartLowRessource();
+					}
 				}
 				else
 				{
@@ -63,4 +68,6 @@ public abstract class PrimarySystem : MonoBehaviour
 		else
 			return false;
 	}
+
+	public abstract void StartLowRessource();
 }

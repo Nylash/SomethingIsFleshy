@@ -123,6 +123,7 @@ GameObject:
   - component: {fileID: 7477743107391433340}
   - component: {fileID: 2616956483603144462}
   - component: {fileID: 627409523214369989}
+  - component: {fileID: 1400387001662980505}
   m_Layer: 0
   m_Name: InversionBlocksByLever
   m_TagString: InversionBlock
@@ -241,6 +242,25 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 2.25, y: 1.5}
   m_EdgeRadius: 0
+--- !u!95 &1400387001662980505
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7477743107391433341}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: fa6bbeaecec4e04468acd5e5a14d6118, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &7477743108035584612
 GameObject:
   m_ObjectHideFlags: 0

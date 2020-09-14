@@ -9,4 +9,9 @@
         else if (instance != this)
             Destroy(gameObject); 
     }
+
+    public override void StartLowRessource()
+    {
+        throw new System.NotImplementedException();
+    }
 }

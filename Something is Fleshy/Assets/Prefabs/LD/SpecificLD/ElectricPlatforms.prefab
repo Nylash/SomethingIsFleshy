@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 4615592955238062025}
   - component: {fileID: 4615592955238062024}
   - component: {fileID: 4179008903411488797}
+  - component: {fileID: 5228790106956902350}
   m_Layer: 0
   m_Name: ElectricPlatforms
   m_TagString: ElectricLever
@@ -128,6 +129,25 @@ MonoBehaviour:
   initialColor: {r: 0.27450982, g: 0, b: 0.18039216, a: 1}
   platformsA: []
   platformsB: []
+--- !u!95 &5228790106956902350
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4615592955238062026}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: fa6bbeaecec4e04468acd5e5a14d6118, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &4615592955457125754
 GameObject:
   m_ObjectHideFlags: 0

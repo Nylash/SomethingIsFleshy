@@ -42,11 +42,24 @@ public class CameraManager : MonoBehaviour
         VCamGlobal.SetActive(false);
 
         actionsMap = new ActionsMap();
-        actionsMap.Gameplay.SwitchCamera.started += ctx => SwitchCamera();
-        actionsMap.Gameplay.Debug.started += ctx => ShakeScreen();
+        actionsMap.Gameplay.SwitchCamera.started += ctx => SwitchCameraFromInput();
     }
 
-    public void SwitchCamera()
+    public void SwitchCameraFromScript()
+    {
+        if (VCamZoom.activeSelf)
+        {
+            VCamZoom.SetActive(false);
+            VCamGlobal.SetActive(true);
+        }
+        else
+        {
+            VCamZoom.SetActive(true);
+            VCamGlobal.SetActive(false);
+        }
+    }
+
+    void SwitchCameraFromInput()
     {
         if (GameManager.instance.levelStarted)
         {

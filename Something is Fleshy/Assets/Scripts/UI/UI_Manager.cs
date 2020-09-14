@@ -81,7 +81,7 @@ public class UI_Manager : MonoBehaviour
         yield return new WaitForSeconds(1);
         UI_startText.text = "Starts in 1";
         UI_startCanvas.GetComponent<Animator>().SetTrigger("AnimSize");
-        CameraManager.instance.SwitchCamera();
+        CameraManager.instance.SwitchCameraFromScript();
         yield return new WaitForSeconds(1);
         UI_startText.text = "Go !";
         UI_startCanvas.GetComponent<Animator>().SetTrigger("AnimSize");
@@ -99,11 +99,6 @@ public class UI_Manager : MonoBehaviour
     {
         Time.timeScale = 1;
         SceneManager.LoadScene("MainMenu");
-    }
-
-    void Dezoom()
-    {
-        CameraManager.instance.SwitchCamera();
     }
 
     void StartGame()

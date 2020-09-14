@@ -93,6 +93,7 @@ GameObject:
   - component: {fileID: 3478768265959703448}
   - component: {fileID: 3478768265959703449}
   - component: {fileID: 3478768265959703450}
+  - component: {fileID: 8055133129696078843}
   m_Layer: 0
   m_Name: Lever
   m_TagString: Lever
@@ -204,8 +205,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pipes:
-  - {fileID: 0}
-  - {fileID: 0}
+  - pipe: {fileID: 0}
+    shapeRenderer: {fileID: 0}
+    shapeController: {fileID: 0}
+  - pipe: {fileID: 0}
+    shapeRenderer: {fileID: 0}
+    shapeController: {fileID: 0}
   associatedObjects:
   - {fileID: 0}
   - {fileID: 0}
@@ -216,3 +221,24 @@ MonoBehaviour:
   pipe1LeaksZones: []
   currentRessource: 0
   currentPipe: 0
+  previousLever: {fileID: 0}
+  isFillingSS: 0
+--- !u!95 &8055133129696078843
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3478768265959703451}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: fa6bbeaecec4e04468acd5e5a14d6118, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0

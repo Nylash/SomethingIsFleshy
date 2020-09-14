@@ -22,6 +22,7 @@ public class InversionBlocks : MonoBehaviour
     public Animator[] blocksB;
     bool blockAactivated = true;
     bool isSwitched;
+    Animator anim;
 
     private void Start()
     {
@@ -52,6 +53,8 @@ public class InversionBlocks : MonoBehaviour
         }
         if(activateByTime)
             InvokeRepeating("InverseBlocks", timeBetweenSwitch, timeBetweenSwitch);
+        if (activateByLever)
+            anim = GetComponent<Animator>();
     }
 
     public void InverseBlocks()
@@ -80,8 +83,8 @@ public class InversionBlocks : MonoBehaviour
     {
         isSwitched = !isSwitched;
         if (isSwitched)
-            transform.GetChild(2).transform.eulerAngles = new Vector3(0, 0, -85);
+            anim.SetTrigger("ToRight");
         else
-            transform.GetChild(2).transform.eulerAngles = new Vector3(0, 0, 0);
+            anim.SetTrigger("ToLeft");
     }
 }

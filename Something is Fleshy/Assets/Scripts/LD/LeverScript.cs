@@ -39,6 +39,7 @@ public class LeverScript : MonoBehaviour
     LeverScript currentAssociatedLever;
     PrimarySystem currentAssociatedPrimarySystem;
     SecondarySystem currentAssociatedSecondarySystem;
+    Animator anim;
 
     //Lerp pipe height variable
     public bool isFillingSS;
@@ -103,6 +104,7 @@ public class LeverScript : MonoBehaviour
             if (endObject.GetComponent<SecondarySystem>())
                 endObject.GetComponent<SecondarySystem>().associatedLever = this;
         }
+        anim = GetComponent<Animator>();
     }
 
     private void Update()
@@ -406,9 +408,9 @@ public class LeverScript : MonoBehaviour
     {
         isSwitched = !isSwitched;
         if (isSwitched)
-            transform.GetChild(0).transform.eulerAngles = new Vector3(0, 0, -85);
+            anim.SetTrigger("ToRight");
         else
-            transform.GetChild(0).transform.eulerAngles = new Vector3(0, 0, 0);
+            anim.SetTrigger("ToLeft");
     }
 
     Color GetOpenColor(RessourcesType currentRessource)

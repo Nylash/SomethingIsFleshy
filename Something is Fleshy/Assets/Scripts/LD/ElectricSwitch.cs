@@ -22,6 +22,7 @@ public class ElectricSwitch : MonoBehaviour
     Color colorPlatformsB;
     //Only used for animation purpose
     bool isSwitched;
+    Animator anim;
 
     private void Start()
     {
@@ -50,6 +51,7 @@ public class ElectricSwitch : MonoBehaviour
             platformsA_activated = false;
             MakeSwitch(platformsB, platformsA, colorPlatformsB);
         }
+        anim = GetComponent<Animator>();
     }
 
     public void Switch()
@@ -99,8 +101,8 @@ public class ElectricSwitch : MonoBehaviour
     {
         isSwitched = !isSwitched;
         if (isSwitched)
-            transform.GetChild(0).transform.eulerAngles = new Vector3(0, 0, -85);
+            anim.SetTrigger("ToRight");
         else
-            transform.GetChild(0).transform.eulerAngles = new Vector3(0, 0, 0);
+            anim.SetTrigger("ToLeft");
     }
 }
