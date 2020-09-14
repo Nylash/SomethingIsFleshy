@@ -13,6 +13,8 @@ public class HintSecondarySystemManager : MonoBehaviour
     [SerializeField] GameObject hintPrefab;
     [SerializeField] Sprite oxygenSprite;
     [SerializeField] Sprite energySprite;
+    [SerializeField] Sprite energyGaugeSprite;
+    [SerializeField] Sprite oxygenGaugeSprite;
 #pragma warning restore 0649
     [Space]
     [Header("⚠ DON'T TOUCH BELOW ⚠")]
@@ -54,10 +56,17 @@ public class HintSecondarySystemManager : MonoBehaviour
                     {
                         item.associatedHint = Instantiate(hintPrefab, transform);
                         if (item.energyNeeded)
+                        {
                             item.associatedHint.GetComponent<Image>().sprite = energySprite;
+                            item.associatedHint.transform.GetChild(0).GetComponent<Image>().sprite = energyGaugeSprite;
+                        }
                         else
+                        {
                             item.associatedHint.GetComponent<Image>().sprite = oxygenSprite;
-                        item.associatedTimerHint = item.associatedHint.transform.GetChild(0).GetComponent<Image>();
+                            item.associatedHint.transform.GetChild(0).GetComponent<Image>().sprite = oxygenGaugeSprite;
+                        }
+                        item.associatedTimerHint = item.associatedHint.transform.GetChild(1).GetComponent<Image>();
+                        item.associatedGaugeHint = item.associatedHint.transform.GetChild(0).GetComponent<Image>();
                     }
                     float angle = Vector2.SignedAngle(item.associatedHint.transform.up, (Camera.main.WorldToScreenPoint(item.transform.position) - item.associatedHint.transform.position).normalized);
                     item.associatedHint.transform.Rotate(new Vector3(0, 0, angle));

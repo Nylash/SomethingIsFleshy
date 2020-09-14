@@ -25,6 +25,7 @@ public class SecondarySystem : MonoBehaviour
 	public SecondarySystemsManager.Pack associatedPack;
 	public GameObject associatedHint;
 	public Image associatedTimerHint;
+	public Image associatedGaugeHint;
 	public float currentEnergy;
 	public float currentOxygen;
 	public bool energyNeeded;
@@ -94,11 +95,13 @@ public class SecondarySystem : MonoBehaviour
 						associatedTimerHint.fillAmount = timerBeforeExpiration / SecondarySystemsManager.instance.timeBeforeExpirationSecondarySystem;
                         if (energyNeeded)
                         {
+							associatedGaugeHint.fillAmount = currentEnergy / SecondarySystemsManager.instance.energyAmoutNeeded;
 							if (timerBeforeExpiration + SecondarySystemsManager.instance.energyAmoutNeeded > SecondarySystemsManager.instance.timeBeforeExpirationSecondarySystem && associatedTimerHint.color != Color.red)
 								associatedTimerHint.color = Color.red;
                         }
                         else
                         {
+							associatedGaugeHint.fillAmount = currentOxygen / SecondarySystemsManager.instance.oxygenAmoutNeeded;
 							if (timerBeforeExpiration + SecondarySystemsManager.instance.oxygenAmoutNeeded > SecondarySystemsManager.instance.timeBeforeExpirationSecondarySystem && associatedTimerHint.color != Color.red)
 								associatedTimerHint.color = Color.red;
 						}
@@ -169,7 +172,7 @@ public class SecondarySystem : MonoBehaviour
 		if (suceed)
 		{
 			ScoreManager.instance.WinPoints((int)GameManager.instance.pointsWinSecondarySystemFilled.Evaluate(timerBeforeExpiration / SecondarySystemsManager.instance.timeBeforeExpirationSecondarySystem));
-			print("win by time " + timerBeforeExpiration / SecondarySystemsManager.instance.timeBeforeExpirationSecondarySystem);
+			print("filled with " + timerBeforeExpiration / SecondarySystemsManager.instance.timeBeforeExpirationSecondarySystem * 100 +" % of time elasped");
 		}
 		else
 		{
