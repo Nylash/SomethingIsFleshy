@@ -34,4 +34,10 @@ public class TimerSecondarySystem : MonoBehaviour
             }
         }
     }
+
+    public void DisableOnPause()
+    {
+        if (canvas.enabled)
+            canvas.enabled = false;
+    }
 }

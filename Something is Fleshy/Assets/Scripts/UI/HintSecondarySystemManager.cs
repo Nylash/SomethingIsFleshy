@@ -31,59 +31,82 @@ public class HintSecondarySystemManager : MonoBehaviour
 
     private void Update()
     {
-        if (CameraManager.instance.VCamZoom.activeSelf)
+        if (GameManager.instance.levelStarted)
         {
-            foreach (SecondarySystem item in activeSecondarySystems)
+            if (!ScoreManager.instance.levelEnded && !GameManager.instance.levelPaused)
             {
-                Vector3 screenPoint = Camera.main.WorldToViewportPoint(item.transform.position);
-                bool onScreen = screenPoint.x > 0 && screenPoint.x < 1 && screenPoint.y > 0 && screenPoint.y < 1;
-                if (onScreen)
+                if (CameraManager.instance.VCamZoom.activeSelf)
                 {
-                    if (item.associatedHint)
+                    foreach (SecondarySystem item in activeSecondarySystems)
                     {
-                        if (item.associatedHint.activeSelf)
-                            item.associatedHint.SetActive(false);
+                        Vector3 screenPoint = Camera.main.WorldToViewportPoint(item.transform.position);
+                        bool onScreen = screenPoint.x > 0 && screenPoint.x < 1 && screenPoint.y > 0 && screenPoint.y < 1;
+                        if (onScreen)
+                        {
+                            if (item.associatedHint)
+                            {
+                                if (item.associatedHint.activeSelf)
+                                    item.associatedHint.SetActive(false);
+                            }
+                        }
+                        else
+                        {
+                            if (item.associatedHint)
+                            {
+                                if (!item.associatedHint.activeSelf)
+                                    item.associatedHint.SetActive(true);
+                            }
+                            else
+                            {
+                                item.associatedHint = Instantiate(hintPrefab, transform);
+                                if (item.energyNeeded)
+                                {
+                                    item.associatedHint.GetComponent<Image>().sprite = energySprite;
+                                    item.associatedHint.transform.GetChild(0).GetComponent<Image>().sprite = energyGaugeSprite;
+                                }
+                                else
+                                {
+                                    item.associatedHint.GetComponent<Image>().sprite = oxygenSprite;
+                                    item.associatedHint.transform.GetChild(0).GetComponent<Image>().sprite = oxygenGaugeSprite;
+                                }
+                                item.associatedTimerHint = item.associatedHint.transform.GetChild(1).GetComponent<Image>();
+                                item.associatedGaugeHint = item.associatedHint.transform.GetChild(0).GetComponent<Image>();
+                            }
+                            float angle = Vector2.SignedAngle(item.associatedHint.transform.up, (Camera.main.WorldToScreenPoint(item.transform.position) - item.associatedHint.transform.position).normalized);
+                            item.associatedHint.transform.Rotate(new Vector3(0, 0, angle));
+                            RectTransform hintRectRansform = item.associatedHint.GetComponent<Image>().rectTransform;
+                            float newPivotY = -pivotValue.Evaluate(Mathf.Abs(WrapAngle(hintRectRansform.localEulerAngles.z)));
+                            hintRectRansform.pivot = new Vector2(hintRectRansform.pivot.x, newPivotY);
+                            hintRectRansform.position = hintRectRansform.parent.position;
+                        }
                     }
                 }
                 else
                 {
-                    if (item.associatedHint)
+                    foreach (SecondarySystem item in activeSecondarySystems)
                     {
-                        if(!item.associatedHint.activeSelf)
-                            item.associatedHint.SetActive(true);
-                    }  
-                    else
-                    {
-                        item.associatedHint = Instantiate(hintPrefab, transform);
-                        if (item.energyNeeded)
-                        {
-                            item.associatedHint.GetComponent<Image>().sprite = energySprite;
-                            item.associatedHint.transform.GetChild(0).GetComponent<Image>().sprite = energyGaugeSprite;
-                        }
-                        else
-                        {
-                            item.associatedHint.GetComponent<Image>().sprite = oxygenSprite;
-                            item.associatedHint.transform.GetChild(0).GetComponent<Image>().sprite = oxygenGaugeSprite;
-                        }
-                        item.associatedTimerHint = item.associatedHint.transform.GetChild(1).GetComponent<Image>();
-                        item.associatedGaugeHint = item.associatedHint.transform.GetChild(0).GetComponent<Image>();
+                        if (item.associatedHint && item.associatedHint.activeSelf)
+                            item.associatedHint.SetActive(false);
                     }
-                    float angle = Vector2.SignedAngle(item.associatedHint.transform.up, (Camera.main.WorldToScreenPoint(item.transform.position) - item.associatedHint.transform.position).normalized);
-                    item.associatedHint.transform.Rotate(new Vector3(0, 0, angle));
-                    RectTransform hintRectRansform = item.associatedHint.GetComponent<Image>().rectTransform;
-                    float newPivotY = -pivotValue.Evaluate(Mathf.Abs(WrapAngle(hintRectRansform.localEulerAngles.z)));
-                    hintRectRansform.pivot = new Vector2(hintRectRansform.pivot.x, newPivotY);
-                    hintRectRansform.position = hintRectRansform.parent.position;
+                }
+            }
+            else
+            {
+                foreach (SecondarySystem item in activeSecondarySystems)
+                {
+                    if (item.associatedHint && item.associatedHint.activeSelf)
+                        item.associatedHint.SetActive(false);
                 }
             }
         }
-        else
+    }
+
+    public void DisableOnPause()
+    {
+        foreach (SecondarySystem item in activeSecondarySystems)
         {
-            foreach (SecondarySystem item in activeSecondarySystems)
-            {
-                if (item.associatedHint && item.associatedHint.activeSelf)
-                    item.associatedHint.SetActive(false);
-            }
+            if (item.associatedHint && item.associatedHint.activeSelf)
+                item.associatedHint.SetActive(false);
         }
     }
 

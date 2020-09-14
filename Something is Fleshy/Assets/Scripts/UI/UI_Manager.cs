@@ -57,8 +57,12 @@ public class UI_Manager : MonoBehaviour
         if (!ScoreManager.instance.levelEnded)
         {
             UI_pauseCanvas.enabled = !UI_pauseCanvas.enabled;
+            GameManager.instance.levelPaused = !GameManager.instance.levelPaused;
             if (UI_pauseCanvas.enabled)
             {
+                HintSecondarySystemManager.instance.DisableOnPause();
+                foreach (TimerSecondarySystem item in GameObject.FindObjectsOfType<TimerSecondarySystem>())
+                    item.DisableOnPause();
                 Time.timeScale = 0;
             }
             else

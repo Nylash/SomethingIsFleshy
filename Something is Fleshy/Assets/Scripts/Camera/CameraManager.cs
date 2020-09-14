@@ -47,15 +47,21 @@ public class CameraManager : MonoBehaviour
 
     public void SwitchCamera()
     {
-        if (VCamZoom.activeSelf)
+        if (GameManager.instance.levelStarted)
         {
-            VCamZoom.SetActive(false);
-            VCamGlobal.SetActive(true);
-        }
-        else
-        {
-            VCamZoom.SetActive(true);
-            VCamGlobal.SetActive(false);
+            if (!ScoreManager.instance.levelEnded && !GameManager.instance.levelPaused)
+            {
+                if (VCamZoom.activeSelf)
+                {
+                    VCamZoom.SetActive(false);
+                    VCamGlobal.SetActive(true);
+                }
+                else
+                {
+                    VCamZoom.SetActive(true);
+                    VCamGlobal.SetActive(false);
+                }
+            }
         }
     }
 
