@@ -57,6 +57,7 @@ public class HintSecondarySystemManager : MonoBehaviour
                             item.associatedHint.GetComponent<Image>().sprite = energySprite;
                         else
                             item.associatedHint.GetComponent<Image>().sprite = oxygenSprite;
+                        item.associatedTimerHint = item.associatedHint.transform.GetChild(0).GetComponent<Image>();
                     }
                     float angle = Vector2.SignedAngle(item.associatedHint.transform.up, (Camera.main.WorldToScreenPoint(item.transform.position) - item.associatedHint.transform.position).normalized);
                     item.associatedHint.transform.Rotate(new Vector3(0, 0, angle));

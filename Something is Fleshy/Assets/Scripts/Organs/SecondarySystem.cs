@@ -1,6 +1,5 @@
 ﻿using UnityEngine;
-using System.Collections.Generic;
-using System.Threading;
+using UnityEngine.UI;
 
 public class SecondarySystem : MonoBehaviour
 {
@@ -25,6 +24,7 @@ public class SecondarySystem : MonoBehaviour
 	public LeverScript associatedLever;
 	public SecondarySystemsManager.Pack associatedPack;
 	public GameObject associatedHint;
+	public Image associatedTimerHint;
 	public float currentEnergy;
 	public float currentOxygen;
 	public bool energyNeeded;
@@ -89,6 +89,8 @@ public class SecondarySystem : MonoBehaviour
 						oxygenPropertyBlock.SetFloat("Height", currentOxygen / SecondarySystemsManager.instance.oxygenAmoutNeeded);
 						oxygenRenderer.SetPropertyBlock(oxygenPropertyBlock);
 					}
+					if (associatedHint)
+						associatedTimerHint.fillAmount = timerBeforeExpiration / SecondarySystemsManager.instance.timeBeforeExpirationSecondarySystem;
 					CheckStopActivity();
 				}
                 if (canBeDraw)
@@ -159,7 +161,7 @@ public class SecondarySystem : MonoBehaviour
 		}
 		else
 		{
-			print(gameObject.name);
+			print("expired" + gameObject.name);
 			ScoreManager.instance.LosePoints(GameManager.instance.pointsLossSecondarySystemExpiration);
 		}
 		timerBeforeExpiration = 0f;
