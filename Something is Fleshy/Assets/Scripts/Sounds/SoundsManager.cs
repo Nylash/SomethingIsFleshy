@@ -72,7 +72,7 @@ public class SoundsManager : MonoBehaviour
 
     public enum SoundName
     {
-        TO_DEFINE, StomachEmpty, LungsEmpty, StomachFull, LungsFull, LeverInteraction, HeartDamage, HeartLow, Walk, Jump
+        TO_DEFINE, StomachEmpty, LungsEmpty, StomachFull, LungsFull, LeverInteraction, EMPTY1, EMPTY2, Walk, Jump
     }
 
     void DebugSound()
