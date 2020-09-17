@@ -62,6 +62,7 @@ public class SoundsManager : MonoBehaviour
 
     int GetIndex(SoundName name)
     {
+        print(name);
         foreach (Sound item in sounds)
         {
             if (name == item.name)
@@ -72,7 +73,7 @@ public class SoundsManager : MonoBehaviour
 
     public enum SoundName
     {
-        TO_DEFINE, StomachEmpty, LungsEmpty, StomachFull, LungsFull, LeverInteraction, EMPTY1, EMPTY2, Walk, Jump
+        TO_DEFINE, StomachEmpty, LungsEmpty, StartLeak, EndLeak, LeverInteraction, EMPTY1, EMPTY2, Walk, Jump
     }
 
     void DebugSound()

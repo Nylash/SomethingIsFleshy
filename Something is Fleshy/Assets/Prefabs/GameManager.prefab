@@ -164,6 +164,7 @@ MonoBehaviour:
     type: 3}
   leakProbWeightValue: 20
   timeToRepair: 1.5
+  leakSource: {fileID: 7729027649541113808}
   leversWithLeaksZones: []
   allLeaks: []
 --- !u!114 &343164629535681210
@@ -191,14 +192,34 @@ MonoBehaviour:
     pitch: 1
   - name: 1
     clips:
-    - {fileID: 8300000, guid: 3fbf18c373ceaab4f80aea9e173091a0, type: 3}
-    volume: 0.25
+    - {fileID: 8300000, guid: 35dd9227a56324b4582898109f9eccf0, type: 3}
+    - {fileID: 8300000, guid: 636f9643bba519f478a907cf4b8ddfda, type: 3}
+    - {fileID: 8300000, guid: 4d75f53e41f35d7419adcec3f76f29f8, type: 3}
+    volume: 0.5
     pitch: 1
   - name: 5
     clips:
     - {fileID: 8300000, guid: d668fc1e060ba1649abfc0aa98d55b9b, type: 3}
     - {fileID: 8300000, guid: 29c7563210ca9554aa8c20b3213025e3, type: 3}
     volume: 0.25
+    pitch: 1
+  - name: 4
+    clips:
+    - {fileID: 8300000, guid: 79317f721deaf924396579e44018cd94, type: 3}
+    - {fileID: 8300000, guid: 630c4601117bde54caf77f184f626eb7, type: 3}
+    volume: 0.3
+    pitch: 1
+  - name: 2
+    clips:
+    - {fileID: 8300000, guid: b89c538eecd8bb4438e75a085eb92bb6, type: 3}
+    - {fileID: 8300000, guid: 0710de3777b9f9c4b9aa33cc68e46ccb, type: 3}
+    volume: 0.3
+    pitch: 1
+  - name: 3
+    clips:
+    - {fileID: 8300000, guid: c68a4ce799bd3864b89f61b8091d0ab1, type: 3}
+    - {fileID: 8300000, guid: 9f08fa616fe03ba49ae4a78ac4603375, type: 3}
+    volume: 0.08
     pitch: 1
 --- !u!114 &2873604965991707631
 MonoBehaviour:

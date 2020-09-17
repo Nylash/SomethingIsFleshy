@@ -19,6 +19,7 @@ public class Leak : MonoBehaviour
     ParticleSystem.MainModule fxMainModule;
     ParticleSystem.MainModule fxMainModuleChild;
     LeverScript.RessourcesType currentRessource;
+    AudioSource audioSource;
 
     private void Start()
     {
@@ -29,6 +30,7 @@ public class Leak : MonoBehaviour
         fxMainModuleChild = FX.transform.GetChild(0).GetComponent<ParticleSystem>().main;
         transform.eulerAngles = new Vector3(0, 0, Random.Range(0f, 360f));
         HintLeakManager.instance.activesLeaks.Add(this);
+        audioSource = GetComponent<AudioSource>();
     }
 
     private void Update()
@@ -183,6 +185,7 @@ public class Leak : MonoBehaviour
         Destroy(FX);
         LeaksManager.instance.allLeaks.Remove(gameObject);
         HintLeakManager.instance.activesLeaks.Remove(this);
+        SoundsManager.instance.PlaySoundOneShot(SoundsManager.SoundName.EndLeak, audioSource);
         if (associatedHint)
             Destroy(associatedHint);
         Destroy(gameObject);

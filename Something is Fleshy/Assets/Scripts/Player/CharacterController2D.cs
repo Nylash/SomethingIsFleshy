@@ -53,6 +53,7 @@ public class CharacterController2D : MonoBehaviour
 	public ParticleSystem walkFX;
 	public GameObject JLFXspot;
 	public GameObject JLFX;
+	public AudioSource jumpLandingSource;
 	ActionsMap actionsMap;
 
 	[Header("Variables")]
@@ -205,6 +206,7 @@ public class CharacterController2D : MonoBehaviour
 						rb.velocity = new Vector2(0f, initialYJumpForce + jumpPadForce);
 					debugColor = jumpColor;
 					Instantiate(JLFX, JLFXspot.transform.position, JLFX.transform.rotation);
+					SoundsManager.instance.PlaySoundOneShot(SoundsManager.SoundName.Jump, jumpLandingSource);
 				}
 				else
 				{

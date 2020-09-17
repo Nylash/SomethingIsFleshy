@@ -172,11 +172,9 @@ public class SecondarySystem : MonoBehaviour
 		if (suceed)
 		{
 			ScoreManager.instance.WinPoints((int)GameManager.instance.pointsWinSecondarySystemFilled.Evaluate(timerBeforeExpiration / SecondarySystemsManager.instance.timeBeforeExpirationSecondarySystem));
-			print("filled with " + timerBeforeExpiration / SecondarySystemsManager.instance.timeBeforeExpirationSecondarySystem * 100 +" % of time elasped");
 		}
 		else
 		{
-			print("expired" + gameObject.name);
 			ScoreManager.instance.LosePoints(GameManager.instance.pointsLossSecondarySystemExpiration);
 		}
 		timerBeforeExpiration = 0f;

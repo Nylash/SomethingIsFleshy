@@ -15,6 +15,7 @@ public class LeaksManager : MonoBehaviour
     [Range(0, 50)] [SerializeField] int leakProbWeightValue = 20;
     [Tooltip("The player must hold interaction input for this time to repair the leak.")]
     public float timeToRepair = 1.5f;
+    [SerializeField] AudioSource leakSource;
 #pragma warning restore 0649
     [Header("Variables")]
     [Header("⚠ DON'T TOUCH BELOW ⚠")]
@@ -100,6 +101,7 @@ public class LeaksManager : MonoBehaviour
             leakScript.associatedPipe = pipe;
             leversWithLeaksZones[lever].allLeaksZones[pipe] = null;
             allLeaks.Add(leak);
+            SoundsManager.instance.PlaySoundOneShot(SoundsManager.SoundName.StartLeak, leakSource);
         }
     }
 

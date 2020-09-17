@@ -12,6 +12,6 @@
 
     public override void StartLowRessource()
     {
-        throw new System.NotImplementedException();
+        SoundsManager.instance.PlaySoundOneShot(SoundsManager.SoundName.LungsEmpty, audioSource);
     }
 }

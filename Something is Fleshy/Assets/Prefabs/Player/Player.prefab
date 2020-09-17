@@ -43,7 +43,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   walkSource: {fileID: 5946067894139405930}
-  jumpSource: {fileID: 5932870625251774606}
   tpPosition: {x: 0, y: 0, z: 0}
 --- !u!1 &4800235096309690794
 GameObject:
@@ -90,8 +89,8 @@ GameObject:
   - component: {fileID: 4800235096581447250}
   - component: {fileID: 4800235096581447599}
   - component: {fileID: 5946067894139405930}
-  - component: {fileID: 5932870625251774606}
   - component: {fileID: 1328498859056628096}
+  - component: {fileID: 6196941693643608619}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -159,6 +158,7 @@ MonoBehaviour:
   walkFX: {fileID: 5620919155269269715}
   JLFXspot: {fileID: 185064660259434841}
   JLFX: {fileID: 5409841332802143248, guid: da48555ce8dbfc94c84b24f4c1ce8b23, type: 3}
+  jumpLandingSource: {fileID: 6196941693643608619}
   associatedMovingPlatform: {fileID: 0}
   jumpPadForce: 0
 --- !u!114 &768884482182505631
@@ -335,7 +335,7 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!82 &5932870625251774606
+--- !u!82 &1328498859056628096
 AudioSource:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -431,7 +431,7 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!82 &1328498859056628096
+--- !u!82 &6196941693643608619
 AudioSource:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

@@ -5,7 +5,6 @@ public class PlayerAnimationsMethods : MonoBehaviour
 #pragma warning disable 0649
     [Header("REFERENCES")]
     [SerializeField] AudioSource walkSource;
-    [SerializeField] AudioSource jumpSource;
 #pragma warning restore 0649
     [Header("Variables")]
     [Header("⚠ DON'T TOUCH BELOW ⚠")]
@@ -40,20 +39,5 @@ public class PlayerAnimationsMethods : MonoBehaviour
     void WalkSound()
     {
         SoundsManager.instance.PlaySoundOneShot(SoundsManager.SoundName.Walk, walkSource);
-    }
-
-    void JumpSound()
-    {
-        if (!securityJumpSFX)
-        {
-            securityJumpSFX = true;
-            SoundsManager.instance.PlaySoundOneShot(SoundsManager.SoundName.Jump, jumpSource);
-            Invoke("DisableSecurityJumpSFX", .5f);
-        }
-    }
-
-    void DisableSecurityJumpSFX()
-    {
-        securityJumpSFX = false;
     }
 }
