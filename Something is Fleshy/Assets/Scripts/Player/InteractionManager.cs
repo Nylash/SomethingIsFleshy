@@ -87,6 +87,8 @@ public class InteractionManager : MonoBehaviour
                                 animMethodsScript.tpPosition = interactableObject.GetComponentInParent<Teleporters>().GetTPLocation(interactableObject.gameObject);
                                 CharacterController2D.instance.animator.SetTrigger("StartTeleporting");
                                 CharacterController2D.instance.animator.SetBool("Teleporting", true);
+                                SoundsManager.instance.PlaySoundOneShot(SoundsManager.SoundName.TeleportationIn, interactionSource);
+                                animMethodsScript.tpSource = interactionSource;
                             }
                             break;
                         case InteractableType.inversionBlockLever:

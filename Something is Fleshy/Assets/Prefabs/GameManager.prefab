@@ -187,8 +187,8 @@ MonoBehaviour:
     pitch: 1
   - name: 9
     clips:
-    - {fileID: 8300000, guid: 19d32f38fb3071d46845b9e29b1cf259, type: 3}
-    volume: 0.05
+    - {fileID: 8300000, guid: 6e8b406b81d978e409604d05a287ae0c, type: 3}
+    volume: 0.1
     pitch: 1
   - name: 1
     clips:
@@ -220,6 +220,36 @@ MonoBehaviour:
     - {fileID: 8300000, guid: c68a4ce799bd3864b89f61b8091d0ab1, type: 3}
     - {fileID: 8300000, guid: 9f08fa616fe03ba49ae4a78ac4603375, type: 3}
     volume: 0.08
+    pitch: 1
+  - name: 6
+    clips:
+    - {fileID: 8300000, guid: 310cd03a63a6ad1469052a9c3f3edaa9, type: 3}
+    volume: 0.6
+    pitch: 1
+  - name: 7
+    clips:
+    - {fileID: 8300000, guid: 08a0230bfb727414687569879adc9bfd, type: 3}
+    volume: 0.6
+    pitch: 1
+  - name: 10
+    clips:
+    - {fileID: 8300000, guid: 1dcc4a8192606dc41827407e43402318, type: 3}
+    volume: 0.45
+    pitch: 1
+  - name: 11
+    clips:
+    - {fileID: 8300000, guid: 78df628f5c0090546be6c639522291aa, type: 3}
+    volume: 0.5
+    pitch: 1
+  - name: 12
+    clips:
+    - {fileID: 8300000, guid: 0e30e4269d94b7547b9ff0d2e0096378, type: 3}
+    volume: 0.08
+    pitch: 1
+  - name: 13
+    clips:
+    - {fileID: 8300000, guid: 573b6db23b8a4854e93f30c61b349e79, type: 3}
+    volume: 0.6
     pitch: 1
 --- !u!114 &2873604965991707631
 MonoBehaviour:

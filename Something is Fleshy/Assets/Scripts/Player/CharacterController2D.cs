@@ -200,13 +200,16 @@ public class CharacterController2D : MonoBehaviour
 					isJumping = true;
 					framesCounterCoyoteTime = 0;
 					jumpTimeCounter = 0f;
+					if (jumpPadForce != 0)
+						SoundsManager.instance.PlaySoundOneShot(SoundsManager.SoundName.SuperJump, jumpLandingSource);
+					else
+						SoundsManager.instance.PlaySoundOneShot(SoundsManager.SoundName.Jump, jumpLandingSource);
 					if (movementInput != 0)
 						rb.velocity = new Vector2((facingRight ? 1 : -1) * initialXJumpForce, initialYJumpForce + jumpPadForce);
 					else
 						rb.velocity = new Vector2(0f, initialYJumpForce + jumpPadForce);
 					debugColor = jumpColor;
 					Instantiate(JLFX, JLFXspot.transform.position, JLFX.transform.rotation);
-					SoundsManager.instance.PlaySoundOneShot(SoundsManager.SoundName.Jump, jumpLandingSource);
 				}
 				else
 				{
@@ -347,13 +350,14 @@ public class CharacterController2D : MonoBehaviour
 				animator.SetBool("Shocked", true);
 				
 				break;
-			case "Nerve" :
+			case "Nerve":
 				if (!isOnNerve)
 				{
 					ScoreManager.instance.LosePoints(GameManager.instance.pointsLossNerveHit);
 					collision.gameObject.GetComponent<Animator>().SetTrigger("Hit");
 					isOnNerve = true;
 					StartCoroutine(OnNerveAnimation());
+					SoundsManager.instance.PlaySoundOneShot(SoundsManager.SoundName.NerveHit, InteractionManager.instance.interactionSource);
 				}
 				break;
 			default:
@@ -361,7 +365,7 @@ public class CharacterController2D : MonoBehaviour
 		}
 	}
 
-	private void OnTriggerExit2D(Collider2D collision)
+    private void OnTriggerExit2D(Collider2D collision)
 	{
 		switch (collision.gameObject.tag)
 		{

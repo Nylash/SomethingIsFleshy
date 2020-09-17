@@ -9,6 +9,7 @@ public class PlayerAnimationsMethods : MonoBehaviour
     [Header("Variables")]
     [Header("⚠ DON'T TOUCH BELOW ⚠")]
     public Vector3 tpPosition;
+    public AudioSource tpSource;
     bool securityJumpSFX;
 
     private void Start()
@@ -29,6 +30,7 @@ public class PlayerAnimationsMethods : MonoBehaviour
     void DoTeleportation()
     {
         CharacterController2D.instance.transform.position = tpPosition;
+        SoundsManager.instance.PlaySoundOneShot(SoundsManager.SoundName.TeleportationOut, tpSource);
     }
 
     void EndShocked()
@@ -39,5 +41,10 @@ public class PlayerAnimationsMethods : MonoBehaviour
     void WalkSound()
     {
         SoundsManager.instance.PlaySoundOneShot(SoundsManager.SoundName.Walk, walkSource);
+    }
+
+    void LandingSound()
+    {
+        SoundsManager.instance.PlaySoundOneShot(SoundsManager.SoundName.Landing, CharacterController2D.instance.jumpLandingSource);
     }
 }

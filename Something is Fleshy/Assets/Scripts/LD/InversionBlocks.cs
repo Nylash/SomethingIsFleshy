@@ -23,6 +23,7 @@ public class InversionBlocks : MonoBehaviour
     bool blockAactivated = true;
     bool isSwitched;
     Animator anim;
+    AudioSource audioSource;
 
     private void Start()
     {
@@ -55,6 +56,7 @@ public class InversionBlocks : MonoBehaviour
             InvokeRepeating("InverseBlocks", timeBetweenSwitch, timeBetweenSwitch);
         if (activateByLever)
             anim = GetComponent<Animator>();
+        audioSource = GetComponent<AudioSource>();
     }
 
     public void InverseBlocks()
@@ -75,6 +77,7 @@ public class InversionBlocks : MonoBehaviour
             foreach (Animator item in blocksB)
                 item.SetTrigger("Depop");
         }
+        SoundsManager.instance.PlaySoundOneShot(SoundsManager.SoundName.SwitchPlatform, audioSource);
         if (activateByLever)
             AnimHandler();
     }
