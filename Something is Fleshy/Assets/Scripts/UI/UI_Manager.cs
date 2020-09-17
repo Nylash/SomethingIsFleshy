@@ -26,6 +26,7 @@ public class UI_Manager : MonoBehaviour
     public Canvas UI_leakGaugeCanvas;
     public Image UI_leakGaugeIn;
     public Canvas UI_timerCanvas;
+    public AudioSource UI_audioSource;
     [Header("Components")]
     ActionsMap actionsMap;
 
@@ -46,6 +47,7 @@ public class UI_Manager : MonoBehaviour
 
     private void Start()
     {
+        UI_audioSource = GetComponent<AudioSource>();
         if (SceneManager.GetActiveScene().name != "Tutorial")
             StartCoroutine(AnimStart());
         else
@@ -78,13 +80,16 @@ public class UI_Manager : MonoBehaviour
         yield return new WaitForSeconds(1);
         UI_startText.text = "Starts in 2";
         UI_startCanvas.GetComponent<Animator>().SetTrigger("AnimSize");
+        SoundsManager.instance.PlaySoundOneShot(SoundsManager.SoundName.Ready, UI_audioSource);
         yield return new WaitForSeconds(1);
         UI_startText.text = "Starts in 1";
         UI_startCanvas.GetComponent<Animator>().SetTrigger("AnimSize");
+        SoundsManager.instance.PlaySoundOneShot(SoundsManager.SoundName.Set, UI_audioSource);
         CameraManager.instance.SwitchCameraFromScript();
         yield return new WaitForSeconds(1);
         UI_startText.text = "Go !";
         UI_startCanvas.GetComponent<Animator>().SetTrigger("AnimSize");
+        SoundsManager.instance.PlaySoundOneShot(SoundsManager.SoundName.Go, UI_audioSource);
         yield return new WaitForSeconds(1);
         StartGame();
     }

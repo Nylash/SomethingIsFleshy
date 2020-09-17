@@ -251,6 +251,21 @@ MonoBehaviour:
     - {fileID: 8300000, guid: 573b6db23b8a4854e93f30c61b349e79, type: 3}
     volume: 0.6
     pitch: 1
+  - name: 15
+    clips:
+    - {fileID: 8300000, guid: 63c1847679a52b040856c304d7017944, type: 3}
+    volume: 0.6
+    pitch: 1
+  - name: 16
+    clips:
+    - {fileID: 8300000, guid: 288458b8f2439bc4590a0b8188c0f6e3, type: 3}
+    volume: 0.6
+    pitch: 1
+  - name: 14
+    clips:
+    - {fileID: 8300000, guid: 41722380064152f47a0e9d75ba3b92ce, type: 3}
+    volume: 0.6
+    pitch: 1
 --- !u!114 &2873604965991707631
 MonoBehaviour:
   m_ObjectHideFlags: 0
