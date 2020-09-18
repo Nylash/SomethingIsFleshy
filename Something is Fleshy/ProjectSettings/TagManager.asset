@@ -16,6 +16,7 @@ TagManager:
   - Nerve
   - Leak
   - InversionBlock
+  - UI_Master
   layers:
   - Default
   - TransparentFX

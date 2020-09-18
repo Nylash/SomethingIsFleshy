@@ -50,6 +50,7 @@ public class Tutorial : MonoBehaviour
     ActionsMap actionsMap;
     bool cameraTutoDone;
     public GameObject stockedCam;
+    AudioSource audioSource;
 
     private void OnEnable() => actionsMap.Gameplay.Enable();
     private void OnDisable() => actionsMap.Gameplay.Disable();
@@ -68,6 +69,8 @@ public class Tutorial : MonoBehaviour
         GameManager.instance.levelPaused = true;
         presentationCanvas.enabled = true;
         CameraManager.instance.SwitchCameraFromScript();
+
+        audioSource = GetComponent<AudioSource>();
     }
 
     private void Update()
@@ -89,6 +92,7 @@ public class Tutorial : MonoBehaviour
                 if (LungsManager.instance.currentCapacity/GameManager.instance.maxCapacityPrimarySystem >.9f 
                     && StomachManager.instance.currentCapacity / GameManager.instance.maxCapacityPrimarySystem > .9f && !GameManager.instance.levelPaused)
                 {
+                    SoundsManager.instance.PlaySoundOneShot(SoundsManager.SoundName.TutorialObjectiveSuccess, audioSource);
                     GameManager.instance.levelPaused = true;
                     CharacterController2D.instance.animator.SetBool("Running", false);
                     primarySystemCongratulationsCanvas.enabled = true;
@@ -100,7 +104,7 @@ public class Tutorial : MonoBehaviour
                 textBot.text = "Energy : " + ((int)(tutoSS.currentEnergy / SecondarySystemsManager.instance.energyAmoutNeeded * 100)).ToString() + "%";
                 if (!tutoSS.energyNeeded && !GameManager.instance.levelPaused)
                 {
-                    if(ScoreManager.instance.currentScore < 0)
+                    if(ScoreManager.instance.currentScore <= 0)
                     {
                         GameManager.instance.levelPaused = true;
                         CharacterController2D.instance.animator.SetBool("Running", false);
@@ -118,6 +122,7 @@ public class Tutorial : MonoBehaviour
             case TutorialStep.ssFilledUp:
                 if(LeaksManager.instance.allLeaks.Count == 0 && !GameManager.instance.levelPaused)
                 {
+                    SoundsManager.instance.PlaySoundOneShot(SoundsManager.SoundName.TutorialObjectiveSuccess, audioSource);
                     currentStep++;
                     GameManager.instance.levelPaused = true;
                     CharacterController2D.instance.animator.SetBool("Running", false);

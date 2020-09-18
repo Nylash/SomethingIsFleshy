@@ -47,6 +47,7 @@ public class SecondarySystemsManager : MonoBehaviour
     public Pack lastPack;
     //Lerp pipes height variables
     public float timerLerp;
+    public AudioSource ssManagerSource;
     bool isIncreasingHeight;
 
     [System.Serializable]
@@ -176,6 +177,7 @@ public class SecondarySystemsManager : MonoBehaviour
             HintSecondarySystemManager.instance.activeSecondarySystems.Add(selectedSecondarySystem);
             TimerSecondarySystem timerObject = Instantiate(GameManager.instance.UI_timerSS, UI_Manager.instance.transform).GetComponent<TimerSecondarySystem>();
             timerObject.associatedSystem = selectedSecondarySystem;
+            SoundsManager.instance.PlaySoundOneShot(SoundsManager.SoundName.SecondarySystemPop, ssManagerSource);
         }
     }
 
@@ -226,6 +228,7 @@ public class SecondarySystemsManager : MonoBehaviour
         HintSecondarySystemManager.instance.activeSecondarySystems.Add(specificSecondarySystem);
         TimerSecondarySystem timerObject = Instantiate(GameManager.instance.UI_timerSS, UI_Manager.instance.transform).GetComponent<TimerSecondarySystem>();
         timerObject.associatedSystem = specificSecondarySystem;
+        SoundsManager.instance.PlaySoundOneShot(SoundsManager.SoundName.SecondarySystemPop, ssManagerSource);
     }
 
     public void TutorialCompleted()

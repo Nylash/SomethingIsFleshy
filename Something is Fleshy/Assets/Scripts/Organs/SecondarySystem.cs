@@ -20,6 +20,7 @@ public class SecondarySystem : MonoBehaviour
 	[Header("Components")]
 	public Animator animator;
 	public Animator memberAnimator;
+	public AudioSource audioSource;
 	[Header("Variables")]
 	public LeverScript associatedLever;
 	public SecondarySystemsManager.Pack associatedPack;
@@ -64,6 +65,8 @@ public class SecondarySystem : MonoBehaviour
 		}
 		if (memberAnimator)
 			memberAnimator.speed = 0;
+
+		audioSource = GetComponent<AudioSource>();
 	}
 
 	private void Update()
@@ -172,10 +175,12 @@ public class SecondarySystem : MonoBehaviour
 		if (suceed)
 		{
 			ScoreManager.instance.WinPoints((int)GameManager.instance.pointsWinSecondarySystemFilled.Evaluate(timerBeforeExpiration / SecondarySystemsManager.instance.timeBeforeExpirationSecondarySystem));
+			SoundsManager.instance.PlaySoundOneShot(SoundsManager.SoundName.SecondarySystemFilled, audioSource);
 		}
 		else
 		{
 			ScoreManager.instance.LosePoints(GameManager.instance.pointsLossSecondarySystemExpiration);
+			SoundsManager.instance.PlaySoundOneShot(SoundsManager.SoundName.SecondarySystemExpire, audioSource);
 		}
 		timerBeforeExpiration = 0f;
 		energyGauge.SetActive(false);

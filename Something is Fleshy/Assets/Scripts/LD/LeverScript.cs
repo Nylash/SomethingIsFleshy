@@ -210,6 +210,7 @@ public class LeverScript : MonoBehaviour
                 if (currentRessource == RessourcesType.energy)
                 {
                     currentAssociatedSecondarySystem.filling = true;
+                    SoundsManager.instance.PlaySoundOneShot(SoundsManager.SoundName.StartFillingSecondarySystem, currentAssociatedSecondarySystem.audioSource);
                     IsSecondarySystemFilling(true);
                 }
                 else
@@ -222,6 +223,7 @@ public class LeverScript : MonoBehaviour
                 if (currentRessource == RessourcesType.oxygen)
                 {
                     currentAssociatedSecondarySystem.filling = true;
+                    SoundsManager.instance.PlaySoundOneShot(SoundsManager.SoundName.StartFillingSecondarySystem, currentAssociatedSecondarySystem.audioSource);
                     IsSecondarySystemFilling(true);
                 }
                 else
@@ -297,6 +299,7 @@ public class LeverScript : MonoBehaviour
                 if (currentRessource == RessourcesType.energy)
                 {
                     currentAssociatedSecondarySystem.filling = true;
+                    SoundsManager.instance.PlaySoundOneShot(SoundsManager.SoundName.StartFillingSecondarySystem, currentAssociatedSecondarySystem.audioSource);
                     IsSecondarySystemFilling(true);
                 }
                 else

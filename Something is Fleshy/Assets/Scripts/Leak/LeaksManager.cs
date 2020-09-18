@@ -121,4 +121,9 @@ public class LeaksManager : MonoBehaviour
         CancelInvoke("CheckLeak");
         InvokeRepeating("CheckLeak", timeBeforeFirstCheckForLeak, timeIntervalForCheckForLeak);
     }
+
+    public void StopLeakCall()
+    {
+        CancelInvoke("CheckLeak");
+    }
 }

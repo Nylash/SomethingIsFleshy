@@ -69,6 +69,7 @@ public class UI_Manager : MonoBehaviour
             }
             else
             {
+                SoundsManager.instance.PlaySoundOneShot(SoundsManager.SoundName.MenuValidation, UI_audioSource);
                 EventSystem.current.SetSelectedGameObject(null);
                 Time.timeScale = 1;
             }
@@ -96,12 +97,14 @@ public class UI_Manager : MonoBehaviour
 
     public void ReloadLevel()
     {
+        SoundsManager.instance.PlaySoundOneShot(SoundsManager.SoundName.MenuValidation, UI_audioSource);
         Time.timeScale = 1;
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 
     public void LoadMainMenu()
     {
+        SoundsManager.instance.PlaySoundOneShot(SoundsManager.SoundName.MenuValidation, UI_audioSource);
         Time.timeScale = 1;
         SceneManager.LoadScene("MainMenu");
     }

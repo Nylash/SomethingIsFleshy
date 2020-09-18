@@ -72,7 +72,9 @@ public class SoundsManager : MonoBehaviour
 
     public enum SoundName
     {
-        TO_DEFINE, StomachEmpty, LungsEmpty, StartLeak, EndLeak, LeverInteraction, TeleportationIn, TeleportationOut, Walk, Jump, SuperJump, SwitchPlatform, Landing, NerveHit, Go, Ready, Set
+        TO_DEFINE, StomachEmpty, LungsEmpty, StartLeak, EndLeak, LeverInteraction, TeleportationIn, TeleportationOut, Walk, Jump, SuperJump, 
+        SwitchPlatform, Landing, NerveHit, Go, Ready, Set, MenuValidation, MenuSwitch, SecondarySystemPop, SecondarySystemFilled, SecondarySystemExpire,
+        EndTimer, TutorialObjectiveSuccess, Victory, Defeat, StartFillingSecondarySystem
     }
 
     void DebugSound()

@@ -19,12 +19,14 @@ public class MainMenuButtons : MonoBehaviour
 
     public void ActivateLevelSelectionCanvas()
     {
+        SoundsManager.instance.PlaySoundOneShot(SoundsManager.SoundName.MenuValidation, GameObject.FindGameObjectWithTag("UI_Master").GetComponent<AudioSource>());
         mainCanvas.enabled = false;
         levelSelectionCanvas.enabled = true;
     }
 
     public void ActivateOptionsCanvas()
     {
+        SoundsManager.instance.PlaySoundOneShot(SoundsManager.SoundName.MenuValidation, GameObject.FindGameObjectWithTag("UI_Master").GetComponent<AudioSource>());
         mainCanvas.enabled = false;
         optionsCanvas.enabled = true;
     }

@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System;
+using System.Collections;
 
 public class ScoreManager : MonoBehaviour
 {
@@ -12,6 +13,7 @@ public class ScoreManager : MonoBehaviour
 	public int currentScore = 0;
 	public int secondarySystemsExpired;
 	public int secondarySystemsFilled;
+	Coroutine endLevel;
 
 	private void Awake()
 	{
@@ -36,6 +38,8 @@ public class ScoreManager : MonoBehaviour
 			{
 				currentTimer -= Time.deltaTime;
 				UI_Manager.instance.UI_timerValue.text = TimeSpan.FromSeconds(currentTimer).ToString("mm' : 'ss");
+				if (currentTimer <= 10 && endLevel == null && !levelEnded)
+					endLevel = StartCoroutine(TimerEndLevel());
 				if (currentTimer <= 0)
 					EndLevel();
 			}
@@ -53,13 +57,26 @@ public class ScoreManager : MonoBehaviour
 			UI_Manager.instance.UI_medal.sprite = GameManager.instance.bronzeMedal;
 		else
 			UI_Manager.instance.UI_medal.sprite = GameManager.instance.failMedal;
+		if (UI_Manager.instance.UI_medal.sprite == GameManager.instance.failMedal)
+			SoundsManager.instance.PlaySoundOneShot(SoundsManager.SoundName.Defeat, SecondarySystemsManager.instance.ssManagerSource);
+		else
+			SoundsManager.instance.PlaySoundOneShot(SoundsManager.SoundName.Victory, SecondarySystemsManager.instance.ssManagerSource);
 		UI_Manager.instance.UI_endScore.text = "Your score : " + currentScore.ToString();
 		UI_Manager.instance.UI_goldScore.text = ": " + GameManager.instance.pointsForGold.ToString();
 		UI_Manager.instance.UI_silverScore.text = ": " + GameManager.instance.pointsForSilver.ToString();
 		UI_Manager.instance.UI_bronzeScore.text = ": " + GameManager.instance.pointsForBronze.ToString();
 		UI_Manager.instance.UI_endCanvas.enabled = true;
 		SecondarySystemsManager.instance.StopActivityCall();
+		LeaksManager.instance.StopLeakCall();
 	}
+
+	IEnumerator TimerEndLevel()
+    {
+		SoundsManager.instance.PlaySoundOneShot(SoundsManager.SoundName.EndTimer, UI_Manager.instance.UI_audioSource);
+		yield return new WaitForSeconds(1);
+		if(!levelEnded)
+			StartCoroutine(TimerEndLevel());
+    }
 
 	public void LosePoints(int amount)
     {
