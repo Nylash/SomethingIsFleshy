@@ -17015,7 +17015,9 @@ MonoBehaviour:
   timeBeforeFirstLeakCheckAfterCompletion: 12
   tutoSS: {fileID: 1879286758}
   associatedPack:
-    secondarySystems: []
+    secondarySystems:
+    - {fileID: 1879286758}
+    - {fileID: 439463593}
     currentSecondarySystem: {fileID: 0}
     drawIndex: 0
     packWithOneSecondarySystem: 0
@@ -36677,7 +36679,7 @@ PrefabInstance:
     - target: {fileID: 3207447065868730712, guid: 8d06d1b731884de4f8f1c425cf55aff5,
         type: 3}
       propertyPath: orthographic size
-      value: 38
+      value: 15
       objectReference: {fileID: 0}
     - target: {fileID: 3207447065868730715, guid: 8d06d1b731884de4f8f1c425cf55aff5,
         type: 3}
@@ -36687,12 +36689,12 @@ PrefabInstance:
     - target: {fileID: 3207447065868730791, guid: 8d06d1b731884de4f8f1c425cf55aff5,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: -2.41
       objectReference: {fileID: 0}
     - target: {fileID: 3207447065868730791, guid: 8d06d1b731884de4f8f1c425cf55aff5,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 20.03
+      value: 21.904434
       objectReference: {fileID: 0}
     - target: {fileID: 3207447065868730791, guid: 8d06d1b731884de4f8f1c425cf55aff5,
         type: 3}

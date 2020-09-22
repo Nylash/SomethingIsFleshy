@@ -105,13 +105,14 @@ public class LeaksManager : MonoBehaviour
         }
     }
 
-    public void StartSpecificLeak(LeakZone leakZone, List<LeakZone> pipeLeakZones, LeverScript associatedLever, int associatedPipe)
+    public void StartSpecificLeak(LeakZone leakZone, List<LeakZone> pipeLeakZones, LeverScript associatedLever, int associatedPipe, LeverScript.RessourcesType ressource = LeverScript.RessourcesType.none)
     {
         GameObject leak = Instantiate(leakPrefab, leakZone.GetRandomLeakPosition(), Quaternion.identity);
         Leak leakScript = leak.GetComponent<Leak>();
         leakScript.associatedPipeLeaksZones = pipeLeakZones;
         leakScript.associatedLever = associatedLever;
         leakScript.associatedPipe = associatedPipe;
+        leakScript.currentRessource = ressource;
         associatedLever.allLeaksZones[associatedPipe] = null;
         allLeaks.Add(leak);
     }

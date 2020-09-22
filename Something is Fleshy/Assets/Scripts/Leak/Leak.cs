@@ -11,6 +11,7 @@ public class Leak : MonoBehaviour
 #pragma warning restore 0649
     [Header("Variables")]
     [Header("⚠ DON'T TOUCH BELOW ⚠")]
+    public LeverScript.RessourcesType currentRessource;
     public List<LeakZone> associatedPipeLeaksZones;
     public LeverScript associatedLever;
     public GameObject associatedHint;
@@ -18,7 +19,6 @@ public class Leak : MonoBehaviour
     GameObject FX;
     ParticleSystem.MainModule fxMainModule;
     ParticleSystem.MainModule fxMainModuleChild;
-    LeverScript.RessourcesType currentRessource;
 
     private void Start()
     {

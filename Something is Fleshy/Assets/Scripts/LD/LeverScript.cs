@@ -8,7 +8,9 @@ public class LeverScript : MonoBehaviour
     public struct Pipe
     {
         public GameObject pipe;
+        [HideInInspector]
         public SpriteShapeRenderer shapeRenderer;
+        [HideInInspector]
         public SpriteShapeController shapeController;
     }
 

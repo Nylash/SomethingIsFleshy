@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Collections;
 using UnityEngine;
 
 public class SecondarySystemsManager : MonoBehaviour
@@ -208,7 +207,7 @@ public class SecondarySystemsManager : MonoBehaviour
         CancelInvoke("StartActivityByTimer");
     }
 
-    public void LaunchSpecificSS(SecondarySystem specificSecondarySystem, Pack associatedPack)
+    public void LaunchSpecificSS(SecondarySystem specificSecondarySystem, Pack associatedPack, LeverScript.RessourcesType ressource = LeverScript.RessourcesType.energy)
     {
         if (lastPack != null)
         {
@@ -221,9 +220,18 @@ public class SecondarySystemsManager : MonoBehaviour
         specificSecondarySystem.animator.SetBool("OnActivity", true);
         if (specificSecondarySystem.memberAnimator)
             specificSecondarySystem.memberAnimator.speed = 1f;
-        specificSecondarySystem.currentEnergy = 0f;
-        specificSecondarySystem.energyGauge.SetActive(true);
-        specificSecondarySystem.energyNeeded = true;
+        if(ressource == LeverScript.RessourcesType.energy)
+        {
+            specificSecondarySystem.currentEnergy = 0f;
+            specificSecondarySystem.energyGauge.SetActive(true);
+            specificSecondarySystem.energyNeeded = true;
+        }
+        else
+        {
+            specificSecondarySystem.currentOxygen = 0f;
+            specificSecondarySystem.oxygenGauge.SetActive(true);
+            specificSecondarySystem.oxygenNeeded = true;
+        }
         activesSecondarySystems++;
         HintSecondarySystemManager.instance.activeSecondarySystems.Add(specificSecondarySystem);
         TimerSecondarySystem timerObject = Instantiate(GameManager.instance.UI_timerSS, UI_Manager.instance.transform).GetComponent<TimerSecondarySystem>();
