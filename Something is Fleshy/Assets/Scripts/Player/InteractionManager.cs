@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using UnityEngine.InputSystem;
 
 public class InteractionManager : MonoBehaviour
 {
@@ -8,6 +7,7 @@ public class InteractionManager : MonoBehaviour
     [Header("Components")]
     [Header("⚠ DON'T TOUCH BELOW ⚠")]
     public AudioSource interactionSource;
+    public GameObject interactFX;
     ActionsMap actionsMap;
 
     [Header("Variables")]
@@ -70,6 +70,7 @@ public class InteractionManager : MonoBehaviour
                         case InteractableType.lever:
                             interactableObject.GetComponent<LeverScript>().Switch();
                             SoundsManager.instance.PlaySoundOneShot(SoundsManager.SoundName.LeverInteraction, interactionSource);
+                            Instantiate(interactFX, interactableObject.transform.position, Quaternion.identity);
                             break;
                         case InteractableType.electricLever:
                             interactableObject.GetComponent<ElectricSwitch>().Switch();

@@ -44,6 +44,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   walkSource: {fileID: 5946067894139405930}
   tpPosition: {x: 0, y: 0, z: 0}
+  tpSource: {fileID: 0}
 --- !u!1 &4800235096309690794
 GameObject:
   m_ObjectHideFlags: 0
@@ -212,6 +213,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   interactionSource: {fileID: 1328498859056628096}
+  interactFX: {fileID: 5860125497217327566, guid: dcfb0df3e4d1f874ead0422fb90cd3c9,
+    type: 3}
   animMethodsScript: {fileID: 0}
 --- !u!61 &4800235096581447599
 BoxCollider2D:
