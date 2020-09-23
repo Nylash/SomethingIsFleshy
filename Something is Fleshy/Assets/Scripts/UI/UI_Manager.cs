@@ -109,6 +109,13 @@ public class UI_Manager : MonoBehaviour
         SceneManager.LoadScene("MainMenu");
     }
 
+    public void LoadTrailerMainMenu()
+    {
+        SoundsManager.instance.PlaySoundOneShot(SoundsManager.SoundName.MenuValidation, UI_audioSource);
+        Time.timeScale = 1;
+        SceneManager.LoadScene("TrailerMenu");
+    }
+
     void StartGame()
     {
         UI_startCanvas.enabled = false;

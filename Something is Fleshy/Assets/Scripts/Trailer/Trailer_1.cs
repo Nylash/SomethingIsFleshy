@@ -2,7 +2,7 @@
 using UnityEngine;
 using System.Collections;
 
-public class Trailer : MonoBehaviour
+public class Trailer_1 : MonoBehaviour
 {
     [Header("Transitions timer")]
     public float timeBefore2ndLeak = 1;
@@ -34,7 +34,6 @@ public class Trailer : MonoBehaviour
     [Header("Secondary systems")]
     public SecondarySystem ss1;
     public SecondarySystem ss2;
-    SecondarySystemsManager.Pack pack;
 
     ActionsMap actionsMap;
 
@@ -70,8 +69,8 @@ public class Trailer : MonoBehaviour
         cam2.SetActive(true);
         cam1.SetActive(false);
         yield return new WaitForSeconds(timeBeforeSS);
-        SecondarySystemsManager.instance.LaunchSpecificSS(ss1, pack, LeverScript.RessourcesType.energy);
-        SecondarySystemsManager.instance.LaunchSpecificSS(ss2, pack, LeverScript.RessourcesType.oxygen);
+        SecondarySystemsManager.instance.LaunchSpecificSS(ss1, null, LeverScript.RessourcesType.energy, false);
+        SecondarySystemsManager.instance.LaunchSpecificSS(ss2, null, LeverScript.RessourcesType.oxygen, false);
         yield return new WaitForSeconds(timeBefore3rdZoomOut);
         cam3.SetActive(true);
         cam2.SetActive(false);
@@ -79,5 +78,11 @@ public class Trailer : MonoBehaviour
         CameraManager.instance.VCamZoom.GetComponent<Cinemachine.CinemachineVirtualCamera>().m_Lens.OrthographicSize = 2;
         CameraManager.instance.VCamZoom.GetComponent<Cinemachine.CinemachineVirtualCamera>().enabled = true;
         cam1.SetActive(false);
+        foreach (SecondarySystem item in HintSecondarySystemManager.instance.activeSecondarySystems)
+            Destroy(item.associatedHint);
+        HintSecondarySystemManager.instance.enabled = false;
+        foreach (Leak item in HintLeakManager.instance.activesLeaks)
+            Destroy(item.associatedHint);
+        HintLeakManager.instance.enabled = false;
     }
 }

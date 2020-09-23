@@ -207,7 +207,7 @@ public class SecondarySystemsManager : MonoBehaviour
         CancelInvoke("StartActivityByTimer");
     }
 
-    public void LaunchSpecificSS(SecondarySystem specificSecondarySystem, Pack associatedPack, LeverScript.RessourcesType ressource = LeverScript.RessourcesType.energy)
+    public void LaunchSpecificSS(SecondarySystem specificSecondarySystem, Pack associatedPack, LeverScript.RessourcesType ressource = LeverScript.RessourcesType.energy, bool showTimer = true)
     {
         if (lastPack != null)
         {
@@ -234,8 +234,11 @@ public class SecondarySystemsManager : MonoBehaviour
         }
         activesSecondarySystems++;
         HintSecondarySystemManager.instance.activeSecondarySystems.Add(specificSecondarySystem);
-        TimerSecondarySystem timerObject = Instantiate(GameManager.instance.UI_timerSS, UI_Manager.instance.transform).GetComponent<TimerSecondarySystem>();
-        timerObject.associatedSystem = specificSecondarySystem;
+        if (showTimer)
+        {
+            TimerSecondarySystem timerObject = Instantiate(GameManager.instance.UI_timerSS, UI_Manager.instance.transform).GetComponent<TimerSecondarySystem>();
+            timerObject.associatedSystem = specificSecondarySystem;
+        }
         SoundsManager.instance.PlaySoundOneShot(SoundsManager.SoundName.SecondarySystemPop, ssManagerSource);
     }
 
