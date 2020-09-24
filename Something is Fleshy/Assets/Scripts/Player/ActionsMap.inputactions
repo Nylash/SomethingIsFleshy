@@ -54,6 +54,14 @@
                     "interactions": ""
                 },
                 {
+                    "name": "Submit",
+                    "type": "PassThrough",
+                    "id": "0de3e977-cbcd-4414-9a36-421a358f995a",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
                     "name": "ValidationPopUp",
                     "type": "Button",
                     "id": "83812996-388e-4163-bdb8-336f8104878c",
@@ -293,6 +301,39 @@
                     "action": "ValidationPopUp",
                     "isComposite": false,
                     "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "cdf220f9-d307-43c0-91cf-bba525c0e650",
+                    "path": "<Keyboard>/e",
+                    "interactions": "Hold",
+                    "processors": "",
+                    "groups": "Keyboard",
+                    "action": "Submit",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "75960371-f621-43a6-b220-5c72314045d3",
+                    "path": "<Keyboard>/enter",
+                    "interactions": "Hold",
+                    "processors": "",
+                    "groups": "Keyboard",
+                    "action": "Submit",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "3dfe6be1-414a-45fa-8640-8a2f84ce0a1f",
+                    "path": "<Gamepad>/buttonSouth",
+                    "interactions": "Hold",
+                    "processors": "",
+                    "groups": "Gamepad",
+                    "action": "Submit",
+                    "isComposite": false,
+                    "isPartOfComposite": false
                 }
             ]
         },
@@ -454,7 +495,7 @@
                     "name": "",
                     "id": "b32dd423-5f6e-464b-9a2d-a80b3b88cb47",
                     "path": "<Keyboard>/e",
-                    "interactions": "",
+                    "interactions": "Hold",
                     "processors": "",
                     "groups": "Keyboard",
                     "action": "Submit",
@@ -465,7 +506,7 @@
                     "name": "",
                     "id": "6f93f2fd-3537-44b5-97b9-bf4474923df4",
                     "path": "<Keyboard>/enter",
-                    "interactions": "",
+                    "interactions": "Hold",
                     "processors": "",
                     "groups": "Keyboard",
                     "action": "Submit",
@@ -476,7 +517,7 @@
                     "name": "",
                     "id": "97ac7e7e-7b74-415d-8d80-d239a8eee78b",
                     "path": "<Gamepad>/buttonSouth",
-                    "interactions": "",
+                    "interactions": "Hold",
                     "processors": "",
                     "groups": "Gamepad",
                     "action": "Submit",

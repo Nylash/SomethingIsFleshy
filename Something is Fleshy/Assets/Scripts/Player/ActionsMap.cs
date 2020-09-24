@@ -67,6 +67,14 @@ public class @ActionsMap : IInputActionCollection, IDisposable
                     ""interactions"": """"
                 },
                 {
+                    ""name"": ""Submit"",
+                    ""type"": ""PassThrough"",
+                    ""id"": ""0de3e977-cbcd-4414-9a36-421a358f995a"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
+                },
+                {
                     ""name"": ""ValidationPopUp"",
                     ""type"": ""Button"",
                     ""id"": ""83812996-388e-4163-bdb8-336f8104878c"",
@@ -306,6 +314,39 @@ public class @ActionsMap : IInputActionCollection, IDisposable
                     ""action"": ""ValidationPopUp"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""cdf220f9-d307-43c0-91cf-bba525c0e650"",
+                    ""path"": ""<Keyboard>/e"",
+                    ""interactions"": ""Hold"",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard"",
+                    ""action"": ""Submit"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""75960371-f621-43a6-b220-5c72314045d3"",
+                    ""path"": ""<Keyboard>/enter"",
+                    ""interactions"": ""Hold"",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard"",
+                    ""action"": ""Submit"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""3dfe6be1-414a-45fa-8640-8a2f84ce0a1f"",
+                    ""path"": ""<Gamepad>/buttonSouth"",
+                    ""interactions"": ""Hold"",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""Submit"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         },
@@ -467,7 +508,7 @@ public class @ActionsMap : IInputActionCollection, IDisposable
                     ""name"": """",
                     ""id"": ""b32dd423-5f6e-464b-9a2d-a80b3b88cb47"",
                     ""path"": ""<Keyboard>/e"",
-                    ""interactions"": """",
+                    ""interactions"": ""Hold"",
                     ""processors"": """",
                     ""groups"": ""Keyboard"",
                     ""action"": ""Submit"",
@@ -478,7 +519,7 @@ public class @ActionsMap : IInputActionCollection, IDisposable
                     ""name"": """",
                     ""id"": ""6f93f2fd-3537-44b5-97b9-bf4474923df4"",
                     ""path"": ""<Keyboard>/enter"",
-                    ""interactions"": """",
+                    ""interactions"": ""Hold"",
                     ""processors"": """",
                     ""groups"": ""Keyboard"",
                     ""action"": ""Submit"",
@@ -489,7 +530,7 @@ public class @ActionsMap : IInputActionCollection, IDisposable
                     ""name"": """",
                     ""id"": ""97ac7e7e-7b74-415d-8d80-d239a8eee78b"",
                     ""path"": ""<Gamepad>/buttonSouth"",
-                    ""interactions"": """",
+                    ""interactions"": ""Hold"",
                     ""processors"": """",
                     ""groups"": ""Gamepad"",
                     ""action"": ""Submit"",
@@ -520,6 +561,7 @@ public class @ActionsMap : IInputActionCollection, IDisposable
         m_Gameplay_Pause = m_Gameplay.FindAction("Pause", throwIfNotFound: true);
         m_Gameplay_SwitchCamera = m_Gameplay.FindAction("SwitchCamera", throwIfNotFound: true);
         m_Gameplay_Debug = m_Gameplay.FindAction("Debug", throwIfNotFound: true);
+        m_Gameplay_Submit = m_Gameplay.FindAction("Submit", throwIfNotFound: true);
         m_Gameplay_ValidationPopUp = m_Gameplay.FindAction("ValidationPopUp", throwIfNotFound: true);
         // UI
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
@@ -580,6 +622,7 @@ public class @ActionsMap : IInputActionCollection, IDisposable
     private readonly InputAction m_Gameplay_Pause;
     private readonly InputAction m_Gameplay_SwitchCamera;
     private readonly InputAction m_Gameplay_Debug;
+    private readonly InputAction m_Gameplay_Submit;
     private readonly InputAction m_Gameplay_ValidationPopUp;
     public struct GameplayActions
     {
@@ -591,6 +634,7 @@ public class @ActionsMap : IInputActionCollection, IDisposable
         public InputAction @Pause => m_Wrapper.m_Gameplay_Pause;
         public InputAction @SwitchCamera => m_Wrapper.m_Gameplay_SwitchCamera;
         public InputAction @Debug => m_Wrapper.m_Gameplay_Debug;
+        public InputAction @Submit => m_Wrapper.m_Gameplay_Submit;
         public InputAction @ValidationPopUp => m_Wrapper.m_Gameplay_ValidationPopUp;
         public InputActionMap Get() { return m_Wrapper.m_Gameplay; }
         public void Enable() { Get().Enable(); }
@@ -619,6 +663,9 @@ public class @ActionsMap : IInputActionCollection, IDisposable
                 @Debug.started -= m_Wrapper.m_GameplayActionsCallbackInterface.OnDebug;
                 @Debug.performed -= m_Wrapper.m_GameplayActionsCallbackInterface.OnDebug;
                 @Debug.canceled -= m_Wrapper.m_GameplayActionsCallbackInterface.OnDebug;
+                @Submit.started -= m_Wrapper.m_GameplayActionsCallbackInterface.OnSubmit;
+                @Submit.performed -= m_Wrapper.m_GameplayActionsCallbackInterface.OnSubmit;
+                @Submit.canceled -= m_Wrapper.m_GameplayActionsCallbackInterface.OnSubmit;
                 @ValidationPopUp.started -= m_Wrapper.m_GameplayActionsCallbackInterface.OnValidationPopUp;
                 @ValidationPopUp.performed -= m_Wrapper.m_GameplayActionsCallbackInterface.OnValidationPopUp;
                 @ValidationPopUp.canceled -= m_Wrapper.m_GameplayActionsCallbackInterface.OnValidationPopUp;
@@ -644,6 +691,9 @@ public class @ActionsMap : IInputActionCollection, IDisposable
                 @Debug.started += instance.OnDebug;
                 @Debug.performed += instance.OnDebug;
                 @Debug.canceled += instance.OnDebug;
+                @Submit.started += instance.OnSubmit;
+                @Submit.performed += instance.OnSubmit;
+                @Submit.canceled += instance.OnSubmit;
                 @ValidationPopUp.started += instance.OnValidationPopUp;
                 @ValidationPopUp.performed += instance.OnValidationPopUp;
                 @ValidationPopUp.canceled += instance.OnValidationPopUp;
@@ -718,6 +768,7 @@ public class @ActionsMap : IInputActionCollection, IDisposable
         void OnPause(InputAction.CallbackContext context);
         void OnSwitchCamera(InputAction.CallbackContext context);
         void OnDebug(InputAction.CallbackContext context);
+        void OnSubmit(InputAction.CallbackContext context);
         void OnValidationPopUp(InputAction.CallbackContext context);
     }
     public interface IUIActions
