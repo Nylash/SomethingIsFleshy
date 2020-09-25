@@ -9935,15 +9935,15 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1442325289, guid: 9719e81b153f0914ebc60d15fdb1de3f, type: 3}
       propertyPath: timeBeforeFirstCheckForLeak
-      value: 15
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1442325289, guid: 9719e81b153f0914ebc60d15fdb1de3f, type: 3}
       propertyPath: timeIntervalForCheckForLeak
-      value: 15
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 1442325289, guid: 9719e81b153f0914ebc60d15fdb1de3f, type: 3}
       propertyPath: probabilityLeak
-      value: 15
+      value: 100
       objectReference: {fileID: 0}
     - target: {fileID: 1892749339, guid: 9719e81b153f0914ebc60d15fdb1de3f, type: 3}
       propertyPath: packA.Array.size

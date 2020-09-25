@@ -5151,6 +5151,8 @@ MonoBehaviour:
   interactionSource: {fileID: 1328498859056628096}
   interactFX: {fileID: 5860125497217327566, guid: dcfb0df3e4d1f874ead0422fb90cd3c9,
     type: 3}
+  interactLeakFX: {fileID: 5860125497217327566, guid: 1b4bbfc55a0839f408aa9d2f08108975,
+    type: 3}
   animMethodsScript: {fileID: 0}
 --- !u!61 &4800235096581447599
 BoxCollider2D:

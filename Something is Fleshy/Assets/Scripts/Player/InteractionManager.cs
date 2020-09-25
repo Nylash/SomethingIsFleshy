@@ -8,6 +8,7 @@ public class InteractionManager : MonoBehaviour
     [Header("⚠ DON'T TOUCH BELOW ⚠")]
     public AudioSource interactionSource;
     public GameObject interactFX;
+    public GameObject interactLeakFX;
     ActionsMap actionsMap;
 
     [Header("Variables")]
@@ -16,6 +17,7 @@ public class InteractionManager : MonoBehaviour
     GameObject interactableObject;
     InteractableType currentInteractableType;
     float holdTimer;
+    GameObject currentInteractionLeakFX;
 
     private void OnEnable() => actionsMap.Gameplay.Enable();
     private void OnDisable() => actionsMap.Gameplay.Disable();
@@ -61,6 +63,8 @@ public class InteractionManager : MonoBehaviour
                 {
                     UI_Manager.instance.UI_leakGaugeCanvas.enabled = false;
                     CharacterController2D.instance.animator.SetBool("Holding", false);
+                    if (currentInteractionLeakFX)
+                        Destroy(currentInteractionLeakFX);
                 }
             }
         }
@@ -118,6 +122,7 @@ public class InteractionManager : MonoBehaviour
                     {
                         CharacterController2D.instance.animator.SetTrigger("StartHolding");
                         CharacterController2D.instance.animator.SetBool("Holding", true);
+                        currentInteractionLeakFX = Instantiate(interactLeakFX, interactableObject.transform.position, Quaternion.identity);
                     }
                 }
             }
@@ -137,6 +142,8 @@ public class InteractionManager : MonoBehaviour
                         case InteractableType.leak:
                             CharacterController2D.instance.animator.SetBool("Holding", false);
                             UI_Manager.instance.UI_leakGaugeCanvas.enabled = false;
+                            if (currentInteractionLeakFX)
+                                Destroy(currentInteractionLeakFX);
                             break;
                     }
                 }

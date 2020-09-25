@@ -18,6 +18,6 @@ public class TestScriptBen : MonoBehaviour
 
     void Test()
     {
-        CharacterController2D.instance.animator.SetTrigger("Stress");
+        
     }
 }
