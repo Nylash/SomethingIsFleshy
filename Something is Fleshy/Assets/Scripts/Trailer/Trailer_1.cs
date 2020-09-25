@@ -52,25 +52,29 @@ public class Trailer_1 : MonoBehaviour
         if (collision.gameObject.CompareTag("Player"))
         {
             LeaksManager.instance.StartSpecificLeak(leakZone1, pipeLeakZones1, associatedLever1, associatedPipe1);
+            CharacterController2D.instance.animator.SetTrigger("Choc");
         }
     }
 
     IEnumerator LaunchCrisis()
     {
-        //launch anim pfiou
+        CharacterController2D.instance.animator.SetTrigger("Sigh");
         yield return new WaitForSeconds(timeBefore2ndLeak);
         LeaksManager.instance.StartSpecificLeak(leakZone2, pipeLeakZones2, associatedLever2, associatedPipe2);
+        CharacterController2D.instance.animator.SetTrigger("Choc");
         yield return new WaitForSeconds(timeBefore1stZoomOut);
         cam1.SetActive(true);
         CameraManager.instance.VCamZoom.GetComponent<Cinemachine.CinemachineVirtualCamera>().enabled = false;
         yield return new WaitForSeconds(timeBefore3rdLeak);
         LeaksManager.instance.StartSpecificLeak(leakZone3, pipeLeakZones3, associatedLever3, associatedPipe3);
+        CharacterController2D.instance.animator.SetTrigger("Choc");
         yield return new WaitForSeconds(timeBefore2ndZoomOut);
         cam2.SetActive(true);
         cam1.SetActive(false);
         yield return new WaitForSeconds(timeBeforeSS);
         SecondarySystemsManager.instance.LaunchSpecificSS(ss1, null, LeverScript.RessourcesType.energy, false);
         SecondarySystemsManager.instance.LaunchSpecificSS(ss2, null, LeverScript.RessourcesType.oxygen, false);
+        CharacterController2D.instance.animator.SetTrigger("Choc");
         yield return new WaitForSeconds(timeBefore3rdZoomOut);
         cam3.SetActive(true);
         cam2.SetActive(false);
@@ -78,6 +82,7 @@ public class Trailer_1 : MonoBehaviour
         CameraManager.instance.VCamZoom.GetComponent<Cinemachine.CinemachineVirtualCamera>().m_Lens.OrthographicSize = 2;
         CameraManager.instance.VCamZoom.GetComponent<Cinemachine.CinemachineVirtualCamera>().enabled = true;
         cam1.SetActive(false);
+        CharacterController2D.instance.animator.SetTrigger("Stress");
         foreach (SecondarySystem item in HintSecondarySystemManager.instance.activeSecondarySystems)
             Destroy(item.associatedHint);
         HintSecondarySystemManager.instance.enabled = false;

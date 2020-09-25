@@ -49,6 +49,7 @@ public class CharacterController2D : MonoBehaviour
 	[Header("Components")]
 	[Header("⚠ DON'T TOUCH BELOW ⚠")]
 	public Animator animator;
+	public Animator animatorFace;
 	public Rigidbody2D rb;
 	public ParticleSystem walkFX;
 	public GameObject JLFXspot;
