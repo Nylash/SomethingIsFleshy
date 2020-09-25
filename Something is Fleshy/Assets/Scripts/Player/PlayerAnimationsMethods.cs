@@ -47,4 +47,19 @@ public class PlayerAnimationsMethods : MonoBehaviour
     {
         SoundsManager.instance.PlaySoundOneShot(SoundsManager.SoundName.Landing, CharacterController2D.instance.jumpLandingSource);
     }
+
+    void ChocFace()
+    {
+        CharacterController2D.instance.animatorFace.SetTrigger("Choc");
+    }
+
+    void StressFace()
+    {
+        CharacterController2D.instance.animatorFace.SetTrigger("Stress");
+    }
+
+    void SighFace()
+    {
+        CharacterController2D.instance.animatorFace.SetTrigger("Sigh");
+    }
 }
