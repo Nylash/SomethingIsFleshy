@@ -78,11 +78,11 @@ public class Trailer_1 : MonoBehaviour
         yield return new WaitForSeconds(timeBefore3rdZoomOut);
         cam3.SetActive(true);
         cam2.SetActive(false);
+        CharacterController2D.instance.animator.SetTrigger("Stress");
         yield return new WaitForSeconds(timeBeforeZoomIn);
         CameraManager.instance.VCamZoom.GetComponent<Cinemachine.CinemachineVirtualCamera>().m_Lens.OrthographicSize = 2;
         CameraManager.instance.VCamZoom.GetComponent<Cinemachine.CinemachineVirtualCamera>().enabled = true;
         cam1.SetActive(false);
-        CharacterController2D.instance.animator.SetTrigger("Stress");
         foreach (SecondarySystem item in HintSecondarySystemManager.instance.activeSecondarySystems)
             Destroy(item.associatedHint);
         HintSecondarySystemManager.instance.enabled = false;
