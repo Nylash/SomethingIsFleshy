@@ -105,7 +105,7 @@ ParticleSystem:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-  moveWithTransform: 0
+  moveWithTransform: 1
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 1
   randomSeed: 0
@@ -5608,6 +5608,11 @@ PrefabInstance:
       propertyPath: m_LocalScale.y
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: -5688431638980764671, guid: 2e468d8708ea91e4c869ce8a8d24da04,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: -4765888233632187178, guid: 2e468d8708ea91e4c869ce8a8d24da04,
         type: 3}
       propertyPath: m_Materials.Array.data[0]
@@ -5863,6 +5868,11 @@ PrefabInstance:
       propertyPath: m_LocalRotation.y
       value: -0
       objectReference: {fileID: 0}
+    - target: {fileID: 773233794777196903, guid: 2e468d8708ea91e4c869ce8a8d24da04,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1194772748094026511, guid: 2e468d8708ea91e4c869ce8a8d24da04,
         type: 3}
       propertyPath: m_LocalPosition.y
@@ -5882,6 +5892,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalPosition.x
       value: -7.661999
+      objectReference: {fileID: 0}
+    - target: {fileID: 1960657808916206565, guid: 2e468d8708ea91e4c869ce8a8d24da04,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2269732747106077857, guid: 2e468d8708ea91e4c869ce8a8d24da04,
         type: 3}
@@ -5907,6 +5922,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Enabled
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2867992949409343553, guid: 2e468d8708ea91e4c869ce8a8d24da04,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3737508095693869908, guid: 2e468d8708ea91e4c869ce8a8d24da04,
         type: 3}
@@ -5962,6 +5982,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Enabled
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4893277431653565059, guid: 2e468d8708ea91e4c869ce8a8d24da04,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5200953635269264339, guid: 2e468d8708ea91e4c869ce8a8d24da04,
         type: 3}
