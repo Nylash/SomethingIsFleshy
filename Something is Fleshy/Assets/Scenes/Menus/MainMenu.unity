@@ -98,7 +98,7 @@ LightmapSettings:
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
   m_LightingDataAsset: {fileID: 0}
-  m_UseShadowmask: 1
+  m_UseShadowmask: 0
 --- !u!196 &4
 NavMeshSettings:
   serializedVersion: 2
@@ -600,8 +600,8 @@ MonoBehaviour:
 
 '
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 43a792635d0efa0428577ef95ca0e5a5, type: 2}
-  m_sharedMaterial: {fileID: 4521260838727346984, guid: 43a792635d0efa0428577ef95ca0e5a5,
+  m_fontAsset: {fileID: 11400000, guid: c3e8b1f7be0b66f4a9126cac074aff11, type: 2}
+  m_sharedMaterial: {fileID: 7727227783974282407, guid: c3e8b1f7be0b66f4a9126cac074aff11,
     type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
@@ -644,7 +644,7 @@ MonoBehaviour:
   m_enableWordWrapping: 1
   m_wordWrappingRatios: 0.4
   m_overflowMode: 0
-  m_firstOverflowCharacterIndex: -1
+  m_firstOverflowCharacterIndex: 81
   m_linkedTextComponent: {fileID: 0}
   m_isLinkedTextComponent: 0
   m_isTextTruncated: 0
