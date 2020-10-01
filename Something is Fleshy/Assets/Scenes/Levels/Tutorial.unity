@@ -98,7 +98,7 @@ LightmapSettings:
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
   m_LightingDataAsset: {fileID: 0}
-  m_UseShadowmask: 0
+  m_UseShadowmask: 1
 --- !u!196 &4
 NavMeshSettings:
   serializedVersion: 2
@@ -4223,8 +4223,8 @@ MonoBehaviour:
   m_text: Good job ! The lungs and the stomach are now full and ready to distribute
     ressources to muscles in need.
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 43a792635d0efa0428577ef95ca0e5a5, type: 2}
-  m_sharedMaterial: {fileID: 4521260838727346984, guid: 43a792635d0efa0428577ef95ca0e5a5,
+  m_fontAsset: {fileID: 11400000, guid: c3e8b1f7be0b66f4a9126cac074aff11, type: 2}
+  m_sharedMaterial: {fileID: 7727227783974282407, guid: c3e8b1f7be0b66f4a9126cac074aff11,
     type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
@@ -4911,9 +4911,9 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_text: Here this muscle need energy, so you will have to use severals levers to
-    activate the right pipes to bring it to it.
+    activate the right pipes to bring energy to the muscle.
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 43a792635d0efa0428577ef95ca0e5a5, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: c3e8b1f7be0b66f4a9126cac074aff11, type: 2}
   m_sharedMaterial: {fileID: 4521260838727346984, guid: 43a792635d0efa0428577ef95ca0e5a5,
     type: 2}
   m_fontSharedMaterials: []
@@ -4992,7 +4992,7 @@ MonoBehaviour:
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_spriteAnimator: {fileID: 0}
-  m_hasFontAssetChanged: 0
+  m_hasFontAssetChanged: 1
   m_subTextObjects:
   - {fileID: 0}
   - {fileID: 0}
@@ -5442,7 +5442,7 @@ MonoBehaviour:
       m_Calls: []
   m_text: to switch camera
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 43a792635d0efa0428577ef95ca0e5a5, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: c3e8b1f7be0b66f4a9126cac074aff11, type: 2}
   m_sharedMaterial: {fileID: 4521260838727346984, guid: 43a792635d0efa0428577ef95ca0e5a5,
     type: 2}
   m_fontSharedMaterials: []
@@ -5521,7 +5521,7 @@ MonoBehaviour:
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_spriteAnimator: {fileID: 0}
-  m_hasFontAssetChanged: 0
+  m_hasFontAssetChanged: 1
   m_subTextObjects:
   - {fileID: 0}
   - {fileID: 0}
@@ -6092,8 +6092,8 @@ MonoBehaviour:
     otherwise your ressources' stock might be running low. You can repair it by holding
     interaction button near to it.
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 43a792635d0efa0428577ef95ca0e5a5, type: 2}
-  m_sharedMaterial: {fileID: 4521260838727346984, guid: 43a792635d0efa0428577ef95ca0e5a5,
+  m_fontAsset: {fileID: 11400000, guid: c3e8b1f7be0b66f4a9126cac074aff11, type: 2}
+  m_sharedMaterial: {fileID: 7727227783974282407, guid: c3e8b1f7be0b66f4a9126cac074aff11,
     type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
@@ -6805,7 +6805,7 @@ MonoBehaviour:
     muscles you help the more points you earn, it's symbolize the help you had bring
     to your host.
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 43a792635d0efa0428577ef95ca0e5a5, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: c3e8b1f7be0b66f4a9126cac074aff11, type: 2}
   m_sharedMaterial: {fileID: 4521260838727346984, guid: 43a792635d0efa0428577ef95ca0e5a5,
     type: 2}
   m_fontSharedMaterials: []
@@ -6884,7 +6884,7 @@ MonoBehaviour:
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_spriteAnimator: {fileID: 0}
-  m_hasFontAssetChanged: 0
+  m_hasFontAssetChanged: 1
   m_subTextObjects:
   - {fileID: 0}
   - {fileID: 0}
@@ -12624,11 +12624,11 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "This muscle need a ressource, the color inside indicate which ressource
+  m_text: "This muscle need a ressource, the color inside indicates which ressource
     is needed, \r\nblue for oxygen and yellow for energy."
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 43a792635d0efa0428577ef95ca0e5a5, type: 2}
-  m_sharedMaterial: {fileID: 4521260838727346984, guid: 43a792635d0efa0428577ef95ca0e5a5,
+  m_fontAsset: {fileID: 11400000, guid: c3e8b1f7be0b66f4a9126cac074aff11, type: 2}
+  m_sharedMaterial: {fileID: 7727227783974282407, guid: c3e8b1f7be0b66f4a9126cac074aff11,
     type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
@@ -12695,7 +12695,7 @@ MonoBehaviour:
   m_margin: {x: 0, y: 0, z: 0, w: 0}
   m_textInfo:
     textComponent: {fileID: 511186193}
-    characterCount: 123
+    characterCount: 124
     spriteCount: 0
     spaceCount: 20
     wordCount: 20
@@ -14376,7 +14376,7 @@ MonoBehaviour:
       m_Calls: []
   m_text: to interact with a lever
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 43a792635d0efa0428577ef95ca0e5a5, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: c3e8b1f7be0b66f4a9126cac074aff11, type: 2}
   m_sharedMaterial: {fileID: 4521260838727346984, guid: 43a792635d0efa0428577ef95ca0e5a5,
     type: 2}
   m_fontSharedMaterials: []
@@ -14455,7 +14455,7 @@ MonoBehaviour:
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_spriteAnimator: {fileID: 0}
-  m_hasFontAssetChanged: 0
+  m_hasFontAssetChanged: 1
   m_subTextObjects:
   - {fileID: 0}
   - {fileID: 0}
@@ -14859,8 +14859,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Well done ! You have succesfully supply this muscle !
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 43a792635d0efa0428577ef95ca0e5a5, type: 2}
-  m_sharedMaterial: {fileID: 4521260838727346984, guid: 43a792635d0efa0428577ef95ca0e5a5,
+  m_fontAsset: {fileID: 11400000, guid: c3e8b1f7be0b66f4a9126cac074aff11, type: 2}
+  m_sharedMaterial: {fileID: 7727227783974282407, guid: c3e8b1f7be0b66f4a9126cac074aff11,
     type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
@@ -15355,7 +15355,7 @@ MonoBehaviour:
       m_Calls: []
   m_text: to jump
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 43a792635d0efa0428577ef95ca0e5a5, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: c3e8b1f7be0b66f4a9126cac074aff11, type: 2}
   m_sharedMaterial: {fileID: 4521260838727346984, guid: 43a792635d0efa0428577ef95ca0e5a5,
     type: 2}
   m_fontSharedMaterials: []
@@ -15434,7 +15434,7 @@ MonoBehaviour:
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_spriteAnimator: {fileID: 0}
-  m_hasFontAssetChanged: 0
+  m_hasFontAssetChanged: 1
   m_subTextObjects:
   - {fileID: 0}
   - {fileID: 0}
@@ -16072,11 +16072,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1892749339, guid: 9719e81b153f0914ebc60d15fdb1de3f, type: 3}
       propertyPath: maxSimultaneousSecondarySystems
-      value: 2
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1892749339, guid: 9719e81b153f0914ebc60d15fdb1de3f, type: 3}
       propertyPath: criticalSimultaneousSecondarySystems
-      value: 2
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1770001783312019989, guid: 9719e81b153f0914ebc60d15fdb1de3f,
         type: 3}
@@ -16161,7 +16161,7 @@ PrefabInstance:
     - target: {fileID: 5516669155998750807, guid: 9719e81b153f0914ebc60d15fdb1de3f,
         type: 3}
       propertyPath: levelDuration
-      value: 90
+      value: 1000
       objectReference: {fileID: 0}
     - target: {fileID: 5516669155998750807, guid: 9719e81b153f0914ebc60d15fdb1de3f,
         type: 3}
@@ -16709,7 +16709,7 @@ MonoBehaviour:
       m_Calls: []
   m_text: This hint point toward leaks
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 43a792635d0efa0428577ef95ca0e5a5, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: c3e8b1f7be0b66f4a9126cac074aff11, type: 2}
   m_sharedMaterial: {fileID: 4521260838727346984, guid: 43a792635d0efa0428577ef95ca0e5a5,
     type: 2}
   m_fontSharedMaterials: []
@@ -16788,7 +16788,7 @@ MonoBehaviour:
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_spriteAnimator: {fileID: 0}
-  m_hasFontAssetChanged: 0
+  m_hasFontAssetChanged: 1
   m_subTextObjects:
   - {fileID: 0}
   - {fileID: 0}
@@ -17010,9 +17010,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 859a17061925f1e4b844b8946116cf5c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  timeToFinishAfterCompletion: 90
+  timeToFinishAfterCompletion: 60
   timeBeforeFirstActivityAfterCompletion: 5
   timeBeforeFirstLeakCheckAfterCompletion: 12
+  maxSSsimultaneousAfterCompletion: 2
+  criticalSSsimultaneousAfterCompletion: 2
   tutoSS: {fileID: 1879286758}
   associatedPack:
     secondarySystems:
@@ -19463,8 +19465,8 @@ MonoBehaviour:
 
 '
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 43a792635d0efa0428577ef95ca0e5a5, type: 2}
-  m_sharedMaterial: {fileID: 4521260838727346984, guid: 43a792635d0efa0428577ef95ca0e5a5,
+  m_fontAsset: {fileID: 11400000, guid: c3e8b1f7be0b66f4a9126cac074aff11, type: 2}
+  m_sharedMaterial: {fileID: 7727227783974282407, guid: c3e8b1f7be0b66f4a9126cac074aff11,
     type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
@@ -19496,7 +19498,7 @@ MonoBehaviour:
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
   m_fontSizeMax: 72
-  m_fontStyle: 32
+  m_fontStyle: 0
   m_textAlignment: 514
   m_characterSpacing: 0
   m_wordSpacing: 0
@@ -20720,8 +20722,8 @@ MonoBehaviour:
     this one a little bit more and after you could try with other host. Don't worry,
     this one is easy ;)
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 43a792635d0efa0428577ef95ca0e5a5, type: 2}
-  m_sharedMaterial: {fileID: 4521260838727346984, guid: 43a792635d0efa0428577ef95ca0e5a5,
+  m_fontAsset: {fileID: 11400000, guid: c3e8b1f7be0b66f4a9126cac074aff11, type: 2}
+  m_sharedMaterial: {fileID: 7727227783974282407, guid: c3e8b1f7be0b66f4a9126cac074aff11,
     type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
@@ -22496,7 +22498,7 @@ MonoBehaviour:
   m_text: Some to activate the goods pipes to come to it and another to select the
     right ressource (this one is generally situated near the lungs or the stomach).
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 43a792635d0efa0428577ef95ca0e5a5, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: c3e8b1f7be0b66f4a9126cac074aff11, type: 2}
   m_sharedMaterial: {fileID: 4521260838727346984, guid: 43a792635d0efa0428577ef95ca0e5a5,
     type: 2}
   m_fontSharedMaterials: []
@@ -22575,7 +22577,7 @@ MonoBehaviour:
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_spriteAnimator: {fileID: 0}
-  m_hasFontAssetChanged: 0
+  m_hasFontAssetChanged: 1
   m_subTextObjects:
   - {fileID: 0}
   - {fileID: 0}
@@ -22672,7 +22674,7 @@ MonoBehaviour:
       m_Calls: []
   m_text: Those two hint point toward muscles that need ressource
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 43a792635d0efa0428577ef95ca0e5a5, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: c3e8b1f7be0b66f4a9126cac074aff11, type: 2}
   m_sharedMaterial: {fileID: 4521260838727346984, guid: 43a792635d0efa0428577ef95ca0e5a5,
     type: 2}
   m_fontSharedMaterials: []
@@ -22751,7 +22753,7 @@ MonoBehaviour:
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_spriteAnimator: {fileID: 0}
-  m_hasFontAssetChanged: 0
+  m_hasFontAssetChanged: 1
   m_subTextObjects:
   - {fileID: 0}
   - {fileID: 0}
@@ -25573,7 +25575,7 @@ MonoBehaviour:
       m_Calls: []
   m_text: to move
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 43a792635d0efa0428577ef95ca0e5a5, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: c3e8b1f7be0b66f4a9126cac074aff11, type: 2}
   m_sharedMaterial: {fileID: 4521260838727346984, guid: 43a792635d0efa0428577ef95ca0e5a5,
     type: 2}
   m_fontSharedMaterials: []
@@ -25652,7 +25654,7 @@ MonoBehaviour:
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_spriteAnimator: {fileID: 0}
-  m_hasFontAssetChanged: 0
+  m_hasFontAssetChanged: 1
   m_subTextObjects:
   - {fileID: 0}
   - {fileID: 0}
@@ -28071,17 +28073,17 @@ PrefabInstance:
     - target: {fileID: 301057592666398374, guid: ed213004a973c36429bcd7d23fb23d4f,
         type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.0039087366
+      value: 0.003908736
       objectReference: {fileID: 0}
     - target: {fileID: 1999800814357714602, guid: ed213004a973c36429bcd7d23fb23d4f,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0.20857295
+      value: 0.20856835
       objectReference: {fileID: 0}
     - target: {fileID: 1999800814357714602, guid: ed213004a973c36429bcd7d23fb23d4f,
         type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.9780068
+      value: 0.9780078
       objectReference: {fileID: 0}
     - target: {fileID: 4800235096581447249, guid: ed213004a973c36429bcd7d23fb23d4f,
         type: 3}
@@ -28146,32 +28148,32 @@ PrefabInstance:
     - target: {fileID: 4880820178989475919, guid: ed213004a973c36429bcd7d23fb23d4f,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0.8854431
+      value: 0.88544416
       objectReference: {fileID: 0}
     - target: {fileID: 4880820178989475919, guid: ed213004a973c36429bcd7d23fb23d4f,
         type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.46474785
+      value: 0.46474588
       objectReference: {fileID: 0}
     - target: {fileID: 5850788187405792478, guid: ed213004a973c36429bcd7d23fb23d4f,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0.10957255
+      value: -0.109570116
       objectReference: {fileID: 0}
     - target: {fileID: 5850788187405792478, guid: ed213004a973c36429bcd7d23fb23d4f,
         type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.9939788
+      value: 0.9939791
       objectReference: {fileID: 0}
     - target: {fileID: 5850788187866514027, guid: ed213004a973c36429bcd7d23fb23d4f,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0.06440893
+      value: -0.06440589
       objectReference: {fileID: 0}
     - target: {fileID: 5850788187866514027, guid: ed213004a973c36429bcd7d23fb23d4f,
         type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.9979236
+      value: 0.99792385
       objectReference: {fileID: 0}
     - target: {fileID: 5850788187866514027, guid: ed213004a973c36429bcd7d23fb23d4f,
         type: 3}
@@ -28181,47 +28183,47 @@ PrefabInstance:
     - target: {fileID: 5850788189065947170, guid: ed213004a973c36429bcd7d23fb23d4f,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0.005345575
+      value: 0.005345574
       objectReference: {fileID: 0}
     - target: {fileID: 5850788189199879046, guid: ed213004a973c36429bcd7d23fb23d4f,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0.051331803
+      value: 0.051327556
       objectReference: {fileID: 0}
     - target: {fileID: 5850788189199879046, guid: ed213004a973c36429bcd7d23fb23d4f,
         type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.9986817
+      value: 0.9986819
       objectReference: {fileID: 0}
     - target: {fileID: 6200377046613142779, guid: ed213004a973c36429bcd7d23fb23d4f,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0.11424883
+      value: -0.114239715
       objectReference: {fileID: 0}
     - target: {fileID: 6200377046613142779, guid: ed213004a973c36429bcd7d23fb23d4f,
         type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.99345225
+      value: 0.99345326
       objectReference: {fileID: 0}
     - target: {fileID: 6286065916090863316, guid: ed213004a973c36429bcd7d23fb23d4f,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0.94643134
+      value: -0.94643056
       objectReference: {fileID: 0}
     - target: {fileID: 6286065916090863316, guid: ed213004a973c36429bcd7d23fb23d4f,
         type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.32290527
+      value: 0.3229076
       objectReference: {fileID: 0}
     - target: {fileID: 6717433974428039726, guid: ed213004a973c36429bcd7d23fb23d4f,
         type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.05969346
+      value: 0.059688546
       objectReference: {fileID: 0}
     - target: {fileID: 6717433974428039726, guid: ed213004a973c36429bcd7d23fb23d4f,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0.9982168
+      value: -0.99821705
       objectReference: {fileID: 0}
     - target: {fileID: 7246421174669666578, guid: ed213004a973c36429bcd7d23fb23d4f,
         type: 3}
@@ -28231,12 +28233,12 @@ PrefabInstance:
     - target: {fileID: 7387171241995646980, guid: ed213004a973c36429bcd7d23fb23d4f,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0.13122842
+      value: 0.13122298
       objectReference: {fileID: 0}
     - target: {fileID: 7387171241995646980, guid: ed213004a973c36429bcd7d23fb23d4f,
         type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.99135214
+      value: 0.9913529
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ed213004a973c36429bcd7d23fb23d4f, type: 3}
@@ -30859,8 +30861,8 @@ MonoBehaviour:
   m_text: At anytime you can switch between a global and a zoomed camera. On zoomed
     camera some hints appear to help you, they point toward muscles in need and leak.
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 43a792635d0efa0428577ef95ca0e5a5, type: 2}
-  m_sharedMaterial: {fileID: 4521260838727346984, guid: 43a792635d0efa0428577ef95ca0e5a5,
+  m_fontAsset: {fileID: 11400000, guid: c3e8b1f7be0b66f4a9126cac074aff11, type: 2}
+  m_sharedMaterial: {fileID: 7727227783974282407, guid: c3e8b1f7be0b66f4a9126cac074aff11,
     type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
@@ -31213,8 +31215,8 @@ MonoBehaviour:
   m_text: You don't suceed to help this muscle in time but don't worry, for this
     time you will not loose points and you will try again.
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 43a792635d0efa0428577ef95ca0e5a5, type: 2}
-  m_sharedMaterial: {fileID: 4521260838727346984, guid: 43a792635d0efa0428577ef95ca0e5a5,
+  m_fontAsset: {fileID: 11400000, guid: c3e8b1f7be0b66f4a9126cac074aff11, type: 2}
+  m_sharedMaterial: {fileID: 7727227783974282407, guid: c3e8b1f7be0b66f4a9126cac074aff11,
     type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
@@ -36072,7 +36074,7 @@ MonoBehaviour:
       m_Calls: []
   m_text: (Automatically adapt to azerty keyboard)
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 43a792635d0efa0428577ef95ca0e5a5, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: c3e8b1f7be0b66f4a9126cac074aff11, type: 2}
   m_sharedMaterial: {fileID: 4521260838727346984, guid: 43a792635d0efa0428577ef95ca0e5a5,
     type: 2}
   m_fontSharedMaterials: []
@@ -36151,7 +36153,7 @@ MonoBehaviour:
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_spriteAnimator: {fileID: 0}
-  m_hasFontAssetChanged: 0
+  m_hasFontAssetChanged: 1
   m_subTextObjects:
   - {fileID: 0}
   - {fileID: 0}
@@ -36570,8 +36572,8 @@ MonoBehaviour:
   m_text: Hello ! You are Celli, and your job is to help your host by providing oxygen
     and energy to his muscles.
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 43a792635d0efa0428577ef95ca0e5a5, type: 2}
-  m_sharedMaterial: {fileID: 4521260838727346984, guid: 43a792635d0efa0428577ef95ca0e5a5,
+  m_fontAsset: {fileID: 11400000, guid: c3e8b1f7be0b66f4a9126cac074aff11, type: 2}
+  m_sharedMaterial: {fileID: 7727227783974282407, guid: c3e8b1f7be0b66f4a9126cac074aff11,
     type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
@@ -40890,7 +40892,7 @@ MonoBehaviour:
     overpass this time the you will loose points. Quicker you supply a muscle more
     you earn points.
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 43a792635d0efa0428577ef95ca0e5a5, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: c3e8b1f7be0b66f4a9126cac074aff11, type: 2}
   m_sharedMaterial: {fileID: 4521260838727346984, guid: 43a792635d0efa0428577ef95ca0e5a5,
     type: 2}
   m_fontSharedMaterials: []
@@ -40969,7 +40971,7 @@ MonoBehaviour:
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_spriteAnimator: {fileID: 0}
-  m_hasFontAssetChanged: 0
+  m_hasFontAssetChanged: 1
   m_subTextObjects:
   - {fileID: 0}
   - {fileID: 0}

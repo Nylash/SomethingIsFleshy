@@ -16,7 +16,7 @@ public class SecondarySystemsManager : MonoBehaviour
     public float timeBeforeExpirationSecondarySystem = 5f;
     [Space]
     [Tooltip("Maximum of secondary systems that can be active simultaneously.")]
-    [SerializeField] int maxSimultaneousSecondarySystems;
+    public int maxSimultaneousSecondarySystems;
     [Tooltip("Thereshold of simultaneous seconcady systems when only timer can activate more.")]
     public int criticalSimultaneousSecondarySystems;
     [Space]
@@ -31,7 +31,8 @@ public class SecondarySystemsManager : MonoBehaviour
     [Range(0,50)] [SerializeField] int ressourceRandomWeightValue = 10;
     [Space]
     [SerializeField] Pack packA;
-    [SerializeField] Pack packB;
+    //This one is public for tutorial matter
+    public Pack packB;
     [SerializeField] Pack packC;
     [SerializeField] Pack packD;
     #pragma warning restore 0649

@@ -190,9 +190,9 @@ public class SecondarySystem : MonoBehaviour
 			memberAnimator.speed = 0;
 		currentEnergy = 0f;
 		currentOxygen = 0f;
-		energyPropertyBlock.SetFloat("Height", currentEnergy / SecondarySystemsManager.instance.energyAmoutNeeded);
+		energyPropertyBlock.SetFloat("Height", 0);
 		energyRenderer.SetPropertyBlock(energyPropertyBlock);
-		oxygenPropertyBlock.SetFloat("Height", currentOxygen / SecondarySystemsManager.instance.oxygenAmoutNeeded);
+		oxygenPropertyBlock.SetFloat("Height", 0);
 		oxygenRenderer.SetPropertyBlock(oxygenPropertyBlock);
 		associatedPack.currentSecondarySystem = null;
 		canBeDraw = true;

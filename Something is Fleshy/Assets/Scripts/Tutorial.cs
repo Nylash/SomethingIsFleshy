@@ -10,6 +10,8 @@ public class Tutorial : MonoBehaviour
     [SerializeField] int timeToFinishAfterCompletion;
     [SerializeField] float timeBeforeFirstActivityAfterCompletion;
     [SerializeField] float timeBeforeFirstLeakCheckAfterCompletion;
+    [SerializeField] int maxSSsimultaneousAfterCompletion = 2;
+    [SerializeField] int criticalSSsimultaneousAfterCompletion = 2;
     [Space]
     [SerializeField] SecondarySystem tutoSS;
     [SerializeField] SecondarySystemsManager.Pack associatedPack;
@@ -181,7 +183,7 @@ public class Tutorial : MonoBehaviour
                         stockedCam = (CameraManager.instance.VCamGlobal.activeSelf ? CameraManager.instance.VCamGlobal : CameraManager.instance.VCamZoom);
                         stockedCam.SetActive(false);
                         camSS.SetActive(true);
-                        SecondarySystemsManager.instance.LaunchSpecificSS(tutoSS, associatedPack);
+                        SecondarySystemsManager.instance.LaunchSpecificSS(tutoSS, SecondarySystemsManager.instance.packB);
                         Color color = new Color(1, 1, 1, 1);
                         foreach (GameObject item in leversUnusedAtStart)
                         {
@@ -282,6 +284,8 @@ public class Tutorial : MonoBehaviour
         GameManager.instance.levelDuration = timeToFinishAfterCompletion;
         ScoreManager.instance.currentTimer = timeToFinishAfterCompletion;
         SecondarySystemsManager.instance.timeBeforeFirstActivity = timeBeforeFirstActivityAfterCompletion;
+        SecondarySystemsManager.instance.criticalSimultaneousSecondarySystems = criticalSSsimultaneousAfterCompletion;
+        SecondarySystemsManager.instance.maxSimultaneousSecondarySystems = maxSSsimultaneousAfterCompletion;
         LeaksManager.instance.timeBeforeFirstCheckForLeak = timeBeforeFirstLeakCheckAfterCompletion;
         SecondarySystemsManager.instance.TutorialCompleted();
         LeaksManager.instance.TutorialCompleted();

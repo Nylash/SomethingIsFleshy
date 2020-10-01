@@ -6,45 +6,24 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/Trailer/TrailerMenu.unity
-    guid: 772bf240e6d0d8d4ea73795bbb049036
-  - enabled: 1
-    path: Assets/Scenes/Trailer/1.unity
-    guid: ee5d7d8ea29f33a44914c03376cef71b
-  - enabled: 1
-    path: Assets/Scenes/Trailer/2.unity
-    guid: 733247ef640ce9843aad6c3de23782d1
-  - enabled: 1
-    path: Assets/Scenes/Trailer/3.unity
-    guid: 77e090bdd12ecb04399a0e65a105ee22
-  - enabled: 1
-    path: Assets/Scenes/Trailer/4.unity
-    guid: 6eafee4f8f2508b4bb8ca71a770cea7a
-  - enabled: 1
-    path: Assets/Scenes/Trailer/5.unity
-    guid: 176c4f4da4f7c864fa93adcef8bfa7c5
-  - enabled: 1
-    path: Assets/Scenes/Trailer/6.unity
-    guid: ba96b07c5d1ab274d82de37a70d8e5d7
-  - enabled: 0
     path: Assets/Scenes/Menus/SplashScene.unity
     guid: 6dc09a9b2ea83f74098e3fa464d8d491
-  - enabled: 0
+  - enabled: 1
     path: Assets/Scenes/Menus/MainMenu.unity
     guid: 09b50276c2e616440be0ffa8a7689275
-  - enabled: 0
+  - enabled: 1
     path: Assets/Scenes/Levels/Tutorial.unity
     guid: 907f95d453626d74ca7edba5b69c169d
-  - enabled: 0
+  - enabled: 1
     path: Assets/Scenes/Levels/Human.unity
     guid: 07805d52850cf864390389fb4165a718
-  - enabled: 0
+  - enabled: 1
     path: Assets/Scenes/Levels/Cow.unity
     guid: 782bbab69bc76024c9afd44b380d9aab
-  - enabled: 0
+  - enabled: 1
     path: Assets/Scenes/Levels/Ant.unity
     guid: e506800387d518340a6505e0b413deb9
-  - enabled: 0
+  - enabled: 1
     path: Assets/Scenes/Levels/Alien.unity
     guid: 5ca2b7531112c32428ed58a8ed04ca8c
   m_configObjects: {}
