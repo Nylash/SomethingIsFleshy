@@ -116,6 +116,8 @@ public class LeaksManager : MonoBehaviour
         leakScript.currentRessource = ressource;
         associatedLever.allLeaksZones[associatedPipe] = null;
         allLeaks.Add(leak);
+        SoundsManager.instance.PlaySoundOneShot(SoundsManager.SoundName.StartLeak, leakSource);
+        CharacterController2D.instance.animatorFace.SetTrigger("Choc");
     }
 
     public void TutorialCompleted()
