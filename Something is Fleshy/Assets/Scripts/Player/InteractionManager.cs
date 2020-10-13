@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class InteractionManager : MonoBehaviour
 {
@@ -9,7 +10,6 @@ public class InteractionManager : MonoBehaviour
     public AudioSource interactionSource;
     public GameObject interactFX;
     public GameObject interactLeakFX;
-    ActionsMap actionsMap;
 
     [Header("Variables")]
     public PlayerAnimationsMethods animMethodsScript;
@@ -19,21 +19,12 @@ public class InteractionManager : MonoBehaviour
     float holdTimer;
     GameObject currentInteractionLeakFX;
 
-    private void OnEnable() => actionsMap.Gameplay.Enable();
-    private void OnDisable() => actionsMap.Gameplay.Disable();
-
     private void Awake()
     {
         if (instance == null)
             instance = this;
         else if (instance != this)
             Destroy(gameObject);
-
-        actionsMap = new ActionsMap();
-
-        actionsMap.Gameplay.Interact.started += ctx => InteractionStarted();
-        actionsMap.Gameplay.Interact.canceled += ctx => InteractionHoldCanceled();
-
     }
 
     private void Update()
@@ -68,6 +59,15 @@ public class InteractionManager : MonoBehaviour
                 }
             }
         }
+    }
+
+    public void OnInteract()
+    {
+        print("e");
+        //if (ctx.started)
+        //    InteractionStarted();
+        //else if (ctx.canceled)
+        //    InteractionHoldCanceled();
     }
 
     void InteractionStarted()

@@ -42,7 +42,7 @@ public class CameraManager : MonoBehaviour
         VCamGlobal.SetActive(false);
 
         actionsMap = new ActionsMap();
-        actionsMap.Gameplay.SwitchCamera.started += ctx => SwitchCameraFromInput();
+        //actionsMap.Gameplay.SwitchCamera.started += ctx => SwitchCameraFromInput();
     }
 
     public void SwitchCameraFromScript()

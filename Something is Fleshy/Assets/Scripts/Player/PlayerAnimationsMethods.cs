@@ -10,7 +10,6 @@ public class PlayerAnimationsMethods : MonoBehaviour
     [Header("⚠ DON'T TOUCH BELOW ⚠")]
     public Vector3 tpPosition;
     public AudioSource tpSource;
-    bool securityJumpSFX;
 
     private void Start()
     {

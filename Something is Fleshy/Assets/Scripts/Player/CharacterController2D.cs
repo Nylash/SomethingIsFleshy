@@ -55,7 +55,6 @@ public class CharacterController2D : MonoBehaviour
 	public GameObject JLFXspot;
 	public GameObject JLFX;
 	public AudioSource jumpLandingSource;
-	ActionsMap actionsMap;
 
 	[Header("Variables")]
 	//Movement variables
@@ -80,9 +79,6 @@ public class CharacterController2D : MonoBehaviour
 	//Debug variables
 	Color debugColor;
 
-	private void OnEnable() => actionsMap.Gameplay.Enable();
-	private void OnDisable() => actionsMap.Gameplay.Disable();
-
 	private void Awake()
 	{
 		if (instance == null)
@@ -92,12 +88,10 @@ public class CharacterController2D : MonoBehaviour
 
 		rb = GetComponent<Rigidbody2D>();
 
-		actionsMap = new ActionsMap();
-
-		actionsMap.Gameplay.Movement.performed += ctx => movementInput = ctx.ReadValue<float>();
-		actionsMap.Gameplay.Movement.canceled += ctx => movementInput = 0f;
-		actionsMap.Gameplay.Jump.started += ctx => StartJumping();
-		actionsMap.Gameplay.Jump.canceled += ctx => StopJumping();
+		//actionsMap.Gameplay.Movement.performed += ctx => movementInput = ctx.ReadValue<float>();
+		//actionsMap.Gameplay.Movement.canceled += ctx => movementInput = 0f;
+		//actionsMap.Gameplay.Jump.started += ctx => StartJumping();
+		//actionsMap.Gameplay.Jump.canceled += ctx => StopJumping();
 	}
 
 	private void FixedUpdate()
