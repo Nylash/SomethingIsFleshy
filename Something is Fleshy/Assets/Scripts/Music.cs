@@ -11,6 +11,5 @@ public class Music : MonoBehaviour
         else if (instance != this)
             Destroy(gameObject);
         DontDestroyOnLoad(gameObject);
-        Cursor.visible = false;
     }
 }
