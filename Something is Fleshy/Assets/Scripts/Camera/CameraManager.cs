@@ -20,13 +20,9 @@ public class CameraManager : MonoBehaviour
     public GameObject VCamGlobal;
     CinemachineBasicMultiChannelPerlin VCamZoomNoise;
     CinemachineBasicMultiChannelPerlin VCamGlobalNoise;
-    ActionsMap actionsMap;
 
     [Header("VARIABLES")]
     Coroutine shakeCoroutine;
-
-    private void OnEnable() => actionsMap.Gameplay.Enable();
-    private void OnDisable() => actionsMap.Gameplay.Disable();
 
     private void Awake()
     {
@@ -40,9 +36,6 @@ public class CameraManager : MonoBehaviour
         VCamZoomNoise = VCamZoom.GetComponent<CinemachineVirtualCamera>().GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>();
         VCamGlobalNoise = VCamGlobal.GetComponent<CinemachineVirtualCamera>().GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>();
         VCamGlobal.SetActive(false);
-
-        actionsMap = new ActionsMap();
-        //actionsMap.Gameplay.SwitchCamera.started += ctx => SwitchCameraFromInput();
     }
 
     public void SwitchCameraFromScript()

@@ -102,7 +102,7 @@ public class LeaksManager : MonoBehaviour
             leversWithLeaksZones[lever].allLeaksZones[pipe] = null;
             allLeaks.Add(leak);
             SoundsManager.instance.PlaySoundOneShot(SoundsManager.SoundName.StartLeak, leakSource);
-            CharacterController2D.instance.animatorFace.SetTrigger("Choc");
+            //CharacterController2D.instance.animatorFace.SetTrigger("Choc");
         }
     }
 
@@ -117,7 +117,7 @@ public class LeaksManager : MonoBehaviour
         associatedLever.allLeaksZones[associatedPipe] = null;
         allLeaks.Add(leak);
         SoundsManager.instance.PlaySoundOneShot(SoundsManager.SoundName.StartLeak, leakSource);
-        CharacterController2D.instance.animatorFace.SetTrigger("Choc");
+        //CharacterController2D.instance.animatorFace.SetTrigger("Choc");
     }
 
     public void TutorialCompleted()

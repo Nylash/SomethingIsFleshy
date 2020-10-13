@@ -36,7 +36,7 @@ public class InversionBlockAnimMethod : MonoBehaviour
 
     private void Update()
     {
-        if (coll.isActiveAndEnabled)
+        /*if (coll.isActiveAndEnabled)
         {
             if (coll.bounds.Contains(CharacterController2D.instance.transform.position))
             {
@@ -54,6 +54,6 @@ public class InversionBlockAnimMethod : MonoBehaviour
                     anim.SetBool("PlayerIn", false);
                 }
             } 
-        }
+        }*/
     }
 }

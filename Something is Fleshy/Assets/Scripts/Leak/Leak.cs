@@ -176,14 +176,14 @@ public class Leak : MonoBehaviour
         }
     }
 
-    public void PatchLeak()
+    public void PatchLeak(AudioSource source)
     {
         associatedLever.allLeaksZones[associatedPipe] = associatedPipeLeaksZones;
         Instantiate(bandagePrefab, transform.position, transform.rotation);
         Destroy(FX);
         LeaksManager.instance.allLeaks.Remove(gameObject);
         HintLeakManager.instance.activesLeaks.Remove(this);
-        SoundsManager.instance.PlaySoundOneShot(SoundsManager.SoundName.EndLeak, InteractionManager.instance.interactionSource);
+        SoundsManager.instance.PlaySoundOneShot(SoundsManager.SoundName.EndLeak, source);
         if (associatedHint)
             Destroy(associatedHint);
         Destroy(gameObject);

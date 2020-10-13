@@ -27,11 +27,6 @@ public class UI_Manager : MonoBehaviour
     public Image UI_leakGaugeIn;
     public Canvas UI_timerCanvas;
     public AudioSource UI_audioSource;
-    [Header("Components")]
-    ActionsMap actionsMap;
-
-    private void OnEnable() => actionsMap.Gameplay.Enable();
-    private void OnDisable() => actionsMap.Gameplay.Disable();
 
     private void Awake()
     {
@@ -39,10 +34,6 @@ public class UI_Manager : MonoBehaviour
             instance = this;
         else if (instance != this)
             Destroy(gameObject);
-
-        actionsMap = new ActionsMap();
-
-        actionsMap.Gameplay.Pause.started += ctx => Pause();
     }
 
     private void Start()

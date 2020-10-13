@@ -10,31 +10,33 @@ public class PlayerAnimationsMethods : MonoBehaviour
     [Header("⚠ DON'T TOUCH BELOW ⚠")]
     public Vector3 tpPosition;
     public AudioSource tpSource;
+    CharacterController2D player;
 
     private void Start()
     {
-        InteractionManager.instance.animMethodsScript = this;
+        GetComponentInParent<InteractionManager>().animMethodsScript = this;
+        player = GetComponentInParent<CharacterController2D>();
     }
 
     void EndInteraction()
     {
-        CharacterController2D.instance.animator.SetBool("Interacting", false);
+        player.animator.SetBool("Interacting", false);
     }
 
     void EndTeleporting()
     {
-        CharacterController2D.instance.animator.SetBool("Teleporting", false);
+        player.animator.SetBool("Teleporting", false);
     }
 
     void DoTeleportation()
     {
-        CharacterController2D.instance.transform.position = tpPosition;
+        player.transform.position = tpPosition;
         SoundsManager.instance.PlaySoundOneShot(SoundsManager.SoundName.TeleportationOut, tpSource);
     }
 
     void EndShocked()
     {
-        CharacterController2D.instance.animator.SetBool("Shocked", false);
+        player.animator.SetBool("Shocked", false);
     }
 
     void WalkSound()
@@ -44,21 +46,21 @@ public class PlayerAnimationsMethods : MonoBehaviour
 
     void LandingSound()
     {
-        SoundsManager.instance.PlaySoundOneShot(SoundsManager.SoundName.Landing, CharacterController2D.instance.jumpLandingSource);
+        SoundsManager.instance.PlaySoundOneShot(SoundsManager.SoundName.Landing, player.jumpLandingSource);
     }
 
     void ChocFace()
     {
-        CharacterController2D.instance.animatorFace.SetTrigger("Choc");
+        player.animatorFace.SetTrigger("Choc");
     }
 
     void StressFace()
     {
-        CharacterController2D.instance.animatorFace.SetTrigger("Stress");
+        player.animatorFace.SetTrigger("Stress");
     }
 
     void SighFace()
     {
-        CharacterController2D.instance.animatorFace.SetTrigger("Sigh");
+        player.animatorFace.SetTrigger("Sigh");
     }
 }

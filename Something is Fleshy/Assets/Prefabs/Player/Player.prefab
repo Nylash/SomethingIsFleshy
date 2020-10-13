@@ -5020,7 +5020,6 @@ GameObject:
   m_Component:
   - component: {fileID: 4800235096581447598}
   - component: {fileID: 4800235096581447596}
-  - component: {fileID: 768884482182505631}
   - component: {fileID: 4800235096581447251}
   - component: {fileID: 4800235096581447250}
   - component: {fileID: 4800235096581447599}
@@ -5099,23 +5098,6 @@ MonoBehaviour:
   jumpLandingSource: {fileID: 6196941693643608619}
   associatedMovingPlatform: {fileID: 0}
   jumpPadForce: 0
---- !u!114 &768884482182505631
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4800235096581447249}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0c40a96e66d961c4e8e73850c37ec23c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  shakeDuration: 0.4
-  shakeAmplitude: 1.5
-  shakeFrequency: 1
-  VCamZoom: {fileID: 0}
-  VCamGlobal: {fileID: 0}
 --- !u!50 &4800235096581447251
 Rigidbody2D:
   serializedVersion: 4

@@ -50,7 +50,7 @@ public class Tutorial : MonoBehaviour
     [Header("⚠ DON'T TOUCH BELOW ⚠")]
     public TutorialStep currentStep;
     ActionsMap actionsMap;
-    bool cameraTutoDone;
+    bool cameraTutoDone = false;
     public GameObject stockedCam;
     AudioSource audioSource;
 
@@ -77,7 +77,7 @@ public class Tutorial : MonoBehaviour
 
     private void Update()
     {
-        if (Vector2.Distance(triggerPointCameraTuto.position, CharacterController2D.instance.transform.position) < radiusTriggerCameraTuto && !cameraTutoDone)
+        /*if (Vector2.Distance(triggerPointCameraTuto.position, CharacterController2D.instance.transform.position) < radiusTriggerCameraTuto && !cameraTutoDone)
         {
             cameraTutoDone = true;
             CameraManager.instance.VCamGlobal.SetActive(false);
@@ -85,7 +85,7 @@ public class Tutorial : MonoBehaviour
             cameraCanvas.enabled = true;
             GameManager.instance.levelPaused = true;
             CharacterController2D.instance.animator.SetBool("Running", false);
-        }
+        }*/
         switch (currentStep)
         {
             case TutorialStep.presentationMade:
@@ -96,7 +96,7 @@ public class Tutorial : MonoBehaviour
                 {
                     SoundsManager.instance.PlaySoundOneShot(SoundsManager.SoundName.TutorialObjectiveSuccess, audioSource);
                     GameManager.instance.levelPaused = true;
-                    CharacterController2D.instance.animator.SetBool("Running", false);
+                    //CharacterController2D.instance.animator.SetBool("Running", false);
                     primarySystemCongratulationsCanvas.enabled = true;
                     objectiveCanvas.enabled = false;
                 }
@@ -109,13 +109,13 @@ public class Tutorial : MonoBehaviour
                     if(ScoreManager.instance.currentScore <= 0)
                     {
                         GameManager.instance.levelPaused = true;
-                        CharacterController2D.instance.animator.SetBool("Running", false);
+                        //CharacterController2D.instance.animator.SetBool("Running", false);
                         secondarySystemFailureCanvas.enabled = true;
                     }
                     else
                     {
                         GameManager.instance.levelPaused = true;
-                        CharacterController2D.instance.animator.SetBool("Running", false);
+                        //CharacterController2D.instance.animator.SetBool("Running", false);
                         secondarySystemCongratulationsCanvas.enabled = true;
                         objectiveCanvas.enabled = false;
                     }
@@ -127,7 +127,7 @@ public class Tutorial : MonoBehaviour
                     SoundsManager.instance.PlaySoundOneShot(SoundsManager.SoundName.TutorialObjectiveSuccess, audioSource);
                     currentStep++;
                     GameManager.instance.levelPaused = true;
-                    CharacterController2D.instance.animator.SetBool("Running", false);
+                    //CharacterController2D.instance.animator.SetBool("Running", false);
                     completionCanvas.enabled = true;
                     objectiveCanvas.enabled = false;
                 }

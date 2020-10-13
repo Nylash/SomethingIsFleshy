@@ -178,7 +178,7 @@ public class SecondarySystemsManager : MonoBehaviour
             TimerSecondarySystem timerObject = Instantiate(GameManager.instance.UI_timerSS, UI_Manager.instance.transform).GetComponent<TimerSecondarySystem>();
             timerObject.associatedSystem = selectedSecondarySystem;
             SoundsManager.instance.PlaySoundOneShot(SoundsManager.SoundName.SecondarySystemPop, ssManagerSource);
-            CharacterController2D.instance.animatorFace.SetTrigger("Choc");
+            //CharacterController2D.instance.animatorFace.SetTrigger("Choc");
         }
     }
 

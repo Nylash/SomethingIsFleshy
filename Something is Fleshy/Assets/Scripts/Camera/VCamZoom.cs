@@ -7,7 +7,7 @@ public class VCamZoom : MonoBehaviour
 
     private void Awake()
     {
-        target = GameObject.FindGameObjectWithTag("Player").transform;
+        target = GameObject.FindGameObjectWithTag("LevelCenter").transform;
         GetComponent<CinemachineVirtualCamera>().Follow = target;
     }
 }

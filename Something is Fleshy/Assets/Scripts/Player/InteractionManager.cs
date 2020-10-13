@@ -3,13 +3,12 @@ using UnityEngine.InputSystem;
 
 public class InteractionManager : MonoBehaviour
 {
-    public static InteractionManager instance;
-
     [Header("Components")]
     [Header("⚠ DON'T TOUCH BELOW ⚠")]
     public AudioSource interactionSource;
     public GameObject interactFX;
     public GameObject interactLeakFX;
+    CharacterController2D player;
 
     [Header("Variables")]
     public PlayerAnimationsMethods animMethodsScript;
@@ -19,12 +18,17 @@ public class InteractionManager : MonoBehaviour
     float holdTimer;
     GameObject currentInteractionLeakFX;
 
-    private void Awake()
+    private void Start()
     {
-        if (instance == null)
-            instance = this;
-        else if (instance != this)
-            Destroy(gameObject);
+        player = GetComponent<CharacterController2D>();
+    }
+
+    public void AskInteract(InputAction.CallbackContext ctx)
+    {
+        if (ctx.started)
+            InteractionStarted();
+        else if (ctx.canceled)
+            InteractionHoldCanceled();
     }
 
     private void Update()
@@ -33,7 +37,7 @@ public class InteractionManager : MonoBehaviour
         {
             if (!ScoreManager.instance.levelEnded && !GameManager.instance.levelPaused)
             {
-                if (CharacterController2D.instance.animator.GetBool("Holding"))
+                if (player.animator.GetBool("Holding"))
                 {
                     if (!UI_Manager.instance.UI_leakGaugeCanvas.enabled)
                         UI_Manager.instance.UI_leakGaugeCanvas.enabled = true;
@@ -43,8 +47,8 @@ public class InteractionManager : MonoBehaviour
                     if (holdTimer >= LeaksManager.instance.timeToRepair)
                     {
                         UI_Manager.instance.UI_leakGaugeCanvas.enabled = false;
-                        interactableObject.GetComponent<Leak>().PatchLeak();
-                        CharacterController2D.instance.animator.SetBool("Holding", false);
+                        interactableObject.GetComponent<Leak>().PatchLeak(interactionSource);
+                        player.animator.SetBool("Holding", false);
                     }
                 }
             }
@@ -53,7 +57,7 @@ public class InteractionManager : MonoBehaviour
                 if (UI_Manager.instance.UI_leakGaugeCanvas.enabled)
                 {
                     UI_Manager.instance.UI_leakGaugeCanvas.enabled = false;
-                    CharacterController2D.instance.animator.SetBool("Holding", false);
+                    player.animator.SetBool("Holding", false);
                     if (currentInteractionLeakFX)
                         Destroy(currentInteractionLeakFX);
                 }
@@ -61,24 +65,15 @@ public class InteractionManager : MonoBehaviour
         }
     }
 
-    public void OnInteract()
-    {
-        print("e");
-        //if (ctx.started)
-        //    InteractionStarted();
-        //else if (ctx.canceled)
-        //    InteractionHoldCanceled();
-    }
-
     void InteractionStarted()
     {
         if (GameManager.instance.levelStarted)
         {
-            if (!ScoreManager.instance.levelEnded && !GameManager.instance.levelPaused && CharacterController2D.instance.AnimationNotCurrentlyBlocking())
+            if (!ScoreManager.instance.levelEnded && !GameManager.instance.levelPaused && player.AnimationNotCurrentlyBlocking())
             {
                 if (canInteract)
                 {
-                    CharacterController2D.instance.rb.velocity = Vector2.zero;
+                    player.rb.velocity = Vector2.zero;
                     switch (currentInteractableType)
                     {
                         case InteractableType.lever:
@@ -97,11 +92,11 @@ public class InteractionManager : MonoBehaviour
                             UI_Manager.instance.UI_leakGaugeCanvas.enabled = true;
                             goto HoldInteractionAnim;
                         case InteractableType.teleporter:
-                            if (CharacterController2D.instance.AnimationNotCurrentlyBlocking())
+                            if (player.AnimationNotCurrentlyBlocking())
                             {
                                 animMethodsScript.tpPosition = interactableObject.GetComponentInParent<Teleporters>().GetTPLocation(interactableObject.gameObject);
-                                CharacterController2D.instance.animator.SetTrigger("StartTeleporting");
-                                CharacterController2D.instance.animator.SetBool("Teleporting", true);
+                                player.animator.SetTrigger("StartTeleporting");
+                                player.animator.SetBool("Teleporting", true);
                                 SoundsManager.instance.PlaySoundOneShot(SoundsManager.SoundName.TeleportationIn, interactionSource);
                                 animMethodsScript.tpSource = interactionSource;
                             }
@@ -111,17 +106,17 @@ public class InteractionManager : MonoBehaviour
                             SoundsManager.instance.PlaySoundOneShot(SoundsManager.SoundName.LeverInteraction, interactionSource);
                             break;
                     }
-                    if (CharacterController2D.instance.AnimationNotCurrentlyBlocking())
+                    if (player.AnimationNotCurrentlyBlocking())
                     {
-                        CharacterController2D.instance.animator.SetTrigger("StartInteracting");
-                        CharacterController2D.instance.animator.SetBool("Interacting", true);
+                        player.animator.SetTrigger("StartInteracting");
+                        player.animator.SetBool("Interacting", true);
                     }
                     return;
                 HoldInteractionAnim:
-                    if (CharacterController2D.instance.AnimationNotCurrentlyBlocking())
+                    if (player.AnimationNotCurrentlyBlocking())
                     {
-                        CharacterController2D.instance.animator.SetTrigger("StartHolding");
-                        CharacterController2D.instance.animator.SetBool("Holding", true);
+                        player.animator.SetTrigger("StartHolding");
+                        player.animator.SetBool("Holding", true);
                         currentInteractionLeakFX = Instantiate(interactLeakFX, interactableObject.transform.position, Quaternion.identity);
                     }
                 }
@@ -135,12 +130,12 @@ public class InteractionManager : MonoBehaviour
         {
             if (!ScoreManager.instance.levelEnded && !GameManager.instance.levelPaused)
             {
-                if (canInteract && CharacterController2D.instance.animator.GetBool("Holding"))
+                if (canInteract && player.animator.GetBool("Holding"))
                 {
                     switch (currentInteractableType)
                     {
                         case InteractableType.leak:
-                            CharacterController2D.instance.animator.SetBool("Holding", false);
+                            player.animator.SetBool("Holding", false);
                             UI_Manager.instance.UI_leakGaugeCanvas.enabled = false;
                             if (currentInteractionLeakFX)
                                 Destroy(currentInteractionLeakFX);
@@ -202,7 +197,7 @@ public class InteractionManager : MonoBehaviour
                 else
                     break;
             case "TP":
-                if (currentInteractableType == InteractableType.teleporter && !CharacterController2D.instance.animator.GetBool("Teleporting"))
+                if (currentInteractableType == InteractableType.teleporter && !player.animator.GetBool("Teleporting"))
                     goto case "CLEAN CASE";
                 else
                     break;

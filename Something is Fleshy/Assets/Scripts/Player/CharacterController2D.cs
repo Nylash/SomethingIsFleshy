@@ -1,10 +1,9 @@
 ﻿using System.Collections;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class CharacterController2D : MonoBehaviour
 {
-	public static CharacterController2D instance;
-
 	#region CONFIGURATION
 #pragma warning disable 0649
 	[Header("Movement")]
@@ -55,6 +54,7 @@ public class CharacterController2D : MonoBehaviour
 	public GameObject JLFXspot;
 	public GameObject JLFX;
 	public AudioSource jumpLandingSource;
+	InteractionManager interactionManager;
 
 	[Header("Variables")]
 	//Movement variables
@@ -79,20 +79,32 @@ public class CharacterController2D : MonoBehaviour
 	//Debug variables
 	Color debugColor;
 
-	private void Awake()
+	private void Start()
 	{
-		if (instance == null)
-			instance = this;
-		else if (instance != this)
-			Destroy(gameObject);
-
 		rb = GetComponent<Rigidbody2D>();
-
-		//actionsMap.Gameplay.Movement.performed += ctx => movementInput = ctx.ReadValue<float>();
-		//actionsMap.Gameplay.Movement.canceled += ctx => movementInput = 0f;
-		//actionsMap.Gameplay.Jump.started += ctx => StartJumping();
-		//actionsMap.Gameplay.Jump.canceled += ctx => StopJumping();
+		interactionManager = GetComponent<InteractionManager>();
 	}
+
+	public void AskMovement(InputAction.CallbackContext ctx)
+    {
+		if (ctx.performed)
+			movementInput = ctx.ReadValue<float>();
+		else if(ctx.canceled)
+			movementInput = 0f;
+	}
+
+	public void AskJump(InputAction.CallbackContext ctx)
+    {
+		if (ctx.started)
+			StartJumping();
+		else if (ctx.canceled)
+			StopJumping();
+    }
+
+	public void AskPause()
+    {
+		UI_Manager.instance.Pause();
+    }
 
 	private void FixedUpdate()
 	{
@@ -352,7 +364,7 @@ public class CharacterController2D : MonoBehaviour
 					collision.gameObject.GetComponent<Animator>().SetTrigger("Hit");
 					isOnNerve = true;
 					StartCoroutine(OnNerveAnimation());
-					SoundsManager.instance.PlaySoundOneShot(SoundsManager.SoundName.NerveHit, InteractionManager.instance.interactionSource);
+					SoundsManager.instance.PlaySoundOneShot(SoundsManager.SoundName.NerveHit, interactionManager.interactionSource);
 				}
 				break;
 			default:
