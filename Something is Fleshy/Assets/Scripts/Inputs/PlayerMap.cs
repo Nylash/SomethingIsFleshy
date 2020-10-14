@@ -57,13 +57,21 @@ public class @PlayerMap : IInputActionCollection, IDisposable
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """"
+                },
+                {
+                    ""name"": ""Pause"",
+                    ""type"": ""Button"",
+                    ""id"": ""d0be4d38-4d8c-4382-ae16-0785659173d4"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
                 }
             ],
             ""bindings"": [
                 {
                     ""name"": """",
                     ""id"": ""faf52d53-43ae-4af5-84d3-4dc08f79bc3b"",
-                    ""path"": ""<Gamepad>/leftStick/left"",
+                    ""path"": ""<Gamepad>/leftStick/x"",
                     ""interactions"": """",
                     ""processors"": ""AxisDeadzone"",
                     ""groups"": """",
@@ -162,7 +170,7 @@ public class @PlayerMap : IInputActionCollection, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""5609bf4b-4d85-44bd-aaf2-c83ddf52d66d"",
-                    ""path"": ""<Gamepad>/buttonSouth"",
+                    ""path"": ""<Gamepad>/buttonWest"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -213,6 +221,28 @@ public class @PlayerMap : IInputActionCollection, IDisposable
                     ""action"": ""ValidationPopUp"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""da66eb0b-ef71-4855-aae4-feb4b443e486"",
+                    ""path"": ""<Keyboard>/escape"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Pause"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""ab82b78b-51f1-4581-8da2-577e2c486c1a"",
+                    ""path"": ""<Gamepad>/start"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Pause"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         },
@@ -225,14 +255,6 @@ public class @PlayerMap : IInputActionCollection, IDisposable
                     ""type"": ""PassThrough"",
                     ""id"": ""ff7262b9-0d18-45ee-95a3-5db3fe5ee53c"",
                     ""expectedControlType"": ""Vector2"",
-                    ""processors"": """",
-                    ""interactions"": """"
-                },
-                {
-                    ""name"": ""Pause"",
-                    ""type"": ""Button"",
-                    ""id"": ""499dba19-4204-40d0-990c-3b12d26f2136"",
-                    ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """"
                 },
@@ -380,28 +402,6 @@ public class @PlayerMap : IInputActionCollection, IDisposable
                 },
                 {
                     ""name"": """",
-                    ""id"": ""0c82f1d4-4be6-4637-9f34-75148fa6f57f"",
-                    ""path"": ""<Keyboard>/escape"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Pause"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""9d37422a-fa80-489b-9776-b9f21277167a"",
-                    ""path"": ""<Gamepad>/start"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Pause"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
                     ""id"": ""2c0b1dab-d2be-4a6b-8cc6-8fad3e719396"",
                     ""path"": ""<Keyboard>/e"",
                     ""interactions"": ""Hold"",
@@ -445,10 +445,10 @@ public class @PlayerMap : IInputActionCollection, IDisposable
         m_Gameplay_Interact = m_Gameplay.FindAction("Interact", throwIfNotFound: true);
         m_Gameplay_Debug = m_Gameplay.FindAction("Debug", throwIfNotFound: true);
         m_Gameplay_ValidationPopUp = m_Gameplay.FindAction("ValidationPopUp", throwIfNotFound: true);
+        m_Gameplay_Pause = m_Gameplay.FindAction("Pause", throwIfNotFound: true);
         // UI
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
         m_UI_Move = m_UI.FindAction("Move", throwIfNotFound: true);
-        m_UI_Pause = m_UI.FindAction("Pause", throwIfNotFound: true);
         m_UI_Submit = m_UI.FindAction("Submit", throwIfNotFound: true);
     }
 
@@ -504,6 +504,7 @@ public class @PlayerMap : IInputActionCollection, IDisposable
     private readonly InputAction m_Gameplay_Interact;
     private readonly InputAction m_Gameplay_Debug;
     private readonly InputAction m_Gameplay_ValidationPopUp;
+    private readonly InputAction m_Gameplay_Pause;
     public struct GameplayActions
     {
         private @PlayerMap m_Wrapper;
@@ -513,6 +514,7 @@ public class @PlayerMap : IInputActionCollection, IDisposable
         public InputAction @Interact => m_Wrapper.m_Gameplay_Interact;
         public InputAction @Debug => m_Wrapper.m_Gameplay_Debug;
         public InputAction @ValidationPopUp => m_Wrapper.m_Gameplay_ValidationPopUp;
+        public InputAction @Pause => m_Wrapper.m_Gameplay_Pause;
         public InputActionMap Get() { return m_Wrapper.m_Gameplay; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -537,6 +539,9 @@ public class @PlayerMap : IInputActionCollection, IDisposable
                 @ValidationPopUp.started -= m_Wrapper.m_GameplayActionsCallbackInterface.OnValidationPopUp;
                 @ValidationPopUp.performed -= m_Wrapper.m_GameplayActionsCallbackInterface.OnValidationPopUp;
                 @ValidationPopUp.canceled -= m_Wrapper.m_GameplayActionsCallbackInterface.OnValidationPopUp;
+                @Pause.started -= m_Wrapper.m_GameplayActionsCallbackInterface.OnPause;
+                @Pause.performed -= m_Wrapper.m_GameplayActionsCallbackInterface.OnPause;
+                @Pause.canceled -= m_Wrapper.m_GameplayActionsCallbackInterface.OnPause;
             }
             m_Wrapper.m_GameplayActionsCallbackInterface = instance;
             if (instance != null)
@@ -556,6 +561,9 @@ public class @PlayerMap : IInputActionCollection, IDisposable
                 @ValidationPopUp.started += instance.OnValidationPopUp;
                 @ValidationPopUp.performed += instance.OnValidationPopUp;
                 @ValidationPopUp.canceled += instance.OnValidationPopUp;
+                @Pause.started += instance.OnPause;
+                @Pause.performed += instance.OnPause;
+                @Pause.canceled += instance.OnPause;
             }
         }
     }
@@ -565,14 +573,12 @@ public class @PlayerMap : IInputActionCollection, IDisposable
     private readonly InputActionMap m_UI;
     private IUIActions m_UIActionsCallbackInterface;
     private readonly InputAction m_UI_Move;
-    private readonly InputAction m_UI_Pause;
     private readonly InputAction m_UI_Submit;
     public struct UIActions
     {
         private @PlayerMap m_Wrapper;
         public UIActions(@PlayerMap wrapper) { m_Wrapper = wrapper; }
         public InputAction @Move => m_Wrapper.m_UI_Move;
-        public InputAction @Pause => m_Wrapper.m_UI_Pause;
         public InputAction @Submit => m_Wrapper.m_UI_Submit;
         public InputActionMap Get() { return m_Wrapper.m_UI; }
         public void Enable() { Get().Enable(); }
@@ -586,9 +592,6 @@ public class @PlayerMap : IInputActionCollection, IDisposable
                 @Move.started -= m_Wrapper.m_UIActionsCallbackInterface.OnMove;
                 @Move.performed -= m_Wrapper.m_UIActionsCallbackInterface.OnMove;
                 @Move.canceled -= m_Wrapper.m_UIActionsCallbackInterface.OnMove;
-                @Pause.started -= m_Wrapper.m_UIActionsCallbackInterface.OnPause;
-                @Pause.performed -= m_Wrapper.m_UIActionsCallbackInterface.OnPause;
-                @Pause.canceled -= m_Wrapper.m_UIActionsCallbackInterface.OnPause;
                 @Submit.started -= m_Wrapper.m_UIActionsCallbackInterface.OnSubmit;
                 @Submit.performed -= m_Wrapper.m_UIActionsCallbackInterface.OnSubmit;
                 @Submit.canceled -= m_Wrapper.m_UIActionsCallbackInterface.OnSubmit;
@@ -599,9 +602,6 @@ public class @PlayerMap : IInputActionCollection, IDisposable
                 @Move.started += instance.OnMove;
                 @Move.performed += instance.OnMove;
                 @Move.canceled += instance.OnMove;
-                @Pause.started += instance.OnPause;
-                @Pause.performed += instance.OnPause;
-                @Pause.canceled += instance.OnPause;
                 @Submit.started += instance.OnSubmit;
                 @Submit.performed += instance.OnSubmit;
                 @Submit.canceled += instance.OnSubmit;
@@ -616,11 +616,11 @@ public class @PlayerMap : IInputActionCollection, IDisposable
         void OnInteract(InputAction.CallbackContext context);
         void OnDebug(InputAction.CallbackContext context);
         void OnValidationPopUp(InputAction.CallbackContext context);
+        void OnPause(InputAction.CallbackContext context);
     }
     public interface IUIActions
     {
         void OnMove(InputAction.CallbackContext context);
-        void OnPause(InputAction.CallbackContext context);
         void OnSubmit(InputAction.CallbackContext context);
     }
 }

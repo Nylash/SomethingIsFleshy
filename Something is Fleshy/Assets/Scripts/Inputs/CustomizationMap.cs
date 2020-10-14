@@ -1,4 +1,4 @@
-// GENERATED AUTOMATICALLY FROM 'Assets/Scripts/UI/CustomizationMap.inputactions'
+// GENERATED AUTOMATICALLY FROM 'Assets/Scripts/Inputs/CustomizationMap.inputactions'
 
 using System;
 using System.Collections;
