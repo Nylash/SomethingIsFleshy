@@ -17,10 +17,10 @@ public class SoundsManager : MonoBehaviour
 
     [ArrayElementTitle("name")]
     public List<Sound> sounds = new List<Sound>();
-    ActionsMap actionsMap;
+    PlayerMap playerMap;
 
-    private void OnEnable() => actionsMap.Gameplay.Enable();
-    private void OnDisable() => actionsMap.Gameplay.Disable();
+    private void OnEnable() => playerMap.Gameplay.Enable();
+    private void OnDisable() => playerMap.Gameplay.Disable();
 
     private void Awake()
     {
@@ -29,9 +29,9 @@ public class SoundsManager : MonoBehaviour
         else if (instance != this)
             Destroy(gameObject);
 
-        actionsMap = new ActionsMap();
+        playerMap = new PlayerMap();
 
-        actionsMap.Gameplay.Debug.performed += ctx => DebugSound();
+        playerMap.Gameplay.Debug.started += ctx => DebugSound();
     }
 
     public void PlaySoundLoop(SoundName soundName, AudioSource source)
@@ -79,6 +79,7 @@ public class SoundsManager : MonoBehaviour
 
     void DebugSound()
     {
-        GetComponent<AudioSource>().Play();
+        if(GetComponent<AudioSource>())
+            GetComponent<AudioSource>().Play();
     }
 }

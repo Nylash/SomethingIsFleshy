@@ -1,0 +1,74 @@
+{
+    "name": "CustomizationMap",
+    "maps": [
+        {
+            "name": "Menu",
+            "id": "8f42c7f2-3937-41b1-a3d3-070d4555fc8a",
+            "actions": [
+                {
+                    "name": "Start",
+                    "type": "Button",
+                    "id": "a44a23c2-c505-4d58-b687-04cbe2f3d774",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
+                    "name": "Back",
+                    "type": "Button",
+                    "id": "1f6cbbf4-b50a-4fe3-b854-4d2ccd3b6453",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "6529a47a-b067-4223-9643-f57720b63c18",
+                    "path": "<Keyboard>/enter",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Start",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "a41ee835-ffe4-4c8c-a02d-127cb96ab39f",
+                    "path": "<Gamepad>/start",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Start",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "23f724c0-c17d-48ed-9d0e-b31fbb5617d8",
+                    "path": "<Gamepad>/buttonEast",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Back",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "67b841c2-4b49-4a77-927a-05fc94d5956f",
+                    "path": "<Keyboard>/escape",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Back",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        }
+    ],
+    "controlSchemes": []
+}

@@ -7,15 +7,15 @@ public class Trailer_3 : MonoBehaviour
     public List<LeakZone> pipeLeakZones;
     public LeverScript associatedLever;
     public int associatedPipe;
-    ActionsMap actionsMap;
+    PlayerMap playerMap;
 
-    private void OnEnable() => actionsMap.Gameplay.Enable();
-    private void OnDisable() => actionsMap.Gameplay.Disable();
+    private void OnEnable() => playerMap.Gameplay.Enable();
+    private void OnDisable() => playerMap.Gameplay.Disable();
 
     private void Awake()
     {
-        actionsMap = new ActionsMap();
+        playerMap = new PlayerMap();
 
-        actionsMap.Gameplay.SwitchCamera.started += ctx => LeaksManager.instance.StartSpecificLeak(leakZone, pipeLeakZones, associatedLever,associatedPipe);
+        //actionsMap.Gameplay.SwitchCamera.started += ctx => LeaksManager.instance.StartSpecificLeak(leakZone, pipeLeakZones, associatedLever,associatedPipe);
     }
 }

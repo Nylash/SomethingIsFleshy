@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using UnityEngine.U2D;
+using UnityEngine.InputSystem;
 
 public class GameManager : MonoBehaviour
 {
@@ -62,5 +63,16 @@ public class GameManager : MonoBehaviour
             instance = this;
         else if (instance != this)
             Destroy(gameObject);
+
+        for (int i = 0; i < 2; i++)
+        {
+			PlayersManager.instance.players[i].transform.position = transform.GetChild(i).transform.position;
+			PlayersManager.instance.players[i].GetComponent<CharacterController2D>().enabled = true;
+			PlayersManager.instance.players[i].GetComponent<InteractionManager>().enabled = true;
+			PlayersManager.instance.players[i].GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Dynamic;
+			PlayersManager.instance.players[i].GetComponent<PlayerInput>().enabled = true;
+			PlayersManager.instance.players[i].GetComponentInChildren<PlayerAnimationsMethods>().enabled = true;
+			PlayersManager.instance.players[i].GetComponent<PlayerInput>().notificationBehavior = PlayerNotifications.InvokeUnityEvents;
+		}
     }
 }

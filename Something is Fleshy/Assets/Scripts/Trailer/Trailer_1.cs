@@ -35,16 +35,16 @@ public class Trailer_1 : MonoBehaviour
     public SecondarySystem ss1;
     public SecondarySystem ss2;
 
-    ActionsMap actionsMap;
+    PlayerMap playerMap;
 
-    private void OnEnable() => actionsMap.Gameplay.Enable();
-    private void OnDisable() => actionsMap.Gameplay.Disable();
+    private void OnEnable() => playerMap.Gameplay.Enable();
+    private void OnDisable() => playerMap.Gameplay.Disable();
 
     private void Awake()
     {
-        actionsMap = new ActionsMap();
+        playerMap = new PlayerMap();
 
-        actionsMap.Gameplay.Debug.started += ctx => StartCoroutine(LaunchCrisis());
+        playerMap.Gameplay.Debug.started += ctx => StartCoroutine(LaunchCrisis());
     }
 
     private void OnTriggerEnter2D(Collider2D collision)

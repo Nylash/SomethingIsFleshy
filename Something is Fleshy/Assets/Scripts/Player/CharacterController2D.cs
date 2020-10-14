@@ -59,6 +59,7 @@ public class CharacterController2D : MonoBehaviour
 	[Header("Variables")]
 	//Movement variables
 	public GameObject associatedMovingPlatform;
+	public int playerNumber;
 	bool isGrounded;
 	bool wasGrounded;
 	bool facingRight = true;

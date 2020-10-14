@@ -10,17 +10,17 @@ public class UI_HoldAnimation : MonoBehaviour
     float holdTime;
     bool holding;
 
-    ActionsMap actionsMap;
+    PlayerMap playerMap;
 
-    private void OnEnable() => actionsMap.Gameplay.Enable();
-    private void OnDisable() => actionsMap.Gameplay.Disable();
+    private void OnEnable() => playerMap.UI.Enable();
+    private void OnDisable() => playerMap.UI.Disable();
 
     private void Awake()
     {
-        actionsMap = new ActionsMap();
+        playerMap = new PlayerMap();
 
-        actionsMap.Gameplay.Submit.started += ctx => StartHolding();
-        actionsMap.Gameplay.Submit.canceled += ctx => CancelHolding();
+        playerMap.UI.Submit.started += ctx => StartHolding();
+        playerMap.UI.Submit.canceled += ctx => CancelHolding();
     }
 
     private void Start()

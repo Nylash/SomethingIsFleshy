@@ -2,7 +2,6 @@
 
 public class MainMenuButtons : MonoBehaviour
 {
-    public Canvas levelSelectionCanvas;
     public Canvas optionsCanvas;
 
     Canvas mainCanvas;
@@ -15,13 +14,6 @@ public class MainMenuButtons : MonoBehaviour
     public void QuitGame()
     {
         Application.Quit();
-    }
-
-    public void ActivateLevelSelectionCanvas()
-    {
-        SoundsManager.instance.PlaySoundOneShot(SoundsManager.SoundName.MenuValidation, GameObject.FindGameObjectWithTag("UI_Master").GetComponent<AudioSource>());
-        mainCanvas.enabled = false;
-        levelSelectionCanvas.enabled = true;
     }
 
     public void ActivateOptionsCanvas()

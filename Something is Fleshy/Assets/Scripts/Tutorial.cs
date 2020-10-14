@@ -49,18 +49,18 @@ public class Tutorial : MonoBehaviour
     [Header("Variables")]
     [Header("⚠ DON'T TOUCH BELOW ⚠")]
     public TutorialStep currentStep;
-    ActionsMap actionsMap;
+    PlayerMap playerMap;
     bool cameraTutoDone = false;
     public GameObject stockedCam;
     AudioSource audioSource;
 
-    private void OnEnable() => actionsMap.Gameplay.Enable();
-    private void OnDisable() => actionsMap.Gameplay.Disable();
+    private void OnEnable() => playerMap.Gameplay.Enable();
+    private void OnDisable() => playerMap.Gameplay.Disable();
 
     private void Awake()
     {
-        actionsMap = new ActionsMap();
-        actionsMap.Gameplay.ValidationPopUp.started += ctx => Validation();
+        playerMap = new PlayerMap();
+        playerMap.Gameplay.ValidationPopUp.started += ctx => Validation();
     }
 
     private void Start()

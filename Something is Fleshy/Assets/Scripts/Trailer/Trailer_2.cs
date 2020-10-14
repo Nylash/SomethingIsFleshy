@@ -9,18 +9,18 @@ public class Trailer_2 : MonoBehaviour
     public SecondarySystem ss;
     public GameObject text1;
     public GameObject text2;
-    ActionsMap actionsMap;
+    PlayerMap playerMap;
 
-    private void OnEnable() => actionsMap.Gameplay.Enable();
-    private void OnDisable() => actionsMap.Gameplay.Disable();
+    private void OnEnable() => playerMap.Gameplay.Enable();
+    private void OnDisable() => playerMap.Gameplay.Disable();
 
     private void Awake()
     {
-        actionsMap = new ActionsMap();
+        playerMap = new PlayerMap();
 
-        actionsMap.Gameplay.Interact.started += ctx => StartCoroutine(CutToCam());
-        actionsMap.Gameplay.Debug.started += ctx => StartSS();
-        actionsMap.Gameplay.SwitchCamera.started += ctx => StartCoroutine(ShowText());
+        playerMap.Gameplay.Interact.started += ctx => StartCoroutine(CutToCam());
+        playerMap.Gameplay.Debug.started += ctx => StartSS();
+        //actionsMap.Gameplay.SwitchCamera.started += ctx => StartCoroutine(ShowText());
     }
 
     private void StartSS()
