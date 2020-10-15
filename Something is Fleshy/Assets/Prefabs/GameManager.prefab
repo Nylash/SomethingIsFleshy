@@ -123,6 +123,8 @@ MonoBehaviour:
   silverMedal: {fileID: 21300000, guid: 7bc7cdd96634758499a5048c17689554, type: 3}
   bronzeMedal: {fileID: 21300000, guid: bb20e0440b45a0e41b97b0df4bb933a1, type: 3}
   failMedal: {fileID: 21300000, guid: 2416fd4318a83164eb3101273bd2fcdb, type: 3}
+  playerManagerDebug: {fileID: 618795233881473026, guid: 25c4f66259287b04cb59c2872a429842,
+    type: 3}
   levelDuration: 180
   maxCapacityPrimarySystem: 35
   startCapacityPrimarySystem: 20

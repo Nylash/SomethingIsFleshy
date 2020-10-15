@@ -102,10 +102,33 @@ public class CharacterController2D : MonoBehaviour
 			StopJumping();
     }
 
-	public void AskPause()
+	public void AskPause(InputAction.CallbackContext ctx)
     {
-		UI_Manager.instance.Pause();
+		if (ctx.started)
+			UI_Manager.instance.Pause();
     }
+
+	public void AskSwitch(InputAction.CallbackContext ctx)
+    {
+		if (ctx.started)
+        {
+			if(PlayersManager.instance.currentGameMode == PlayersManager.GameMode.OnePlayer && !PlayersManager.instance.switchingPlayer)
+            {
+				PlayersManager.instance.switchingPlayer = true;
+				StartCoroutine(PlayersManager.instance.ResetSwitch());
+				if (playerNumber == 1)
+                {
+					PlayersManager.instance.players[0].GetComponent<PlayerInput>().enabled = false;
+					PlayersManager.instance.players[1].GetComponent<PlayerInput>().enabled = true;
+                }
+                else
+                {
+					PlayersManager.instance.players[1].GetComponent<PlayerInput>().enabled = false;
+					PlayersManager.instance.players[0].GetComponent<PlayerInput>().enabled = true;
+				}
+            }
+        }
+	}
 
 	private void FixedUpdate()
 	{

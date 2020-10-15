@@ -65,6 +65,14 @@ public class @PlayerMap : IInputActionCollection, IDisposable
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """"
+                },
+                {
+                    ""name"": ""SwitchCharacter"",
+                    ""type"": ""Button"",
+                    ""id"": ""96cf2910-498b-46ba-a66d-d08b8a6772e6"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
                 }
             ],
             ""bindings"": [
@@ -241,6 +249,28 @@ public class @PlayerMap : IInputActionCollection, IDisposable
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""Pause"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""2a856481-5425-42c0-a604-b0edfc372889"",
+                    ""path"": ""<Keyboard>/q"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""SwitchCharacter"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""af4688b5-8a3c-486c-8b09-4a7f28a1e24f"",
+                    ""path"": ""<Gamepad>/buttonNorth"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""SwitchCharacter"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -446,6 +476,7 @@ public class @PlayerMap : IInputActionCollection, IDisposable
         m_Gameplay_Debug = m_Gameplay.FindAction("Debug", throwIfNotFound: true);
         m_Gameplay_ValidationPopUp = m_Gameplay.FindAction("ValidationPopUp", throwIfNotFound: true);
         m_Gameplay_Pause = m_Gameplay.FindAction("Pause", throwIfNotFound: true);
+        m_Gameplay_SwitchCharacter = m_Gameplay.FindAction("SwitchCharacter", throwIfNotFound: true);
         // UI
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
         m_UI_Move = m_UI.FindAction("Move", throwIfNotFound: true);
@@ -505,6 +536,7 @@ public class @PlayerMap : IInputActionCollection, IDisposable
     private readonly InputAction m_Gameplay_Debug;
     private readonly InputAction m_Gameplay_ValidationPopUp;
     private readonly InputAction m_Gameplay_Pause;
+    private readonly InputAction m_Gameplay_SwitchCharacter;
     public struct GameplayActions
     {
         private @PlayerMap m_Wrapper;
@@ -515,6 +547,7 @@ public class @PlayerMap : IInputActionCollection, IDisposable
         public InputAction @Debug => m_Wrapper.m_Gameplay_Debug;
         public InputAction @ValidationPopUp => m_Wrapper.m_Gameplay_ValidationPopUp;
         public InputAction @Pause => m_Wrapper.m_Gameplay_Pause;
+        public InputAction @SwitchCharacter => m_Wrapper.m_Gameplay_SwitchCharacter;
         public InputActionMap Get() { return m_Wrapper.m_Gameplay; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -542,6 +575,9 @@ public class @PlayerMap : IInputActionCollection, IDisposable
                 @Pause.started -= m_Wrapper.m_GameplayActionsCallbackInterface.OnPause;
                 @Pause.performed -= m_Wrapper.m_GameplayActionsCallbackInterface.OnPause;
                 @Pause.canceled -= m_Wrapper.m_GameplayActionsCallbackInterface.OnPause;
+                @SwitchCharacter.started -= m_Wrapper.m_GameplayActionsCallbackInterface.OnSwitchCharacter;
+                @SwitchCharacter.performed -= m_Wrapper.m_GameplayActionsCallbackInterface.OnSwitchCharacter;
+                @SwitchCharacter.canceled -= m_Wrapper.m_GameplayActionsCallbackInterface.OnSwitchCharacter;
             }
             m_Wrapper.m_GameplayActionsCallbackInterface = instance;
             if (instance != null)
@@ -564,6 +600,9 @@ public class @PlayerMap : IInputActionCollection, IDisposable
                 @Pause.started += instance.OnPause;
                 @Pause.performed += instance.OnPause;
                 @Pause.canceled += instance.OnPause;
+                @SwitchCharacter.started += instance.OnSwitchCharacter;
+                @SwitchCharacter.performed += instance.OnSwitchCharacter;
+                @SwitchCharacter.canceled += instance.OnSwitchCharacter;
             }
         }
     }
@@ -617,6 +656,7 @@ public class @PlayerMap : IInputActionCollection, IDisposable
         void OnDebug(InputAction.CallbackContext context);
         void OnValidationPopUp(InputAction.CallbackContext context);
         void OnPause(InputAction.CallbackContext context);
+        void OnSwitchCharacter(InputAction.CallbackContext context);
     }
     public interface IUIActions
     {

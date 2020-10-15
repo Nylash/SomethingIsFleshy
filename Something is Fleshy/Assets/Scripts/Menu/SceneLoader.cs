@@ -6,13 +6,31 @@ public class SceneLoader : MonoBehaviour
 {
     public void LoadScene(string sceneName)
     {
-        print(sceneName);
         switch (sceneName)
         {
+            case "PlayerSelection":
+                if(PlayersManager.instance.currentGameMode == PlayersManager.GameMode.OnePlayer)
+                {
+                    sceneName = "1PSelection";
+                    foreach (GameObject item in PlayersManager.instance.players)
+                        Destroy(item);
+                    Destroy(PlayersManager.instance.gameObject);
+                    goto default;
+                }
+                else
+                {
+                    sceneName = "2PSelection";
+                    foreach (GameObject item in PlayersManager.instance.players)
+                        Destroy(item);
+                    Destroy(PlayersManager.instance.gameObject);
+                    goto default;
+                }
             case "LevelSelection":
                 if (PlayersManager.instance.players[0] && PlayersManager.instance.players[1])
                 {
                     PlayersManager.instance.inputMap.Menu.Disable();
+                    foreach (var item in PlayersManager.instance.players)
+                        item.GetComponent<PlayerInput>().notificationBehavior = PlayerNotifications.SendMessages;
                     goto default;
                 }
                 break;

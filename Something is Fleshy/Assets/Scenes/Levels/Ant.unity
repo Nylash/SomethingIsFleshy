@@ -8480,6 +8480,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2279512867265450053, guid: 9719e81b153f0914ebc60d15fdb1de3f,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 3.28
+      objectReference: {fileID: 0}
     - target: {fileID: 5516669155998750807, guid: 9719e81b153f0914ebc60d15fdb1de3f,
         type: 3}
       propertyPath: maxHealth
@@ -8514,6 +8519,11 @@ PrefabInstance:
         type: 3}
       propertyPath: pointsForBronze
       value: 200
+      objectReference: {fileID: 0}
+    - target: {fileID: 6404385160186052430, guid: 9719e81b153f0914ebc60d15fdb1de3f,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -3.88
       objectReference: {fileID: 0}
     - target: {fileID: 8365515437562039805, guid: 9719e81b153f0914ebc60d15fdb1de3f,
         type: 3}

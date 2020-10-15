@@ -26,6 +26,7 @@ public class GameManager : MonoBehaviour
 	public Sprite silverMedal;
 	public Sprite bronzeMedal;
 	public Sprite failMedal;
+	[SerializeField] GameObject playerManagerDebug = null;
 	[Space]
 	[Header("PARAMETERS")]
 	[Tooltip("Level duration (in seconds).")]
@@ -64,15 +65,26 @@ public class GameManager : MonoBehaviour
         else if (instance != this)
             Destroy(gameObject);
 
+        if (!PlayersManager.instance)
+        {
+			PlayersManager playerManager = Instantiate(playerManagerDebug, Vector3.zero, Quaternion.identity).GetComponent<PlayersManager>();
+			playerManager.players[0] = Instantiate(playerManager.DEBUGplayerPrefab);
+			playerManager.players[1] = Instantiate(playerManager.DEBUGplayerPrefab);
+			playerManager.players[0].gameObject.GetComponent<CharacterController2D>().playerNumber = 1;
+			playerManager.players[1].gameObject.GetComponent<CharacterController2D>().playerNumber = 2;
+			playerManager.players[1].gameObject.GetComponent<PlayerCustomization>().SetColor(Color.green);
+			playerManager.players[1].gameObject.GetComponent<PlayerInput>().enabled = false;
+			foreach (GameObject item in playerManager.players)
+				DontDestroyOnLoad(item);
+		}
         for (int i = 0; i < 2; i++)
         {
-			PlayersManager.instance.players[i].transform.position = transform.GetChild(i).transform.position;
-			PlayersManager.instance.players[i].GetComponent<CharacterController2D>().enabled = true;
-			PlayersManager.instance.players[i].GetComponent<InteractionManager>().enabled = true;
-			PlayersManager.instance.players[i].GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Dynamic;
-			PlayersManager.instance.players[i].GetComponent<PlayerInput>().enabled = true;
+            PlayersManager.instance.players[i].transform.position = transform.GetChild(i).transform.position;
+            PlayersManager.instance.players[i].GetComponent<CharacterController2D>().enabled = true;
+            PlayersManager.instance.players[i].GetComponent<InteractionManager>().enabled = true;
+            PlayersManager.instance.players[i].GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Dynamic;
 			PlayersManager.instance.players[i].GetComponentInChildren<PlayerAnimationsMethods>().enabled = true;
-			PlayersManager.instance.players[i].GetComponent<PlayerInput>().notificationBehavior = PlayerNotifications.InvokeUnityEvents;
-		}
+            PlayersManager.instance.players[i].GetComponent<PlayerInput>().notificationBehavior = PlayerNotifications.InvokeUnityEvents;
+        }
     }
 }

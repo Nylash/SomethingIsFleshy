@@ -4,6 +4,7 @@ using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using System.Collections;
+using UnityEngine.InputSystem;
 
 public class UI_Manager : MonoBehaviour
 {
@@ -105,6 +106,35 @@ public class UI_Manager : MonoBehaviour
         SoundsManager.instance.PlaySoundOneShot(SoundsManager.SoundName.MenuValidation, UI_audioSource);
         Time.timeScale = 1;
         SceneManager.LoadScene("TrailerMenu");
+    }
+
+    public void LoadLevelSelection()
+    {
+        foreach (var item in PlayersManager.instance.players)
+            item.GetComponent<PlayerInput>().notificationBehavior = PlayerNotifications.SendMessages;
+        SoundsManager.instance.PlaySoundOneShot(SoundsManager.SoundName.MenuValidation, UI_audioSource);
+        Time.timeScale = 1;
+        SceneManager.LoadScene("LevelSelection");
+    }
+
+    public void LoadPlayerSelection()
+    {
+        if (PlayersManager.instance.currentGameMode == PlayersManager.GameMode.OnePlayer)
+        {
+            foreach (GameObject item in PlayersManager.instance.players)
+                Destroy(item);
+            Destroy(PlayersManager.instance.gameObject);
+            Time.timeScale = 1;
+            SceneManager.LoadScene("1PSelection");
+        }
+        else
+        {
+            foreach (GameObject item in PlayersManager.instance.players)
+                Destroy(item);
+            Destroy(PlayersManager.instance.gameObject);
+            Time.timeScale = 1;
+            SceneManager.LoadScene("2PSelection");
+        }
     }
 
     void StartGame()
