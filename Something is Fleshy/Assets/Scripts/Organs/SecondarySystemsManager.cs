@@ -8,10 +8,8 @@ public class SecondarySystemsManager : MonoBehaviour
     #region CONFIGURATION
 #pragma warning disable 0649
     [Header("PARAMETERS")]
-    [Tooltip("Time to full a secondary system in energy.")]
-    public float energyAmoutNeeded = 10f;
-    [Tooltip("Time to full a secondary system in oxygen.")]
-    public float oxygenAmoutNeeded = 10f;
+    [Tooltip("Time to full a secondary system.")]
+    public float timeToFillSecondarySystem = 10f;
     [Tooltip("Time before an secondary system expires.")]
     public float timeBeforeExpirationSecondarySystem = 5f;
     [Space]
@@ -22,10 +20,8 @@ public class SecondarySystemsManager : MonoBehaviour
     [Space]
     [Tooltip("Time before the first activity.")]
     public float timeBeforeFirstActivity = 10f;
-    [Tooltip("Minimal time between two activities.")]
-    [SerializeField] float minTimeBetweenActivities = 15f;
-    [Tooltip("Maximal time between two activities.")]
-    [SerializeField] float maxTimeBetweenActivities = 30f;
+    [Tooltip("Time between two activities.")]
+    [SerializeField] float timeBetweenActivities = 15f;
     [Tooltip("Value that increase probability of the other ressource when one is chosen." +
         "By default prob are 50-50, but when one is chosen it became 60-40 (if this value is 10).")]
     [Range(0,50)] [SerializeField] int ressourceRandomWeightValue = 10;
@@ -134,7 +130,7 @@ public class SecondarySystemsManager : MonoBehaviour
     {
         if (activesSecondarySystems < maxSimultaneousSecondarySystems)
             StartActivity();
-        Invoke("StartActivityByTimer", Random.Range(minTimeBetweenActivities, maxTimeBetweenActivities));
+        Invoke("StartActivityByTimer", timeBetweenActivities);
     }
 
     public void StartActivityByEnd()

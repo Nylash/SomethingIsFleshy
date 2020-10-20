@@ -9,6 +9,8 @@ public class InteractionManager : MonoBehaviour
     public GameObject interactFX;
     public GameObject interactLeakFX;
     CharacterController2D player;
+    PlayerInput playerInput;
+
 
     [Header("Variables")]
     public PlayerAnimationsMethods animMethodsScript;
@@ -21,6 +23,7 @@ public class InteractionManager : MonoBehaviour
     private void Start()
     {
         player = GetComponent<CharacterController2D>();
+        playerInput = GetComponent<PlayerInput>();
     }
 
     public void AskInteract(InputAction.CallbackContext ctx)
@@ -28,7 +31,7 @@ public class InteractionManager : MonoBehaviour
         if (ctx.started)
             InteractionStarted();
         else if (ctx.canceled)
-            InteractionHoldCanceled();
+            InteractionHoldCanceled(true);
     }
 
     private void Update()
@@ -124,22 +127,43 @@ public class InteractionManager : MonoBehaviour
         }
     }
 
-    void InteractionHoldCanceled()
+    void InteractionHoldCanceled(bool inputCanceled)
     {
         if (GameManager.instance.levelStarted)
         {
             if (!ScoreManager.instance.levelEnded && !GameManager.instance.levelPaused)
             {
-                if (canInteract && player.animator.GetBool("Holding"))
+                if (inputCanceled)
                 {
-                    switch (currentInteractableType)
+                    if (playerInput.enabled)
                     {
-                        case InteractableType.leak:
-                            player.animator.SetBool("Holding", false);
-                            UI_Manager.instance.UI_leakGaugeCanvas.enabled = false;
-                            if (currentInteractionLeakFX)
-                                Destroy(currentInteractionLeakFX);
-                            break;
+                        if (canInteract && player.animator.GetBool("Holding"))
+                        {
+                            switch (currentInteractableType)
+                            {
+                                case InteractableType.leak:
+                                    player.animator.SetBool("Holding", false);
+                                    UI_Manager.instance.UI_leakGaugeCanvas.enabled = false;
+                                    if (currentInteractionLeakFX)
+                                        Destroy(currentInteractionLeakFX);
+                                    break;
+                            }
+                        }
+                    }
+                }
+                else
+                {
+                    if (canInteract && player.animator.GetBool("Holding"))
+                    {
+                        switch (currentInteractableType)
+                        {
+                            case InteractableType.leak:
+                                player.animator.SetBool("Holding", false);
+                                UI_Manager.instance.UI_leakGaugeCanvas.enabled = false;
+                                if (currentInteractionLeakFX)
+                                    Destroy(currentInteractionLeakFX);
+                                break;
+                        }
                     }
                 }
             }
@@ -191,7 +215,7 @@ public class InteractionManager : MonoBehaviour
                 {
                     if (UI_Manager.instance.UI_leakGaugeCanvas)
                         UI_Manager.instance.UI_leakGaugeCanvas.enabled = false;
-                    InteractionHoldCanceled();
+                    InteractionHoldCanceled(false);
                     goto case "CLEAN CASE";
                 }
                 else

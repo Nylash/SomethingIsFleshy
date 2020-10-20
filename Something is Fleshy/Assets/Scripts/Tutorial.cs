@@ -103,7 +103,7 @@ public class Tutorial : MonoBehaviour
                 break;
             case TutorialStep.psFilledUp:
                 textTop.text = "Time : " + ((int)(SecondarySystemsManager.instance.timeBeforeExpirationSecondarySystem - tutoSS.timerBeforeExpiration)).ToString() + " sec";
-                textBot.text = "Energy : " + ((int)(tutoSS.currentEnergy / SecondarySystemsManager.instance.energyAmoutNeeded * 100)).ToString() + "%";
+                textBot.text = "Energy : " + ((int)(tutoSS.currentEnergy / SecondarySystemsManager.instance.timeToFillSecondarySystem * 100)).ToString() + "%";
                 if (!tutoSS.energyNeeded && !GameManager.instance.levelPaused)
                 {
                     if(ScoreManager.instance.currentScore <= 0)

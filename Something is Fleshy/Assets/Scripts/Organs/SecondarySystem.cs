@@ -44,12 +44,12 @@ public class SecondarySystem : MonoBehaviour
 	{
 		energyPropertyBlock = new MaterialPropertyBlock();
 		energyRenderer = energyGauge.GetComponent<SpriteRenderer>();
-		energyPropertyBlock.SetFloat("Height", currentEnergy / SecondarySystemsManager.instance.energyAmoutNeeded);
+		energyPropertyBlock.SetFloat("Height", currentEnergy / SecondarySystemsManager.instance.timeToFillSecondarySystem);
 		energyRenderer.SetPropertyBlock(energyPropertyBlock);
 
 		oxygenPropertyBlock = new MaterialPropertyBlock();
 		oxygenRenderer = oxygenGauge.GetComponent<SpriteRenderer>();
-		oxygenPropertyBlock.SetFloat("Height", currentOxygen / SecondarySystemsManager.instance.oxygenAmoutNeeded);
+		oxygenPropertyBlock.SetFloat("Height", currentOxygen / SecondarySystemsManager.instance.timeToFillSecondarySystem);
 		oxygenRenderer.SetPropertyBlock(oxygenPropertyBlock);
 
 		energyGauge.SetActive(false);
@@ -82,7 +82,7 @@ public class SecondarySystem : MonoBehaviour
 						if (filling)
 							FillingEnergy();
 						timerBeforeExpiration += Time.deltaTime;
-						energyPropertyBlock.SetFloat("Height", currentEnergy / SecondarySystemsManager.instance.energyAmoutNeeded);
+						energyPropertyBlock.SetFloat("Height", currentEnergy / SecondarySystemsManager.instance.timeToFillSecondarySystem);
 						energyRenderer.SetPropertyBlock(energyPropertyBlock);
 					}
 					else if (oxygenNeeded)
@@ -90,7 +90,7 @@ public class SecondarySystem : MonoBehaviour
 						if (filling)
 							FillingOxygen();
 						timerBeforeExpiration += Time.deltaTime;
-						oxygenPropertyBlock.SetFloat("Height", currentOxygen / SecondarySystemsManager.instance.oxygenAmoutNeeded);
+						oxygenPropertyBlock.SetFloat("Height", currentOxygen / SecondarySystemsManager.instance.timeToFillSecondarySystem);
 						oxygenRenderer.SetPropertyBlock(oxygenPropertyBlock);
 					}
 					if (associatedHint)
@@ -98,14 +98,14 @@ public class SecondarySystem : MonoBehaviour
 						associatedTimerHint.fillAmount = timerBeforeExpiration / SecondarySystemsManager.instance.timeBeforeExpirationSecondarySystem;
                         if (energyNeeded)
                         {
-							associatedGaugeHint.fillAmount = currentEnergy / SecondarySystemsManager.instance.energyAmoutNeeded;
-							if (timerBeforeExpiration + SecondarySystemsManager.instance.energyAmoutNeeded > SecondarySystemsManager.instance.timeBeforeExpirationSecondarySystem && associatedTimerHint.color != Color.red)
+							associatedGaugeHint.fillAmount = currentEnergy / SecondarySystemsManager.instance.timeToFillSecondarySystem;
+							if (timerBeforeExpiration + SecondarySystemsManager.instance.timeToFillSecondarySystem > SecondarySystemsManager.instance.timeBeforeExpirationSecondarySystem && associatedTimerHint.color != Color.red)
 								associatedTimerHint.color = Color.red;
                         }
                         else
                         {
-							associatedGaugeHint.fillAmount = currentOxygen / SecondarySystemsManager.instance.oxygenAmoutNeeded;
-							if (timerBeforeExpiration + SecondarySystemsManager.instance.oxygenAmoutNeeded > SecondarySystemsManager.instance.timeBeforeExpirationSecondarySystem && associatedTimerHint.color != Color.red)
+							associatedGaugeHint.fillAmount = currentOxygen / SecondarySystemsManager.instance.timeToFillSecondarySystem;
+							if (timerBeforeExpiration + SecondarySystemsManager.instance.timeToFillSecondarySystem > SecondarySystemsManager.instance.timeBeforeExpirationSecondarySystem && associatedTimerHint.color != Color.red)
 								associatedTimerHint.color = Color.red;
 						}
 					}
@@ -132,8 +132,8 @@ public class SecondarySystem : MonoBehaviour
 	{
 		if (StomachManager.instance.Emptying(Time.deltaTime))
 		{
-			if (currentEnergy + Time.deltaTime >= SecondarySystemsManager.instance.energyAmoutNeeded)
-				currentEnergy = SecondarySystemsManager.instance.energyAmoutNeeded;
+			if (currentEnergy + Time.deltaTime >= SecondarySystemsManager.instance.timeToFillSecondarySystem)
+				currentEnergy = SecondarySystemsManager.instance.timeToFillSecondarySystem;
 			else
 				currentEnergy += Time.deltaTime;
 		}
@@ -143,8 +143,8 @@ public class SecondarySystem : MonoBehaviour
 	{
 		if (LungsManager.instance.Emptying(Time.deltaTime))
 		{
-			if (currentOxygen + Time.deltaTime >= SecondarySystemsManager.instance.oxygenAmoutNeeded)
-				currentOxygen = SecondarySystemsManager.instance.oxygenAmoutNeeded;
+			if (currentOxygen + Time.deltaTime >= SecondarySystemsManager.instance.timeToFillSecondarySystem)
+				currentOxygen = SecondarySystemsManager.instance.timeToFillSecondarySystem;
 			else
 				currentOxygen += Time.deltaTime;
 		}
@@ -154,12 +154,12 @@ public class SecondarySystem : MonoBehaviour
 	{
 		if (energyNeeded)
 		{
-			if (currentEnergy / SecondarySystemsManager.instance.energyAmoutNeeded >= 1)
+			if (currentEnergy / SecondarySystemsManager.instance.timeToFillSecondarySystem >= 1)
 				StopActivity(true);
 		}
 		else if (oxygenNeeded)
 		{
-			if (currentOxygen / SecondarySystemsManager.instance.oxygenAmoutNeeded >= 1)
+			if (currentOxygen / SecondarySystemsManager.instance.timeToFillSecondarySystem >= 1)
 				StopActivity(true);
 		}
 		if(timerBeforeExpiration >= SecondarySystemsManager.instance.timeBeforeExpirationSecondarySystem)
