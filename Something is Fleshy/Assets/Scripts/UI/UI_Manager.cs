@@ -141,7 +141,9 @@ public class UI_Manager : MonoBehaviour
     {
         UI_startCanvas.enabled = false;
         GameManager.instance.levelStarted = true;
-        SecondarySystemsManager.instance.StartGame();
-        LeaksManager.instance.StartGame();
+        if(SecondarySystemsManager.instance)
+            SecondarySystemsManager.instance.StartGame();
+        if(LeaksManager.instance)
+            LeaksManager.instance.StartGame();
     }
 }

@@ -20,6 +20,9 @@ public class InteractionManager : MonoBehaviour
     float holdTimer;
     GameObject currentInteractionLeakFX;
 
+    public AlchemicalMachine.Ressource ressourceCarried;
+    GameObject currentRessourceBall;
+
     private void Start()
     {
         player = GetComponent<CharacterController2D>();
@@ -108,6 +111,33 @@ public class InteractionManager : MonoBehaviour
                             interactableObject.GetComponent<InversionBlocks>().InverseBlocks();
                             SoundsManager.instance.PlaySoundOneShot(SoundsManager.SoundName.LeverInteraction, interactionSource);
                             break;
+
+
+                        case InteractableType.pipeLever:
+                            interactableObject.GetComponent<PipeLever>().Interact();
+                            SoundsManager.instance.PlaySoundOneShot(SoundsManager.SoundName.LeverInteraction, interactionSource);
+                            Instantiate(interactFX, interactableObject.transform.position, Quaternion.identity);
+                            break;
+                        case InteractableType.alchemicalMachine:
+                            AlchemicalMachine.Ressource ressourceColor =  interactableObject.GetComponent<AlchemicalMachine>().GetRessource();
+                            if(ressourceColor != AlchemicalMachine.Ressource.none)
+                            {
+                                ressourceCarried = ressourceColor;
+                                if (currentRessourceBall)
+                                    Destroy(currentRessourceBall);
+                                currentRessourceBall = Instantiate(GameManager.instance.ressourceBallPrefab, transform);
+                                currentRessourceBall.GetComponent<SpriteRenderer>().color = AlchemicalMachine.instance.RessourceToColor(ressourceCarried);
+                            }
+                            SoundsManager.instance.PlaySoundOneShot(SoundsManager.SoundName.LeverInteraction, interactionSource);
+                            Instantiate(interactFX, interactableObject.transform.position, Quaternion.identity);
+                            break;
+                        case InteractableType.humanPartMachine:
+                            interactableObject.GetComponent<HumanPartMachine>().Interact(ressourceCarried);
+                            ressourceCarried = AlchemicalMachine.Ressource.none;
+                            Destroy(currentRessourceBall);
+                            SoundsManager.instance.PlaySoundOneShot(SoundsManager.SoundName.LeverInteraction, interactionSource);
+                            Instantiate(interactFX, interactableObject.transform.position, Quaternion.identity);
+                            break;
                     }
                     if (player.AnimationNotCurrentlyBlocking())
                     {
@@ -189,6 +219,17 @@ public class InteractionManager : MonoBehaviour
             case "InversionBlock":
                 currentInteractableType = InteractableType.inversionBlockLever;
                 goto case "GENERAL CASE";
+
+
+            case "PipeLever":
+                currentInteractableType = InteractableType.pipeLever;
+                goto case "GENERAL CASE";
+            case "AlchemicalMachine":
+                currentInteractableType = InteractableType.alchemicalMachine;
+                goto case "GENERAL CASE";
+            case "HumanPartMachine":
+                currentInteractableType = InteractableType.humanPartMachine;
+                goto case "GENERAL CASE";
             case "GENERAL CASE":
                 canInteract = true;
                 interactableObject = collision.gameObject;
@@ -230,6 +271,23 @@ public class InteractionManager : MonoBehaviour
                     goto case "CLEAN CASE";
                 else
                     break;
+
+
+            case "PipeLever":
+                if (currentInteractableType == InteractableType.pipeLever)
+                    goto case "CLEAN CASE";
+                else
+                    break;
+            case "AlchemicalMachine":
+                if (currentInteractableType == InteractableType.alchemicalMachine)
+                    goto case "CLEAN CASE";
+                else
+                    break;
+            case "HumanPartMachine":
+                if (currentInteractableType == InteractableType.humanPartMachine)
+                    goto case "CLEAN CASE";
+                else
+                    break;
             case "CLEAN CASE":
                 canInteract = false;
                 interactableObject = null;
@@ -240,6 +298,6 @@ public class InteractionManager : MonoBehaviour
 
     public enum InteractableType
     {
-        none, lever, electricLever, leak, teleporter, inversionBlockLever
+        none, lever, electricLever, leak, teleporter, inversionBlockLever, pipeLever, alchemicalMachine, humanPartMachine
     }
 }

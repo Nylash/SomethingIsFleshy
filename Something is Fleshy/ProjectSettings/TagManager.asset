@@ -17,6 +17,9 @@ TagManager:
   - Leak
   - InversionBlock
   - UI_Master
+  - PipeLever
+  - AlchemicalMachine
+  - HumanPartMachine
   layers:
   - Default
   - TransparentFX

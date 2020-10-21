@@ -26,6 +26,7 @@ public class GameManager : MonoBehaviour
 	public Sprite silverMedal;
 	public Sprite bronzeMedal;
 	public Sprite failMedal;
+	public GameObject ressourceBallPrefab;
 	[SerializeField] GameObject playerManagerDebug = null;
 	[Space]
 	[Header("PARAMETERS")]
